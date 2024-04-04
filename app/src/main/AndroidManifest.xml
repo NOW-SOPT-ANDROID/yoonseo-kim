@@ -13,14 +13,20 @@
         android:theme="@style/Theme.NOWSOPTAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".LoginActivity"
+            android:exported="true">  <!--시작(첫 화면) activity만 true, 나머지 activity들은 false로 지정-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:exported="false"
+            android:name=".MainActivity"/>
+        <activity
+            android:exported="false"
+            android:name=".SignUpActivity"/>
     </application>
 
 </manifest>
