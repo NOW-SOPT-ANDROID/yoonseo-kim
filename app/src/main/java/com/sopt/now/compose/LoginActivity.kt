@@ -1,0 +1,163 @@
+package com.sopt.now.compose
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+
+@Suppress("DEPRECATION")
+class LoginActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            NOWSOPTAndroidTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    Login()
+                    val userInfo = intent.getSerializableExtra("user_info") as? UserInfo
+                    userInfo?.let { user ->
+                        Login(user)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Login(userInfo: UserInfo?=null) {
+    var id by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(30.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(40.dp)) //위에서부터 높이
+
+        Text(
+            text = "Welcome to SOPT",
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+//            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        )
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Text(
+            text = "ID",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(30.dp))
+        TextField(
+            value = id,
+            onValueChange = { id = it },
+            placeholder = { Text("아이디를 입력해주세요") },
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+        )
+        Spacer(modifier = Modifier.height(40.dp))
+        Text(
+            text = "비밀번호",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(30.dp))
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            placeholder = { Text("비밀번호를 입력해주세요") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        )
+        Spacer(modifier = Modifier.height(200.dp))
+
+        Button(
+            onClick = {
+                if (id == userInfo?.id && password == userInfo?.password) {
+                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        putExtra("user_info", userInfo)
+                    }
+                    context.startActivity(intent)
+                } else {
+                    Toast.makeText(context, "아이디 또는 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show()
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "로그인 하기",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(context, SignUpActivity::class.java)
+                context.startActivity(intent)
+            }, modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "회원가입 하기",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun LoginPreview() {
+    val userInfo = UserInfo ("", "", "", "")
+    NOWSOPTAndroidTheme {
+        Login(userInfo)
+    }
+}
