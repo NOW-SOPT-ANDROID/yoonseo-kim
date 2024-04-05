@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -44,16 +45,16 @@ fun Main(userInfo: UserInfo?) {
         modifier = Modifier
             .fillMaxSize()
             .padding(30.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(40.dp),
 //        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         userInfo?.let { user ->
             Image(
                 painter = painterResource(id = R.drawable.img),
                 contentDescription = null,
-                modifier = Modifier.size(110.dp)
+                modifier = Modifier.size(110.dp).aspectRatio(1f)
             )
-            UserInfoItem(title = "이름", content = user.nickname)
+            UserInfoItem(title = "닉네임", content = user.nickname)
             UserInfoItem(title = "MBTI", content = user.mbti)
             UserInfoItem(title = "ID", content = user.id)
             UserInfoItem(title = "비밀번호", content = user.password)
@@ -64,7 +65,7 @@ fun Main(userInfo: UserInfo?) {
 @Composable
 fun UserInfoItem(title: String, content: String) {
     Text(
-        text = "$title: $content",
+        text = "$title $content",
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.fillMaxWidth()
