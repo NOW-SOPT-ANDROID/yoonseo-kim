@@ -15,10 +15,15 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
+    //상수화
+    companion object {
+        const val USER_INFO = "user_info"
+    }
+
     private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val data = result.data
-            val userInfo = data?.getSerializableExtra("user_info") as? UserInfo
+            val userInfo = data?.getSerializableExtra(USER_INFO) as? UserInfo
             userInfo?.let { switchToMain(it) }
         }
     }
@@ -29,10 +34,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //로그인 하기 버튼 눌렀을 때 (회원가입 정보와 비교해서 확인)
-        binding.loginButton.setOnClickListener {
-            val id = binding.idTextfield.text.toString()
-            val password = binding.passwordTextfield.text.toString()
-            val userInfo = intent?.getSerializableExtra("user_info") as? UserInfo
+        binding.btnLogin.setOnClickListener {
+            val id = binding.etLoginId.text.toString()
+            val password = binding.etLoginPwd.text.toString()
+            val userInfo = intent?.getSerializableExtra(USER_INFO) as? UserInfo
             if (userInfo != null && userInfo.id == id && userInfo.password == password) {
                 showToast("로그인에 성공하였습니다.")
                 switchToMain(userInfo)
@@ -42,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         //회원가입 하기 버튼 눌렀을 때 (SignUpActivity로 화면 전환)
-        binding.signupButton.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             signUpLauncher.launch(Intent(this, SignUpActivity::class.java))
         }
     }
@@ -50,13 +55,8 @@ class LoginActivity : AppCompatActivity() {
     //로그인 성공 시 MainActivity로 전환되는 함수
     private fun switchToMain(userInfo: UserInfo) {
         val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("user_info", userInfo)
+            putExtra(USER_INFO, userInfo)
         }
         startActivity(intent)
     }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
 }

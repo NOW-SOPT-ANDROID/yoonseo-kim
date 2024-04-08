@@ -16,13 +16,18 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
+    //상수화
+    companion object {
+        const val USER_INFO = "user_info"
+    }
+
     //회원가입 결과를 처리하기 위한 ActivityResultLauncher
     private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         //회원가입 액티비티 성공적 종료 시
         if (result.resultCode == RESULT_OK) {
             val data = result.data
             //회원가입 액티비티에서 넘어온 사용자 정보 확인
-            val userInfo = data?.getSerializableExtra("user_info") as? UserInfo
+            val userInfo = data?.getSerializableExtra(USER_INFO) as? UserInfo
             signUpResult(userInfo)
         }
         //회원가입 액티비티가 취소되었을 시
@@ -36,12 +41,12 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.signupButton.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             //입력된 정보
-            val id = binding.idTextfield.text.toString()
-            val password = binding.passwordTextfield.text.toString()
-            val nickname = binding.nicknameTextfield.text.toString()
-            val mbti = binding.mbtiTextfield.text.toString()
+            val id = binding.etSignUpId.text.toString()
+            val password = binding.etSignUpPwd.text.toString()
+            val nickname = binding.etSignUpNickname.text.toString()
+            val mbti = binding.etSignUpMbti.text.toString()
 
             if (isValidInfo(id, password, nickname)) {
                 //회원가입 정보 생성
@@ -57,7 +62,7 @@ class SignUpActivity : AppCompatActivity() {
     //회원가입에 성공해서 LoginActivity로 사용자 정보를 전달하며 이동하는 함수
     private fun loginSuccess(userInfo: UserInfo) {
         val intent = Intent(this, LoginActivity::class.java).apply {
-            putExtra("user_info", userInfo)
+            putExtra(USER_INFO, userInfo)
         }
         signUpLauncher.launch(intent)
         showToast("회원가입에 성공하였습니다.")
@@ -66,14 +71,11 @@ class SignUpActivity : AppCompatActivity() {
     //회원가입 결과 처리 함수
     private fun signUpResult(userInfo: UserInfo?) {
         if (userInfo != null) {
-            //showToast("회원가입에 성공하였습니다.")
             val resultIntent = Intent().apply {
-                putExtra("user_info", userInfo)
+                putExtra(USER_INFO, userInfo)
             }
             setResult(RESULT_OK, resultIntent)
             finish()
-        } else {
-            //showToast("회원가입 정보가 유효하지 않습니다.")
         }
     }
 
@@ -87,9 +89,5 @@ class SignUpActivity : AppCompatActivity() {
             else -> return true
         }
         return false
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

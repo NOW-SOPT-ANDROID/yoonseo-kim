@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 
 @Suppress("DEPRECATION") //getSerializableExtra deprecation 문제 처리
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         // 사용자 정보가 null이 아니라면 TextView에 정보 표시
         userInfo?.let {
-            binding.myName.text = it.nickname
-            binding.myMbti.text = it.mbti
-            binding.myId.text = it.id
-            binding.myPassword.text = it.password
+            binding.tvMyPageNickname.text = it.nickname
+            binding.tvMyPageMbti.text = it.mbti
+            binding.tvMyPageId.text = it.id
+            binding.tvMyPagePwd.text = it.password
         }
     }
 }
