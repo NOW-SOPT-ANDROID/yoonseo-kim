@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
     <string name="login_title">Welcome to SOPT</string>
+    <string name="sign_up_title">SIGN UP</string>
 
     <string name="id">ID</string>
     <string name="pwd">비밀번호</string>

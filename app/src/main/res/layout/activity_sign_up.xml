@@ -12,7 +12,7 @@
         android:id="@+id/tv_sign_up_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="SIGN UP"
+        android:text="@string/sign_up_title"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/black"
