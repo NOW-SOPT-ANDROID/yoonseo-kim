@@ -9,85 +9,85 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/my_image"
+        android:id="@+id/iv_my_page_profile"
         android:src="@drawable/img"
         android:layout_width="110dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layout_constraintDimensionRatio="1:1"
-        android:layout_marginLeft="30dp"
+        app:layout_constraintDimensionRatio="1"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="70dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/my_name"
+        android:id="@+id/tv_my_page_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/my_image"/>
+        app:layout_constraintStart_toEndOf="@id/iv_my_page_profile"/>
 
     <TextView
-        android:id="@+id/my_mbti"
+        android:id="@+id/tv_my_page_mbti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="25dp"
-        android:layout_marginLeft="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/my_name"
-        app:layout_constraintStart_toEndOf="@+id/my_image"/>
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_page_nickname"
+        app:layout_constraintStart_toEndOf="@id/iv_my_page_profile"/>
 
     <TextView
-        android:id="@+id/id"
+        android:id="@+id/tv_my_page_id_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원님의 ID"
+        android:text="@string/my_page_id_title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/my_image"
+        app:layout_constraintTop_toBottomOf="@id/iv_my_page_profile"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/my_id"
+        android:id="@+id/tv_my_page_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/id"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_page_id_title"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/password"
+        android:id="@+id/tv_my_page_pwd_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원님의 비밀번호"
+        android:text="@string/my_page_pwd_title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/my_id"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_page_id"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/my_password"
+        android:id="@+id/tv_my_page_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@id/tv_my_page_pwd_title"
         app:layout_constraintStart_toStartOf="parent"/>
 
 
