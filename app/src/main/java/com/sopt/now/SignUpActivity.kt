@@ -47,7 +47,7 @@ class SignUpActivity : AppCompatActivity() {
             val nickname = binding.etSignUpNickname.text.toString()
             val mbti = binding.etSignUpMbti.text.toString()
 
-            if (isValidInfo(id, password, nickname)) {
+            if (isSignUpAvailable(id, password, nickname)) {
                 //회원가입 정보 생성
                 val userInfo = UserInfo(id, password, nickname, mbti)
                 loginSuccess(userInfo)
@@ -78,8 +78,8 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    //입력된 정보가 유효한지 검사하는 함수
-    private fun isValidInfo(id: String, password: String, nickname: String): Boolean {
+    //입력된 정보가 유효한지, 회원가입 가능한지 검사하는 함수
+    private fun isSignUpAvailable(id: String, password: String, nickname: String): Boolean {
         //각 조건 해당 Toast 메시지 표시 (하나라도 틀리면 false 반환)
         when {
             id.length !in 6..10 -> showToast(getString(R.string.id_wrong_message))
