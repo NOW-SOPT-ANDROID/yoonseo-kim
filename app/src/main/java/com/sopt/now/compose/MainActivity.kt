@@ -23,14 +23,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
-@Suppress("DEPRECATION")
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        const val USER_INFO = "user_info"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             NOWSOPTAndroidTheme {
                 Surface {
-                    val userInfo = intent.getSerializableExtra("user_info") as? UserInfo
+                    val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
                     Main(userInfo)
                 }
             }
@@ -46,7 +49,6 @@ fun Main(userInfo: UserInfo?) {
             .fillMaxSize()
             .padding(30.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
-//        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         userInfo?.let { user ->
             Image(

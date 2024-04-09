@@ -35,10 +35,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sopt.now.compose.SignUpActivity.Companion.USER_INFO
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
-@Suppress("DEPRECATION")
 class LoginActivity : ComponentActivity() {
+
+    companion object {
+        const val USER_INFO = "user_info"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,10 +52,11 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Login()
-                    val userInfo = intent.getSerializableExtra("user_info") as? UserInfo
-                    userInfo?.let { user ->
-                        Login(user)
+                    val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
+                    if (userInfo != null) {
+                        Login(userInfo)
+                    } else {
+                        Login()
                     }
                 }
             }
@@ -121,7 +127,7 @@ fun Login(userInfo: UserInfo?=null) {
                 if (id == userInfo?.id && password == userInfo?.password) {
                     Toast.makeText(context, context.getString(R.string.login_success_message), Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, MainActivity::class.java).apply {
-                        putExtra("user_info", userInfo)
+                        putExtra(USER_INFO, userInfo)
                     }
                     context.startActivity(intent)
                 } else {

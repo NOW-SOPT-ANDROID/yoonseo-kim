@@ -37,9 +37,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import com.sopt.now.compose.SignUpActivity.Companion.USER_INFO
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 class SignUpActivity : ComponentActivity() {
+
+    companion object {
+        const val USER_INFO = "user_info"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,12 +65,12 @@ class SignUpActivity : ComponentActivity() {
     }
 }
 @Composable
-fun isValidInfo(id: String, password: String, nickname: String): Boolean {
+fun isSignUpAvailable(id: String, password: String, nickname: String): Boolean {
     val context = LocalContext.current
     when {
         id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
         password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
-        nickname.isBlank() -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
+        nickname.isBlank() || nickname.contains(" ") -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
         else -> {
             Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
             return true
@@ -86,7 +91,6 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         modifier = Modifier
             .fillMaxSize()
             .padding(30.dp),
-//        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(20.dp))
@@ -185,7 +189,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             onClick = {
                 val userInfo = UserInfo(id, password, nickname, mbti)
                 val intent = Intent(context, LoginActivity::class.java)
-                intent.putExtra("user_info", userInfo)
+                intent.putExtra(USER_INFO, userInfo)
                 Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
                 context.startActivity(intent)
             },
