@@ -11,10 +11,13 @@ import com.sopt.now.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
 
-@Suppress("DEPRECATION") //getSerializableExtra deprecation 문제 처리
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    companion object {
+        const val USER_INFO = "user_info"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // LoginActivity로부터 전달된 사용자 정보를 받음
-        val userInfo = intent.getSerializableExtra("user_info") as? UserInfo
+        val userInfo = intent?.getParcelableExtra<UserInfo>(USER_INFO)
 
         // 사용자 정보가 null이 아니라면 TextView에 정보 표시
         userInfo?.let {

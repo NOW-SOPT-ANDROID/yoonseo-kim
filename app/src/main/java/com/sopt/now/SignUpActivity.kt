@@ -84,7 +84,7 @@ class SignUpActivity : AppCompatActivity() {
         when {
             id.length !in 6..10 -> showToast(getString(R.string.id_wrong_message))
             password.length !in 8..12 -> showToast(getString(R.string.pwd_wrong_message))
-            nickname.isNullOrBlank() -> showToast(getString(R.string.nickname_wrong_message))
+            nickname.isBlank() || nickname.contains(" ") -> showToast(getString(R.string.nickname_wrong_message))
             else -> return true
         }
         return false

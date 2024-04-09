@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.sopt.now'
-    compileSdk 31
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.sopt.now"

@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val data = result.data
-            val userInfo = data?.getParcelableExtra<UserInfo>(USER_INFO)  //compile SDK 31로 변경함 (33부터 getParcelableExtra<T>(String name) 메소드 deprecated)
+            val userInfo = data?.getParcelableExtra<UserInfo>(USER_INFO)
             userInfo?.let { switchToMain(it) }
         }
     }
