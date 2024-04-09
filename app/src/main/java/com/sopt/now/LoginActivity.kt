@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sopt.now.UserInfo
 import com.sopt.now.databinding.ActivityLoginBinding
 
-@Suppress("DEPRECATION") //getSerializableExtra deprecation 문제 처리
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -23,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val data = result.data
-            val userInfo = data?.getSerializableExtra(USER_INFO) as? UserInfo
+            val userInfo = data?.getParcelableExtra<UserInfo>(USER_INFO)  //compile SDK 31로 변경함 (33부터 getParcelableExtra<T>(String name) 메소드 deprecated)
             userInfo?.let { switchToMain(it) }
         }
     }
@@ -37,7 +36,8 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val id = binding.etLoginId.text.toString()
             val password = binding.etLoginPwd.text.toString()
-            val userInfo = intent?.getSerializableExtra(USER_INFO) as? UserInfo
+            val userInfo = intent?.getParcelableExtra<UserInfo>(USER_INFO)
+
             if (userInfo != null && userInfo.id == id && userInfo.password == password) {
                 showToast(getString(R.string.login_success_message))
                 switchToMain(userInfo)
@@ -58,5 +58,6 @@ class LoginActivity : AppCompatActivity() {
             putExtra(USER_INFO, userInfo)
         }
         startActivity(intent)
+        finish()
     }
 }

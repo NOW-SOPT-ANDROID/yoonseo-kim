@@ -11,7 +11,6 @@ import com.sopt.now.UserInfo
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.google.android.material.snackbar.Snackbar
 
-@Suppress("DEPRECATION") //getSerializableExtra deprecation 문제 처리
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
@@ -27,7 +26,7 @@ class SignUpActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val data = result.data
             //회원가입 액티비티에서 넘어온 사용자 정보 확인
-            val userInfo = data?.getSerializableExtra(USER_INFO) as? UserInfo
+            val userInfo = data?.getParcelableExtra<UserInfo>(USER_INFO)
             signUpResult(userInfo)
         }
         //회원가입 액티비티가 취소되었을 시

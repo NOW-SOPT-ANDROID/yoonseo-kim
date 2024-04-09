@@ -1,11 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
     namespace 'com.sopt.now'
-    compileSdk 34
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.sopt.now"
