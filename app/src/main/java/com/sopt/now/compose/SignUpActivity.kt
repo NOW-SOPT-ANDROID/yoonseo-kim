@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -62,11 +63,11 @@ class SignUpActivity : ComponentActivity() {
 fun isValidInfo(id: String, password: String, nickname: String): Boolean {
     val context = LocalContext.current
     when {
-        id.length !in 6..10 -> Toast.makeText(context, "ID는 6~10글자여야 합니다.", Toast.LENGTH_SHORT).show()
-        password.length !in 8..12 -> Toast.makeText(context, "비밀번호는 8~12글자여야 합니다.", Toast.LENGTH_SHORT).show()
-        nickname.isBlank() -> Toast.makeText(context, "닉네임은 공백 없이 한 글자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+        id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
+        password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
+        nickname.isBlank() -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
         else -> {
-            Toast.makeText(context, "회원가입에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
             return true
         }
     }
@@ -91,7 +92,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(20.dp))
 
         Text (
-            text = "SIGN UP",
+            text = stringResource(id = R.string.sign_up_title),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp)
@@ -100,7 +101,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "ID",
+            text = stringResource(id = R.string.id),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -112,7 +113,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         TextField(
             value = id,
             onValueChange = { id = it },
-            placeholder = { Text("아이디를 입력해주세요") },
+            placeholder = { Text(stringResource(id = R.string.id_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -120,7 +121,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "비밀번호",
+            text = stringResource(id = R.string.pwd),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -132,7 +133,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         TextField(
             value = password,
             onValueChange = { password = it },
-            placeholder = { Text("비밀번호를 입력해주세요") },
+            placeholder = { Text(stringResource(id = R.string.pwd_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
@@ -142,7 +143,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "닉네임",
+            text = stringResource(id = R.string.nickname),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -154,7 +155,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         TextField(
             value = nickname,
             onValueChange = { nickname = it },
-            placeholder = { Text("닉네임을 입력해주세요") },
+            placeholder = { Text(stringResource(id = R.string.nickname_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
         )
@@ -162,7 +163,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = "MBTI",
+            text = stringResource(id = R.string.mbti),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -174,7 +175,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         TextField(
             value = mbti,
             onValueChange = { mbti = it },
-            placeholder = { Text("MBTI를 입력해주세요") },  //넷다 label 말고 placeholder 한 상태 -> 확인 !!
+            placeholder = { Text(stringResource(id = R.string.mbti_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
         )
@@ -185,16 +186,16 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
                 val userInfo = UserInfo(id, password, nickname, mbti)
                 val intent = Intent(context, LoginActivity::class.java)
                 intent.putExtra("user_info", userInfo)
-                Toast.makeText(context, "회원가입에 성공하였습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
                 context.startActivity(intent)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text ="회원가입 하기",
+                text = stringResource(id = R.string.btn_sign_up),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold)
-        } //clickable
+        }
     }
 }
 

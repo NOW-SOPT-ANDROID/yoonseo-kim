@@ -2,6 +2,7 @@ package com.sopt.now.compose
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -73,16 +75,15 @@ fun Login(userInfo: UserInfo?=null) {
         Spacer(modifier = Modifier.height(40.dp)) //위에서부터 높이
 
         Text(
-            text = "Welcome to SOPT",
+            text = stringResource(id = R.string.login_title),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-//            textAlign = TextAlign.Center,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
-            text = "ID",
+            text = stringResource(id = R.string.id),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -92,13 +93,13 @@ fun Login(userInfo: UserInfo?=null) {
         TextField(
             value = id,
             onValueChange = { id = it },
-            placeholder = { Text("아이디를 입력해주세요") },
+            placeholder = { Text(stringResource(id = R.string.id_hint)) },
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
         )
         Spacer(modifier = Modifier.height(40.dp))
         Text(
-            text = "비밀번호",
+            text = stringResource(id = R.string.pwd),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -108,7 +109,7 @@ fun Login(userInfo: UserInfo?=null) {
         TextField(
             value = password,
             onValueChange = { password = it },
-            placeholder = { Text("비밀번호를 입력해주세요") },
+            placeholder = { Text(stringResource(id = R.string.pwd_hint)) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -118,19 +119,19 @@ fun Login(userInfo: UserInfo?=null) {
         Button(
             onClick = {
                 if (id == userInfo?.id && password == userInfo?.password) {
-                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.login_success_message), Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, MainActivity::class.java).apply {
                         putExtra("user_info", userInfo)
                     }
                     context.startActivity(intent)
                 } else {
-                    Toast.makeText(context, "아이디 또는 비밀번호가 틀립니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.login_fail_message), Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "로그인 하기",
+                text = stringResource(id = R.string.btn_login),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -144,7 +145,7 @@ fun Login(userInfo: UserInfo?=null) {
             }, modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "회원가입 하기",
+                text = stringResource(id = R.string.btn_sign_up),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
