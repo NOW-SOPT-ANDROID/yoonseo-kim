@@ -15,7 +15,6 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
-    //상수화
     companion object {
         const val USER_INFO = "user_info"
     }
@@ -41,19 +40,20 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSignUp.setOnClickListener {
-            //입력된 정보
-            val id = binding.etSignUpId.text.toString()
-            val password = binding.etSignUpPwd.text.toString()
-            val nickname = binding.etSignUpNickname.text.toString()
-            val mbti = binding.etSignUpMbti.text.toString()
+            with(binding) {
+                val id = etSignUpId.text.toString()
+                val password = etSignUpPwd.text.toString()
+                val nickname = etSignUpNickname.text.toString()
+                val mbti = etSignUpMbti.text.toString()
 
-            if (isSignUpAvailable(id, password, nickname)) {
-                //회원가입 정보 생성
-                val userInfo = UserInfo(id, password, nickname, mbti)
-                loginSuccess(userInfo)
-            } else {
-                //유효하지 않은 입력일 경우 (조건 하나라도 틀리면 뜨는 두번째 Toast 메시지)
-                showToast(getString(R.string.sign_up_fail_message))
+                if (isSignUpAvailable(id, password, nickname)) {
+                    //회원가입 정보 생성
+                    val userInfo = UserInfo(id, password, nickname, mbti)
+                    loginSuccess(userInfo)
+                } else {
+                    //유효하지 않은 입력일 경우 (조건 하나라도 틀리면 뜨는 두번째 Toast 메시지)
+                    showToast(getString(R.string.sign_up_fail_message))
+                }
             }
         }
     }
@@ -78,9 +78,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    //입력된 정보가 유효한지, 회원가입 가능한지 검사하는 함수
     private fun isSignUpAvailable(id: String, password: String, nickname: String): Boolean {
-        //각 조건 해당 Toast 메시지 표시 (하나라도 틀리면 false 반환)
         when {
             id.length !in 6..10 -> showToast(getString(R.string.id_wrong_message))
             password.length !in 8..12 -> showToast(getString(R.string.pwd_wrong_message))
