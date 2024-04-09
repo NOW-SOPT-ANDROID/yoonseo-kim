@@ -64,9 +64,7 @@ class SignUpActivity : ComponentActivity() {
         }
     }
 }
-@Composable
-fun isSignUpAvailable(id: String, password: String, nickname: String): Boolean {
-    val context = LocalContext.current
+fun isSignUpAvailable(context: Context, id: String, password: String, nickname: String): Boolean {
     when {
         id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
         password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
@@ -187,11 +185,13 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
 
         Button(
             onClick = {
-                val userInfo = UserInfo(id, password, nickname, mbti)
-                val intent = Intent(context, LoginActivity::class.java)
-                intent.putExtra(USER_INFO, userInfo)
-                Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
-                context.startActivity(intent)
+                if (isSignUpAvailable(context, id, password, nickname)) {
+                    val userInfo = UserInfo(id, password, nickname, mbti)
+                    val intent = Intent(context, LoginActivity::class.java).apply {
+                        putExtra(USER_INFO, userInfo)
+                    }
+                    context.startActivity(intent)
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
