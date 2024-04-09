@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">NOW SOPT Android</string>
+    <string name="login_title">Welcome to SOPT</string>
+    <string name="sign_up_title">SIGN UP</string>
+
+    <string name="id">ID</string>
+    <string name="pwd">비밀번호</string>
+    <string name="nickname">닉네임</string>
+    <string name="mbti">MBTI</string>
+
+    <string name="id_hint">아이디를 입력해주세요</string>
+    <string name="pwd_hint">비밀번호를 입력해주세요</string>
+    <string name="nickname_hint">닉네임을 입력해주세요</string>
+    <string name="mbti_hint">MBTI를 입력해주세요</string>
+
+    <string name="btn_login">로그인 하기</string>
+    <string name="btn_sign_up">회원가입 하기</string>
+
+    <string name="my_page_id_title">회원님의 ID</string>
+    <string name="my_page_pwd_title">회원님의 비밀번호</string>
+
+    <string name="login_success_message">로그인에 성공하였습니다.</string>
+    <string name="login_fail_message">아이디 또는 비밀번호가 틀립니다.</string>
+
+    <string name="sign_up_success_message">회원가입에 성공하였습니다.</string>
+    <string name="sign_up_canceled_message">회원가입이 취소되었습니다.</string>
+    <string name="sign_up_fail_message">회원가입에 실패하였습니다.</string>
+
+    <string name="id_wrong_message">ID는 6~10글자여야 합니다.</string>
+    <string name="pwd_wrong_message">비밀번호는 8~12글자여야 합니다.</string>
+    <string name="nickname_wrong_message">닉네임은 공백 없이 한 글자 이상이어야 합니다.</string>
 </resources>
