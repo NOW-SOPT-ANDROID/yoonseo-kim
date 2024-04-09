@@ -32,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
         }
         //회원가입 액티비티가 취소되었을 시
         else if (result.resultCode == RESULT_CANCELED) {
-            showToast("회원가입이 취소되었습니다.")
+            showToast(getString(R.string.sign_up_canceled_message))
         }
     }
 
@@ -54,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
                 loginSuccess(userInfo)
             } else {
                 //유효하지 않은 입력일 경우 (조건 하나라도 틀리면 뜨는 두번째 Toast 메시지)
-                showToast("회원가입에 실패하였습니다.")
+                showToast(getString(R.string.sign_up_fail_message))
             }
         }
     }
@@ -65,7 +65,7 @@ class SignUpActivity : AppCompatActivity() {
             putExtra(USER_INFO, userInfo)
         }
         signUpLauncher.launch(intent)
-        showToast("회원가입에 성공하였습니다.")
+        showToast(getString(R.string.sign_up_success_message))
     }
 
     //회원가입 결과 처리 함수
@@ -83,9 +83,9 @@ class SignUpActivity : AppCompatActivity() {
     private fun isValidInfo(id: String, password: String, nickname: String): Boolean {
         //각 조건 해당 Toast 메시지 표시 (하나라도 틀리면 false 반환)
         when {
-            id.length !in 6..10 -> showToast("ID는 6~10글자여야 합니다.")
-            password.length !in 8..12 -> showToast("비밀번호는 8~12글자여야 합니다.")
-            nickname.isBlank() -> showToast("닉네임은 공백 없이 한 글자 이상이어야 합니다.")
+            id.length !in 6..10 -> showToast(getString(R.string.id_wrong_message))
+            password.length !in 8..12 -> showToast(getString(R.string.pwd_wrong_message))
+            nickname.isNullOrBlank() -> showToast(getString(R.string.nickname_wrong_message))
             else -> return true
         }
         return false

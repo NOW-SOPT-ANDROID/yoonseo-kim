@@ -18,4 +18,15 @@
 
     <string name="my_page_id_title">회원님의 ID</string>
     <string name="my_page_pwd_title">회원님의 비밀번호</string>
+
+    <string name="login_success_message">로그인에 성공하였습니다.</string>
+    <string name="login_fail_message">아이디 또는 비밀번호가 틀립니다.</string>
+
+    <string name="sign_up_success_message">회원가입에 성공하였습니다.</string>
+    <string name="sign_up_canceled_message">회원가입이 취소되었습니다.</string>
+    <string name="sign_up_fail_message">회원가입에 실패하였습니다.</string>
+
+    <string name="id_wrong_message">ID는 6~10글자여야 합니다.</string>
+    <string name="pwd_wrong_message">비밀번호는 8~12글자여야 합니다.</string>
+    <string name="nickname_wrong_message">닉네임은 공백 없이 한 글자 이상이어야 합니다.</string>
 </resources>

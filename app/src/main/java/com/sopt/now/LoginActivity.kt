@@ -39,10 +39,10 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etLoginPwd.text.toString()
             val userInfo = intent?.getSerializableExtra(USER_INFO) as? UserInfo
             if (userInfo != null && userInfo.id == id && userInfo.password == password) {
-                showToast("로그인에 성공하였습니다.")
+                showToast(getString(R.string.login_success_message))
                 switchToMain(userInfo)
             } else {  //입력 정보 하나라도 틀리면
-                showToast("아이디 또는 비밀번호가 틀립니다.")
+                showToast(getString(R.string.login_fail_message))
             }
         }
 
