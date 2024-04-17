@@ -80,7 +80,7 @@ fun Login(userInfo: UserInfo?=null) {
             .padding(30.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp)) //위에서부터 높이
+        Spacer(modifier = Modifier.height(40.dp))
 
         Text(
             text = stringResource(id = R.string.login_title),

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,30 +24,28 @@ fun FriendItem(friend: Friend) {
     Row(
         modifier = Modifier
             .height(80.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(end = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ){
         Image(
-            painter = painterResource(id = R.drawable.ic_person_black_24),
+            painter = painterResource(id = R.drawable.soccer),
             contentDescription = null,
             modifier = Modifier
-                .size(50.dp)
-                .padding(start = 20.dp, top = 10.dp, bottom = 10.dp)
+                .size(80.dp)
+                .padding(start = 10.dp, top = 10.dp, bottom = 10.dp)
         )
+        Spacer(modifier = Modifier.width(15.dp))
         Text(
-            text = "김윤서",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(start = 18.dp)
-                .align(Alignment.CenterVertically)
+            text = friend.name,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
         )
-        Spacer(Modifier.weight(1f))
+        Spacer(modifier = Modifier.width(10.dp))
+        Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "안녕 나는 안드로이드 YB야 잘부탁해",
-            modifier = Modifier
-                .padding(end = 20.dp)
-                .align(Alignment.CenterVertically)
+            text = friend.selfDescription,
+            fontSize = 14.sp,
         )
 
     }

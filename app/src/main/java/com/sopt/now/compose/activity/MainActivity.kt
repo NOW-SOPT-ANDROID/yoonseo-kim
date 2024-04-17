@@ -48,16 +48,20 @@ import com.sopt.now.compose.user.UserInfo
 
 class MainActivity : ComponentActivity() {
 
+    companion object {
+        const val USER_INFO = "user_info"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
         setContent {
             NOWSOPTAndroidTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold()
+                    Scaffold(userInfo)
                 }
             }
         }
@@ -66,7 +70,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Scaffold() {
+fun Scaffold(userInfo: UserInfo?) {
     var presses by remember { mutableIntStateOf(0) }
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
@@ -80,7 +84,7 @@ fun Scaffold() {
         ),
         BottomNavigationItem(
             icon = Icons.Filled.Person,
-            label = "Profile"
+            label = "My Page"
         )
     )
 
@@ -92,7 +96,7 @@ fun Scaffold() {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Top app bar")
+                    Text("NOW SOPT")
                 }
             )
         },
@@ -122,7 +126,9 @@ fun Scaffold() {
                     SearchScreen()
                 }
                 2 -> {
-                    MyPageScreen()
+                    userInfo?.let {
+                        MyPageScreen(userInfo = it)
+                    }
                 }
             }
 

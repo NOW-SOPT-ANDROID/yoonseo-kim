@@ -1,9 +1,9 @@
 package com.sopt.now.compose.friend
 
-import androidx.annotation.DrawableRes
+import androidx.compose.ui.graphics.vector.ImageVector
 
 data class Friend(
-    @DrawableRes val profileImage: Int,
+    val profileImage: ImageVector,
     val name: String,
     val selfDescription: String,
 )
