@@ -5,10 +5,10 @@ import com.sopt.now.databinding.ItemUserBinding
 
 class UserViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root){
 
-    fun onBind(userData: UserInfo) {
+    fun onBind(user: UserInfo) {
         binding.run {
-            tvName.text = userData.nickname
-            tvMbti.text = userData.mbti
+            tvName.text = user.nickname
+            tvMbti.text = user.mbti
         }
     }
 }
