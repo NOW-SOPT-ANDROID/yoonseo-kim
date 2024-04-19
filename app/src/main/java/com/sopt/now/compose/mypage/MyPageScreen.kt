@@ -38,7 +38,7 @@ fun MyPageScreen(userInfo: UserInfo?) {
     ) {
         userInfo?.let { user ->
             Image(
-                painter = painterResource(id = R.drawable.carrot),
+                painter = painterResource(id = R.drawable.donut),
                 contentDescription = null,
                 modifier = Modifier.size(110.dp).aspectRatio(1f)
             )

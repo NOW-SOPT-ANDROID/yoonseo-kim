@@ -31,7 +31,7 @@ fun UserItem(userInfo: UserInfo) {
         verticalAlignment = Alignment.CenterVertically
     ){
         Image(
-            painter = painterResource(id = R.drawable.carrot),
+            painter = painterResource(id = R.drawable.donut),
             contentDescription = null,
             modifier = Modifier
                 .size(110.dp)
