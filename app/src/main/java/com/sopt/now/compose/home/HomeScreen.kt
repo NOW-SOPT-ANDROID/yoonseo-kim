@@ -15,18 +15,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     //ViewModel의 생명주기를 Composable의 생명주기와 연결 (적절한 ViewModel 인스턴스 제공)
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LazyColumn {
-            items(homeViewModel.userList) { user ->
-                UserItem(user)
-            }
-            items(homeViewModel.friendList) { friend ->
-                FriendItem(friend)
-            }
+        items(homeViewModel.userList) { user ->
+            UserItem(user)
+        }
+        items(homeViewModel.friendList) { friend ->
+            FriendItem(friend)
         }
     }
 }
