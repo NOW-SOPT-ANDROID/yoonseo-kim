@@ -13,10 +13,6 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
-    companion object {
-        const val USER_INFO = "user_info"
-    }
-
     private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val data = result.data
@@ -76,5 +72,9 @@ class SignUpActivity : AppCompatActivity() {
             else -> return true
         }
         return false
+    }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
 }

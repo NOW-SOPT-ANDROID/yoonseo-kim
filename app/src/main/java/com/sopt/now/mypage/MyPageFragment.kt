@@ -15,9 +15,6 @@ class MyPageFragment : Fragment() {
     private val binding: FragmentMyPageBinding
         get() = requireNotNull(_binding)
 
-    companion object {
-        const val USER_INFO = "user_info"
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,5 +48,9 @@ class MyPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
 }
