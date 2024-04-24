@@ -12,7 +12,7 @@ abstract class BindingFragment<T : ViewBinding>(
 ) : Fragment() {
     private var _binding: T? = null
     protected val binding: T
-        get() = _binding ?: throw IllegalStateException("ViewBinding is not initialized")
+        get() = _binding ?: throw IllegalStateException("binding object is not initialized")
 
     override fun onCreateView(
         inflater: LayoutInflater,
