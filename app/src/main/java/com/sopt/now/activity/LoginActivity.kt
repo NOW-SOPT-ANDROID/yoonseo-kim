@@ -26,6 +26,10 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpListener()
+    }
+
+    private fun setUpListener() {
         binding.btnLogin.setOnClickListener {
             val id = binding.etLoginId.text.toString()
             val password = binding.etLoginPwd.text.toString()
