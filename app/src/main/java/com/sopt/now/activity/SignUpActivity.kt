@@ -66,8 +66,8 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun isSignUpAvailable(id: String, password: String, nickname: String): Boolean {
         when {
-            id.length !in 6..10 -> showToast(getString(R.string.id_wrong_message))
-            password.length !in 8..12 -> showToast(getString(R.string.pwd_wrong_message))
+            id.length !in MIN_ID_LENGTH..MAX_ID_LENGTH -> showToast(getString(R.string.id_wrong_message))
+            password.length !in MIN_PWD_LENGTH..MAX_PWD_LENGTH -> showToast(getString(R.string.pwd_wrong_message))
             nickname.isBlank() || nickname.contains(" ") -> showToast(getString(R.string.nickname_wrong_message))
             else -> return true
         }
@@ -76,5 +76,9 @@ class SignUpActivity : AppCompatActivity() {
 
     companion object {
         const val USER_INFO = "user_info"
+        const val MIN_ID_LENGTH = 6
+        const val MAX_ID_LENGTH = 10
+        const val MIN_PWD_LENGTH = 8
+        const val MAX_PWD_LENGTH = 12
     }
 }
