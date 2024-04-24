@@ -55,9 +55,9 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUpResult(userInfo: UserInfo?) {
-        if (userInfo != null) {
+        userInfo?.let {
             val resultIntent = Intent().apply {
-                putExtra(USER_INFO, userInfo)
+                putExtra(USER_INFO, it)
             }
             setResult(RESULT_OK, resultIntent)
             finish()
