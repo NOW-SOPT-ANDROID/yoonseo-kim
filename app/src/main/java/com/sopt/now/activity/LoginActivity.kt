@@ -31,12 +31,14 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etLoginPwd.text.toString()
             val userInfo = intent?.getParcelableExtra<UserInfo>(USER_INFO)
 
-            if (userInfo != null && userInfo.id == id && userInfo.password == password) {
-                showToast(getString(R.string.login_success_message))
-                switchToMain(userInfo)
-            } else {
-                showToast(getString(R.string.login_fail_message))
-            }
+            userInfo?.let {
+                if (it.id == id && it.password == password) {
+                    showToast(getString(R.string.login_success_message))
+                    switchToMain(it)
+                } else {
+                    showToast(getString(R.string.login_fail_message))
+                }
+            } ?: showToast(getString(R.string.login_fail_message))
         }
 
         binding.btnSignUp.setOnClickListener {
