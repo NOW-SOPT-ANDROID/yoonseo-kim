@@ -27,4 +27,8 @@
     <string name="id_wrong_message">ID는 6~10글자여야 합니다.</string>
     <string name="pwd_wrong_message">비밀번호는 8~12글자여야 합니다.</string>
     <string name="nickname_wrong_message">닉네임은 공백 없이 한 글자 이상이어야 합니다.</string>
+
+    <string name="home_nav">Home</string>
+    <string name="search_nav">Search</string>
+    <string name="my_page_nav">My Page</string>
 </resources>
