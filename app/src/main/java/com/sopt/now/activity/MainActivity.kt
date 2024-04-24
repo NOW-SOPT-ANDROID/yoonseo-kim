@@ -22,6 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         userInfo = intent.getParcelableExtra(LoginActivity.USER_INFO)
 
+        initHomeFragment()
+        clickBottomNavigation()
+    }
+
+    private fun initHomeFragment(){
         val currentFragment = supportFragmentManager.findFragmentById(binding.fcvHome.id)
         if (currentFragment == null) {
             supportFragmentManager.beginTransaction()
@@ -32,7 +37,6 @@ class MainActivity : AppCompatActivity() {
                 })
                 .commit()
         }
-        clickBottomNavigation()
     }
 
     private fun clickBottomNavigation() {
