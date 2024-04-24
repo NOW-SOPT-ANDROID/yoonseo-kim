@@ -29,6 +29,10 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpListener()
+    }
+
+    private fun setUpListener() {
         binding.btnSignUp.setOnClickListener {
             with(binding) {
                 val id = etSignUpId.text.toString()
