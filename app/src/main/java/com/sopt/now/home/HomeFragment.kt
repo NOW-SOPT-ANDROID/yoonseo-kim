@@ -1,17 +1,11 @@
 package com.sopt.now.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sopt.now.BindingFragment
-import com.sopt.now.R
 import com.sopt.now.user.UserInfo
 import com.sopt.now.databinding.FragmentHomeBinding
-import com.sopt.now.friend.Friend
 import com.sopt.now.friend.FriendAdapter
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {

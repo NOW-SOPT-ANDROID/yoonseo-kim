@@ -2,11 +2,7 @@ package com.sopt.now.mypage
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
 import com.sopt.now.BindingFragment
 import com.sopt.now.activity.LoginActivity
 import com.sopt.now.user.UserInfo
