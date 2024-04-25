@@ -1,23 +1,14 @@
 package com.sopt.now
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.UserInfo
 import com.sopt.now.databinding.ActivitySignUpBinding
-import com.google.android.material.snackbar.Snackbar
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
 
     //회원가입 결과를 처리하기 위한 ActivityResultLauncher
     private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -28,7 +19,6 @@ class SignUpActivity : AppCompatActivity() {
             val userInfo = data?.getParcelableExtra<UserInfo>(USER_INFO)
             signUpResult(userInfo)
         }
-        //회원가입 액티비티가 취소되었을 시
         else if (result.resultCode == RESULT_CANCELED) {
             showToast(getString(R.string.sign_up_canceled_message))
         }
@@ -39,6 +29,10 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setUpListener()
+    }
+
+    private fun setUpListener() {
         binding.btnSignUp.setOnClickListener {
             with(binding) {
                 val id = etSignUpId.text.toString()
@@ -47,18 +41,15 @@ class SignUpActivity : AppCompatActivity() {
                 val mbti = etSignUpMbti.text.toString()
 
                 if (isSignUpAvailable(id, password, nickname)) {
-                    //회원가입 정보 생성
                     val userInfo = UserInfo(id, password, nickname, mbti)
                     loginSuccess(userInfo)
                 } else {
-                    //유효하지 않은 입력일 경우 (조건 하나라도 틀리면 뜨는 두번째 Toast 메시지)
                     showToast(getString(R.string.sign_up_fail_message))
                 }
             }
         }
     }
 
-    //회원가입에 성공해서 LoginActivity로 사용자 정보를 전달하며 이동하는 함수
     private fun loginSuccess(userInfo: UserInfo) {
         val intent = Intent(this, LoginActivity::class.java).apply {
             putExtra(USER_INFO, userInfo)
@@ -67,7 +58,6 @@ class SignUpActivity : AppCompatActivity() {
         showToast(getString(R.string.sign_up_success_message))
     }
 
-    //회원가입 결과 처리 함수
     private fun signUpResult(userInfo: UserInfo?) {
         if (userInfo != null) {
             val resultIntent = Intent().apply {
@@ -86,5 +76,9 @@ class SignUpActivity : AppCompatActivity() {
             else -> return true
         }
         return false
+    }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
 }
