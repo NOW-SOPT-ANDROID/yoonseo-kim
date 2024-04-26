@@ -16,7 +16,8 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NOWSOPTAndroid">
+            android:theme="@style/Theme.NOWSOPTAndroid"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +29,8 @@
             android:name=".MainActivity"/>
         <activity
             android:exported="false"
-            android:name=".SignUpActivity"/>
+            android:name=".SignUpActivity"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>
