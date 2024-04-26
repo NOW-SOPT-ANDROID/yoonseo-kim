@@ -42,10 +42,6 @@ import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 class LoginActivity : ComponentActivity() {
 
-    companion object {
-        const val USER_INFO = "user_info"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -63,6 +59,10 @@ class LoginActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
 }
 
