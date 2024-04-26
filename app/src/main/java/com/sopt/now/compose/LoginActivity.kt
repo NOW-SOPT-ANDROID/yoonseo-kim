@@ -134,6 +134,7 @@ fun Login(userInfo: UserInfo?=null) {
                     Toast.makeText(context, context.getString(R.string.login_success_message), Toast.LENGTH_SHORT).show()
                     val intent = Intent(context, MainActivity::class.java).apply {
                         putExtra(USER_INFO, userInfo)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     context.startActivity(intent)
                 } else {
