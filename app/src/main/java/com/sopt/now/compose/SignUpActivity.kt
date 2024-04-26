@@ -1,19 +1,18 @@
 package com.sopt.now.compose
 
-import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -28,23 +27,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
+import androidx.compose.ui.focus.FocusDirection
+import com.sopt.now.compose.SignUpActivity.Companion.MAX_ID_LENGTH
+import com.sopt.now.compose.SignUpActivity.Companion.MAX_PWD_LENGTH
+import com.sopt.now.compose.SignUpActivity.Companion.MIN_ID_LENGTH
+import com.sopt.now.compose.SignUpActivity.Companion.MIN_PWD_LENGTH
 import com.sopt.now.compose.SignUpActivity.Companion.USER_INFO
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 class SignUpActivity : ComponentActivity() {
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +64,20 @@ class SignUpActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        const val USER_INFO = "user_info"
+        const val MIN_ID_LENGTH = 6
+        const val MAX_ID_LENGTH = 10
+        const val MIN_PWD_LENGTH = 8
+        const val MAX_PWD_LENGTH = 12
+    }
 }
+
 fun isSignUpAvailable(context: Context, id: String, password: String, nickname: String): Boolean {
     when {
-        id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
-        password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
+        id.length !in MIN_ID_LENGTH..MAX_ID_LENGTH -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
+        password.length !in MIN_PWD_LENGTH..MAX_PWD_LENGTH -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
         nickname.isBlank() || nickname.contains(" ") -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
         else -> {
             Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
@@ -76,6 +86,7 @@ fun isSignUpAvailable(context: Context, id: String, password: String, nickname: 
     }
     return false
 }
+
 @Composable
 fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti: String) {
     var id by remember { mutableStateOf("") }
@@ -83,6 +94,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
     var nickname by remember { mutableStateOf("") }
     var mbti by remember { mutableStateOf("") }
 
+    val focusManager = LocalFocusManager.current
     val context = LocalContext.current
 
     Column(
@@ -117,7 +129,9 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             onValueChange = { id = it },
             placeholder = { Text(stringResource(id = R.string.id_hint)) },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -139,7 +153,8 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -160,6 +175,8 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             placeholder = { Text(stringResource(id = R.string.nickname_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -180,6 +197,8 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             placeholder = { Text(stringResource(id = R.string.mbti_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
         Spacer(modifier = Modifier.height(50.dp))
 

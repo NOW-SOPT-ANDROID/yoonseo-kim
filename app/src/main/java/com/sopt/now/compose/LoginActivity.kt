@@ -2,7 +2,6 @@ package com.sopt.now.compose
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings.Global.getString
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -69,8 +71,8 @@ fun Login(userInfo: UserInfo?=null) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    val focusManager = LocalFocusManager.current
     val context = LocalContext.current
-
 
     Column(
         modifier = Modifier
@@ -78,7 +80,7 @@ fun Login(userInfo: UserInfo?=null) {
             .padding(30.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(40.dp)) //위에서부터 높이
+        Spacer(modifier = Modifier.height(40.dp))
 
         Text(
             text = stringResource(id = R.string.login_title),
@@ -101,7 +103,9 @@ fun Login(userInfo: UserInfo?=null) {
             onValueChange = { id = it },
             placeholder = { Text(stringResource(id = R.string.id_hint)) },
             modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
         Spacer(modifier = Modifier.height(40.dp))
         Text(
@@ -117,8 +121,10 @@ fun Login(userInfo: UserInfo?=null) {
             onValueChange = { password = it },
             placeholder = { Text(stringResource(id = R.string.pwd_hint)) },
             modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Next),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
         Spacer(modifier = Modifier.height(200.dp))
 
