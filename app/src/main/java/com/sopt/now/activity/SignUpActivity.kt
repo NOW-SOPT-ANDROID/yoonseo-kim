@@ -1,88 +1,76 @@
 package com.sopt.now.activity
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.R
-import com.sopt.now.user.UserInfo
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.sopt.now.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
-import com.sopt.now.showToast
+import com.sopt.now.request.RequestSignUpDto
+import com.sopt.now.response.ResponseSignUpDto
+import com.sopt.now.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignUpBinding
-
-    private val signUpLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val data = result.data
-            val userInfo = data?.getParcelableExtra<UserInfo>(USER_INFO)
-            signUpResult(userInfo)
-        }
-        else if (result.resultCode == RESULT_CANCELED) {
-            showToast(getString(R.string.sign_up_canceled_message))
-        }
-    }
-
+    private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
+    private val authService by lazy { ServicePool.authService }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setUpListener()
+        initViews()
     }
 
-    private fun setUpListener() {
+    private fun initViews() {
         binding.btnSignUp.setOnClickListener {
-            with(binding) {
-                val id = etSignUpId.text.toString()
-                val password = etSignUpPwd.text.toString()
-                val nickname = etSignUpNickname.text.toString()
-                val mbti = etSignUpMbti.text.toString()
+            signUp()
+        }
+    }
 
-                if (isSignUpAvailable(id, password, nickname)) {
-                    val userInfo = UserInfo(id, password, nickname, mbti)
-                    loginSuccess(userInfo)
+    private fun signUp() {
+        val signUpRequest = getSignUpRequestDto()
+        authService.signUp(signUpRequest).enqueue(object : Callback<ResponseSignUpDto> {
+            override fun onResponse(
+                call: Call<ResponseSignUpDto>,
+                response: Response<ResponseSignUpDto>,
+            ) {
+                if (response.isSuccessful) {
+                    val data: ResponseSignUpDto? = response.body()
+                    val userId = response.headers()["location"]
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "회원가입 성공 유저의 ID는 $userId 입니둥",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                    Log.d("SignUp", "data: $data, userId: $userId")
                 } else {
-                    showToast(getString(R.string.sign_up_fail_message))
+                    val error = response.message()
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "로그인이 실패 $error",
+                        Toast.LENGTH_SHORT,
+                    ).show()
                 }
             }
-        }
-    }
 
-    private fun loginSuccess(userInfo: UserInfo) {
-        val intent = Intent(this, LoginActivity::class.java).apply {
-            putExtra(USER_INFO, userInfo)
-        }
-        signUpLauncher.launch(intent)
-        showToast(getString(R.string.sign_up_success_message))
-    }
-
-    private fun signUpResult(userInfo: UserInfo?) {
-        userInfo?.let {
-            val resultIntent = Intent().apply {
-                putExtra(USER_INFO, it)
+            override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
+                Toast.makeText(this@SignUpActivity, "서버 에러 발생 ", Toast.LENGTH_SHORT).show()
             }
-            setResult(RESULT_OK, resultIntent)
-            finish()
-        }
+        })
     }
 
-    private fun isSignUpAvailable(id: String, password: String, nickname: String): Boolean {
-        when {
-            id.length !in MIN_ID_LENGTH..MAX_ID_LENGTH -> showToast(getString(R.string.id_wrong_message))
-            password.length !in MIN_PWD_LENGTH..MAX_PWD_LENGTH -> showToast(getString(R.string.pwd_wrong_message))
-            nickname.isBlank() || nickname.contains(" ") -> showToast(getString(R.string.nickname_wrong_message))
-            else -> return true
-        }
-        return false
-    }
-
-    companion object {
-        const val USER_INFO = "user_info"
-        const val MIN_ID_LENGTH = 6
-        const val MAX_ID_LENGTH = 10
-        const val MIN_PWD_LENGTH = 8
-        const val MAX_PWD_LENGTH = 12
+    private fun getSignUpRequestDto(): RequestSignUpDto {
+        val id = binding.etSignUpId.text.toString()
+        val password = binding.etSignUpPwd.text.toString()
+        val nickname = binding.etSignUpNickname.text.toString()
+        val phoneNumber = binding.etSignUpPhone.text.toString()
+        return RequestSignUpDto(
+            authenticationId = id,
+            password = password,
+            nickname = nickname,
+            phone = phoneNumber
+        )
     }
 }
