@@ -14,13 +14,11 @@ import com.sopt.now.user.UserInfo
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var userInfo : UserInfo? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        userInfo = intent.getParcelableExtra(LoginActivity.USER_INFO)
 
         initHomeFragment()
         clickBottomNavigation()
@@ -30,11 +28,7 @@ class MainActivity : AppCompatActivity() {
         val currentFragment = supportFragmentManager.findFragmentById(binding.fcvHome.id)
         if (currentFragment == null) {
             supportFragmentManager.beginTransaction()
-                .add(binding.fcvHome.id, HomeFragment().apply {
-                    arguments = Bundle().apply {
-                        putParcelable(LoginActivity.USER_INFO, userInfo)
-                    }
-                })
+                .add(binding.fcvHome.id, HomeFragment())
                 .commit()
         }
     }
@@ -63,9 +57,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        fragment.arguments = Bundle().apply {
-            putParcelable(LoginActivity.USER_INFO, userInfo)
-        }
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_home, fragment)
             .commit()
