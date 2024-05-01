@@ -1,4 +1,4 @@
-package com.sopt.now.home
+package com.sopt.now.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.sopt.now.R
