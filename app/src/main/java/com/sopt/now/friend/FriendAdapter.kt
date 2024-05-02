@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.user.UserInfo
 import com.sopt.now.databinding.ItemFriendBinding
 import com.sopt.now.databinding.ItemUserBinding
+import com.sopt.now.response.ResponseUserInfoDto
 import com.sopt.now.user.UserViewHolder
 
 class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var friendList: List<Friend> = emptyList()
-    private var user = UserInfo("", "", "", "")
+    private var user = UserInfo("", "", "")
 
     companion object {
         private const val TYPE_USER = 0
@@ -56,7 +57,7 @@ class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setUser(userInfo: UserInfo) {
-        this.user = userInfo
+        user = userInfo
         notifyDataSetChanged()
     }
 }

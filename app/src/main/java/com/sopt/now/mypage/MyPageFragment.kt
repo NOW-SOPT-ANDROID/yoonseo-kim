@@ -37,15 +37,15 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
                     data?.data?.let {
                         updateUI(it)
                     }
-                    Log.d("SignUp", "data: $data, userId: $userId")
+                    Log.d("MyPage", "data: $data, userId: $userId")
                 } else {
                     val error = response.errorBody()?.string() ?: response.message()
-                    Log.d("Home", "error: $error")
+                    Log.d("MyPage", "error: $error")
                 }
             }
 
             override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-                Log.d("Home", "onFailure", t)
+                Log.d("MyPage", "onFailure", t)
             }
         })
     }

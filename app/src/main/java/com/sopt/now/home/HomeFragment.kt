@@ -9,6 +9,7 @@ import com.sopt.now.ServicePool.userService
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.friend.FriendAdapter
 import com.sopt.now.response.ResponseUserInfoDto
+import com.sopt.now.user.UserInfo
 import com.sopt.now.viewmodel.HomeViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,12 +27,13 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
             adapter = friendAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-        requireActivity().intent.getStringExtra("userId")?.toIntOrNull()?.let { userId ->
-            getUserInfo(userId)
+        val userId = requireActivity().intent.getStringExtra("userId")
+        if (userId != null) {
+            getUserInfo(userId.toInt())
         }
     }
 
-    private fun getUserInfo(userId: Int){
+    private fun getUserInfo(userId: Int) {
         userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
             override fun onResponse(
                 call: Call<ResponseUserInfoDto>,
@@ -39,8 +41,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
             ) {
                 if (response.isSuccessful) {
                     val data: ResponseUserInfoDto? = response.body()
-                    val userId = response.headers()["location"]
-                    Log.d("SignUp", "data: $data, userId: $userId")
+                    data?.data?.let {
+                        val userInfo = UserInfo(it.authenticationId, it.nickname, it.phone)
+                        updateUI(userInfo)
+                    }
+                    Log.d("Home", "data: $data, userId: $userId")
                 } else {
                     val error = response.errorBody()?.string() ?: response.message()
                     Log.d("Home", "error: $error")
@@ -51,5 +56,10 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
                 Log.d("Home", "onFailure", t)
             }
         })
+    }
+
+    private fun updateUI(userInfo: UserInfo) {
+        val friendAdapter = binding.rvFriends.adapter as FriendAdapter
+        friendAdapter.setUser(userInfo)
     }
 }
