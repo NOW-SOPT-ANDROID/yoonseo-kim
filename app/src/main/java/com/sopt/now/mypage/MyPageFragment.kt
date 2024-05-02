@@ -19,12 +19,14 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getUserInfo(userId)
+        val userId = requireActivity().intent.getStringExtra("userId")
+        if (userId != null) {
+            getUserInfo(userId.toInt())
+        }
         setUpListener()
     }
 
-    private fun getUserInfo(userId: Int){
-        val userId = arguments?.getInt("userId") ?: return
+    private fun getUserInfo(userId: Int) {
         userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
             override fun onResponse(
                 call: Call<ResponseUserInfoDto>,
@@ -32,7 +34,9 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
             ) {
                 if (response.isSuccessful) {
                     val data: ResponseUserInfoDto? = response.body()
-                    updateUI(data?.data)
+                    data?.data?.let {
+                        updateUI(it)
+                    }
                     Log.d("SignUp", "data: $data, userId: $userId")
                 } else {
                     val error = response.errorBody()?.string() ?: response.message()
@@ -46,11 +50,11 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
         })
     }
 
-    private fun updateUI(userInfo: UserInfo?){
-        userInfo?.let {
-            binding.tvMyPageNickname = userInfo.nickname
-            binding.tvMyPageId = userInfo.authenticationId
-            binding.tvMyPagePhone = userInfo.phone
+    private fun updateUI(data: ResponseUserInfoDto.Data) {
+        with(binding) {
+            tvMyPageNickname.text = data.nickname
+            tvMyPageId.text = data.authenticationId
+            tvMyPagePhone.text = data.phone
         }
     }
 
