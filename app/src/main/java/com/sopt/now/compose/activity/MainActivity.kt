@@ -37,10 +37,6 @@ import com.sopt.now.compose.user.UserInfo
 
 class MainActivity : ComponentActivity() {
 
-    companion object {
-        const val USER_INFO = "user_info"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
@@ -54,6 +50,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
 }
 

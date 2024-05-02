@@ -43,10 +43,6 @@ import com.sopt.now.compose.user.UserInfo
 
 class SignUpActivity : ComponentActivity() {
 
-    companion object {
-        const val USER_INFO = "user_info"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -64,7 +60,12 @@ class SignUpActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        const val USER_INFO = "user_info"
+    }
 }
+
 fun isSignUpAvailable(context: Context, id: String, password: String, nickname: String): Boolean {
     when {
         id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
