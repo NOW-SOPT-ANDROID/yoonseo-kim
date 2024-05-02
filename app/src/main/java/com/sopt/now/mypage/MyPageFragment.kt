@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import com.sopt.now.BindingFragment
 import com.sopt.now.activity.LoginActivity
-import com.sopt.now.user.UserInfo
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.response.ResponseUserInfoDto
 import com.sopt.now.ServicePool.userService
@@ -19,10 +18,10 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userId = requireActivity().intent.getStringExtra("userId")
-        if (userId != null) {
-            getUserInfo(userId.toInt())
+        requireActivity().intent.getStringExtra("userId")?.toInt()?.let {
+            getUserInfo(it)
         }
+
         setUpListener()
     }
 
