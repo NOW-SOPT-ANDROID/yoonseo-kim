@@ -6,13 +6,14 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.friend.Friend
 import com.sopt.now.compose.user.UserInfo
 
+
 class HomeViewModel : ViewModel() {
-    val userList = mutableStateListOf(
-        UserInfo(
-            id = "yskimm",
-            password = "ysysysys",
-            nickname = "yoonseo",
-            mbti = "ESFJ"
+
+    val userList = mutableStateListOf (
+        UserInfo (
+            authenticationId = "yoonseo",
+            nickname = "yoon",
+            phone = "010-1234-1234"
         )
     )
 
@@ -94,3 +95,6 @@ class HomeViewModel : ViewModel() {
         )
     )
 }
+
+
+
