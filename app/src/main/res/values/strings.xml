@@ -6,12 +6,12 @@
     <string name="id">ID</string>
     <string name="pwd">비밀번호</string>
     <string name="nickname">닉네임</string>
-    <string name="mbti">MBTI</string>
+    <string name="phone">Phone</string>
 
     <string name="id_hint">아이디를 입력해주세요</string>
     <string name="pwd_hint">비밀번호를 입력해주세요</string>
     <string name="nickname_hint">닉네임을 입력해주세요</string>
-    <string name="mbti_hint">MBTI를 입력해주세요</string>
+    <string name="phone_hint">전화번호를 입력해주세요</string>
 
     <string name="btn_login">로그인 하기</string>
     <string name="btn_sign_up">회원가입 하기</string>
