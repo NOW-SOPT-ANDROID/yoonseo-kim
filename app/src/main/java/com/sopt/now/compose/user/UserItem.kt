@@ -46,7 +46,7 @@ fun UserItem(userInfo: UserInfo) {
         Spacer(modifier = Modifier.width(10.dp))
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = userInfo.mbti,
+            text = userInfo.phone,
             fontSize = 14.sp,
         )
 

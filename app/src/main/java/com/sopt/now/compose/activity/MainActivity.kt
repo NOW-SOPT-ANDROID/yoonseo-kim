@@ -1,6 +1,7 @@
 package com.sopt.now.compose.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -27,40 +28,44 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sopt.now.compose.BottomNavigationItem
+import com.sopt.now.compose.ServicePool
 import com.sopt.now.compose.home.HomeScreen
 import com.sopt.now.compose.mypage.MyPageScreen
+import com.sopt.now.compose.response.ResponseUserInfoDto
 import com.sopt.now.compose.search.SearchScreen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.user.UserInfo
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
+        val userId = intent.getStringExtra("userId")?.toInt()
         setContent {
             NOWSOPTAndroidTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(userInfo)
+                    userId?.let {
+                        Scaffold(userId = userId.toInt())
+                    }
                 }
             }
         }
-    }
-
-    companion object {
-        const val USER_INFO = "user_info"
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Scaffold(userInfo: UserInfo?) {
-    var presses by remember { mutableIntStateOf(0) }
+fun Scaffold(userId: Int) {
+    // var presses by remember { mutableIntStateOf(0) }
+    val context = LocalContext.current
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
         BottomNavigationItem(
@@ -115,12 +120,33 @@ fun Scaffold(userInfo: UserInfo?) {
                     SearchScreen()
                 }
                 2 -> {
-                    userInfo?.let {
-                        MyPageScreen(userInfo = it)
-                    }
+                    MyPageScreen(context, userId)
                 }
             }
-
         }
     }
+}
+
+private fun getUserInfo(userId: Int, onResult: (ResponseUserInfoDto.Data) -> Unit) {
+    ServicePool.userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
+        override fun onResponse(
+            call: Call<ResponseUserInfoDto>,
+            response: Response<ResponseUserInfoDto>,
+        ) {
+            if (response.isSuccessful) {
+                val data: ResponseUserInfoDto? = response.body()
+                data?.data?.let {
+                    onResult(it)
+                }
+                Log.d("MyPage", "data: $data, userId: $userId")
+            } else {
+                val error = response.errorBody()?.string() ?: response.message()
+                Log.d("MyPage", "error: $error")
+            }
+        }
+
+        override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
+            Log.d("MyPage", "onFailure", t)
+        }
+    })
 }
