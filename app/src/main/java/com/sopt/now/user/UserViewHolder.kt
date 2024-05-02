@@ -8,7 +8,7 @@ class UserViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHo
     fun onBind(user: UserInfo) {
         binding.run {
             tvName.text = user.nickname
-            tvMbti.text = user.mbti
+            tvPhone.text = user.phone
         }
     }
 }
