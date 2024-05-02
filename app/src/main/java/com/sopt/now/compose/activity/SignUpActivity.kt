@@ -1,13 +1,13 @@
 package com.sopt.now.compose.activity
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,13 +33,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
-import com.sopt.now.compose.activity.LoginActivity.Companion.USER_INFO
+import com.sopt.now.compose.ServicePool
+import com.sopt.now.compose.request.RequestSignUpDto
+import com.sopt.now.compose.response.ResponseSignUpDto
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.user.UserInfo
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpActivity : ComponentActivity() {
 
@@ -51,39 +54,19 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val userId = intent.getStringExtra("userId").toString()
-                    val userPassword = intent.getStringExtra("userPassword").toString()
-                    val userNickname = intent.getStringExtra("userNickname").toString()
-                    val userMbti = intent.getStringExtra("userMbti").toString()
-                    SignUp(userId, userPassword, userNickname, userMbti)
+                    SignUpPage()
                 }
             }
         }
     }
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
 }
 
-fun isSignUpAvailable(context: Context, id: String, password: String, nickname: String): Boolean {
-    when {
-        id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
-        password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
-        nickname.isBlank() || nickname.contains(" ") -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
-        else -> {
-            Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
-            return true
-        }
-    }
-    return false
-}
 @Composable
-fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti: String) {
+fun SignUpPage() {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
 
     val context = LocalContext.current
 
@@ -167,7 +150,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(30.dp))
 
         Text(
-            text = stringResource(id = R.string.mbti),
+            text = stringResource(id = R.string.phone),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
@@ -177,9 +160,9 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
         Spacer(modifier = Modifier.height(30.dp))
 
         TextField(
-            value = mbti,
-            onValueChange = { mbti = it },
-            placeholder = { Text(stringResource(id = R.string.mbti_hint)) },
+            value = phone,
+            onValueChange = { phone = it },
+            placeholder = { Text(stringResource(id = R.string.phone_hint)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
         )
@@ -187,13 +170,7 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
 
         Button(
             onClick = {
-                if (isSignUpAvailable(context, id, password, nickname)) {
-                    val userInfo = UserInfo(id, password, nickname, mbti)
-                    val intent = Intent(context, LoginActivity::class.java).apply {
-                        putExtra(USER_INFO, userInfo)
-                    }
-                    context.startActivity(intent)
-                }
+                signUp(context, id, password, nickname, phone)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -205,10 +182,33 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SignUpPreview() {
-    NOWSOPTAndroidTheme {
-        SignUp("", "", "", "")
+fun signUp(context: Context, id: String, password: String, nickname: String, phone: String) {
+    val signUpRequest = RequestSignUpDto(authenticationId = id, password = password, nickname = nickname, phone = phone)
+    ServicePool.authService.signUp(signUpRequest).enqueue(object : Callback<ResponseSignUpDto> {
+        override fun onResponse(call: Call<ResponseSignUpDto>, response: Response<ResponseSignUpDto>) {
+            if (response.isSuccessful) {
+                val data: ResponseSignUpDto? = response.body()
+                val userId = response.headers()["location"]
+                Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
+                Log.d("Login", "data: $data, userId: $userId")
+                if (context is Activity) {
+                    switchToLogin(userId, context)
+                }
+            } else {
+                val error = response.message()
+                Toast.makeText(context, "로그인 실패: $error", Toast.LENGTH_SHORT).show()
+            }
+        }
+        override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
+            Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
+        }
+    })
+}
+
+private fun switchToLogin(userId: String?, activity: Activity) {
+    val intent = Intent(activity, LoginActivity::class.java).apply {
+        putExtra("userId", userId)
     }
+    activity.startActivity(intent)
+    activity.finish()
 }
