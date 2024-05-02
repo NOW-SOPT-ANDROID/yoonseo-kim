@@ -10,6 +10,7 @@ import com.sopt.now.R
 import com.sopt.now.ServicePool.authService
 import com.sopt.now.user.UserInfo
 import com.sopt.now.databinding.ActivityLoginBinding
+import com.sopt.now.home.HomeFragment
 import com.sopt.now.request.RequestLoginDto
 import com.sopt.now.request.RequestSignUpDto
 import com.sopt.now.response.ResponseLoginDto
