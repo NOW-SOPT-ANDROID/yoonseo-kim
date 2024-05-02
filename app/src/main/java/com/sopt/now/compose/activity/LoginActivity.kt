@@ -61,14 +61,10 @@ class LoginActivity : ComponentActivity() {
             }
         }
     }
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
 }
 
 @Composable
-fun LoginPage(userInfo: UserInfo? = null) {
+fun LoginPage() {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
