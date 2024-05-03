@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Scaffold(userId: Int) {
-    // var presses by remember { mutableIntStateOf(0) }
     val context = LocalContext.current
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
