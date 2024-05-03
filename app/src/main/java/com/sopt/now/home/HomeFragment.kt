@@ -20,10 +20,6 @@ import retrofit2.Response
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    // private val viewModel = HomeViewModel()
-
-    // private var friendList: List<Friend> ?= null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

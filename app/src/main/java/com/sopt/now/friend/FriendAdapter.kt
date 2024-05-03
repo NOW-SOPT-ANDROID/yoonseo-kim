@@ -1,5 +1,6 @@
 package com.sopt.now.friend
 
+import android.provider.ContactsContract.CommonDataKinds.Relation.TYPE_FRIEND
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,11 +13,6 @@ import com.sopt.now.user.UserViewHolder
 class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var friendList: List<Friend> = emptyList()
     private var user = UserInfo("", "", "")
-
-    companion object {
-        private const val TYPE_USER = 0
-        private const val TYPE_FRIEND = 1
-    }
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
@@ -59,5 +55,10 @@ class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun setUser(userInfo: UserInfo) {
         user = userInfo
         notifyDataSetChanged()
+    }
+
+    companion object {
+        private const val TYPE_USER = 0
+        private const val TYPE_FRIEND = 1
     }
 }

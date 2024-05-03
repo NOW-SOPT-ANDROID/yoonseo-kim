@@ -8,8 +8,6 @@ class HomeViewModel : ViewModel() {
 
     val mockFriendList = mutableListOf<Friend>()
 
-
-
 //    val mockFriendList = listOf<Friend>(
 //        Friend(
 //            profileImage = R.drawable.carrot,

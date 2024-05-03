@@ -11,7 +11,6 @@ import com.sopt.now.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.request.RequestSignUpDto
 import com.sopt.now.response.ResponseSignUpDto
-import com.sopt.now.viewmodel.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
 
