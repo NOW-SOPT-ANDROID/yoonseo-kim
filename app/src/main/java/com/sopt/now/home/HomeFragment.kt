@@ -38,7 +38,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
     }
 
     private fun initAdapter() {
-        val friendAdapter = FriendAdapter() // 빈 어댑터 인스턴스 생성
+        val friendAdapter = FriendAdapter()
         binding.rvFriends.run {
             adapter = friendAdapter
             layoutManager = LinearLayoutManager(requireContext())
