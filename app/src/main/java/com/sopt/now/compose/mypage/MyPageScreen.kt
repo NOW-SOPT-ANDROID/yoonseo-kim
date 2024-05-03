@@ -43,10 +43,8 @@ fun MyPageScreen(context: Context, userId: Int) {
 
     val context = LocalContext.current
 
-    // 사용자 정보 상태를 관리하기 위한 변수 선언
     var userInfo by remember { mutableStateOf<UserInfo?>(null) }
 
-    // 기존 userInfo 파라미터가 null이 아니면 상태를 업데이트
     LaunchedEffect(userId) {
         getUserInfo(userId) { userInfoDto ->
             userInfo = UserInfo(

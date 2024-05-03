@@ -12,13 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
+import com.sopt.now.compose.response.ResponseFriendDto
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
-fun FriendItem(friend: Friend) {
+fun FriendItem(friend: ResponseFriendDto.Data) {
     Row(
         modifier = Modifier
             .height(80.dp)
@@ -27,22 +30,22 @@ fun FriendItem(friend: Friend) {
         verticalAlignment = Alignment.CenterVertically
     ){
         Image(
-            painter = painterResource(id = friend.profileImage),
-            contentDescription = null,
+            painter = rememberImagePainter(data = friend.avatar),
+            contentDescription = "Friend Profile",
             modifier = Modifier
                 .size(80.dp)
                 .padding(start = 10.dp, top = 10.dp, bottom = 10.dp)
         )
         Spacer(modifier = Modifier.width(15.dp))
         Text(
-            text = friend.name,
+            text = friend.firstName,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.width(10.dp))
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = friend.selfDescription,
+            text = friend.email,
             fontSize = 14.sp,
         )
 
