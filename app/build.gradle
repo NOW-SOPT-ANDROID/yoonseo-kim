@@ -22,6 +22,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "AUTH_BASE_URL", properties["base.url"]
+        buildConfigField "String", "OPEN_BASE_URL", properties["open.base.url"]
     }
 
     buildTypes {
@@ -66,4 +67,7 @@ dependencies {
     // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }

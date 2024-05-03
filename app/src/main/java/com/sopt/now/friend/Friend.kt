@@ -1,9 +1,18 @@
 package com.sopt.now.friend
 
-import androidx.annotation.DrawableRes
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Friend(
-    @DrawableRes val profileImage: Int,
-    val name: String,
-    val selfDescription: String,
+    @SerialName("id")
+    val id: Int,
+    @SerialName("email")
+    val email: String,
+    @SerialName("first_name")
+    val firstName: String,
+    @SerialName("last_name")
+    val lastName: String,
+    @SerialName("avatar")
+    val avatar: String
 )
