@@ -1,6 +1,5 @@
 package com.sopt.now.response
 
-import com.sopt.now.user.UserInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
