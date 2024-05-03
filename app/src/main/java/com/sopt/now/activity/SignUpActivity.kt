@@ -1,5 +1,6 @@
 package com.sopt.now.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -44,6 +45,7 @@ class SignUpActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT,
                     ).show()
                     Log.d("SignUp", "data: $data, userId: $userId")
+                    switchToLogin(userId)
                 } else {
                     val error = response.message()
                     Toast.makeText(
@@ -58,6 +60,14 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this@SignUpActivity, "서버 에러 발생 ", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun switchToLogin(userId: String?) {
+        val intent = Intent(this, LoginActivity::class.java).apply {
+            putExtra("userId", userId)
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun getSignUpRequestDto(): RequestSignUpDto {
