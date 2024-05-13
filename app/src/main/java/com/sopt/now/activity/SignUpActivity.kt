@@ -45,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT,
                     ).show()
                     Log.d("SignUp", "data: $data, userId: $userId")
-                    switchToLogin(userId)
+                    navigateToLogin(userId)
                 } else {
                     val error = response.message()
                     Toast.makeText(
@@ -62,7 +62,7 @@ class SignUpActivity : AppCompatActivity() {
         })
     }
 
-    private fun switchToLogin(userId: String?) {
+    private fun navigateToLogin(userId: String?) {
         val intent = Intent(this, LoginActivity::class.java).apply {
             putExtra("userId", userId)
         }
