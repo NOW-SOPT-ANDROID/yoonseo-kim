@@ -11,7 +11,7 @@ import com.sopt.now.response.ResponseUserInfoDto
 import com.sopt.now.user.UserViewHolder
 
 class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var friendList: List<Friend> = emptyList()
+    private var friends: List<Friend> = emptyList()
     private var user = UserInfo("", "", "")
 
     override fun getItemViewType(position: Int): Int {
@@ -39,16 +39,16 @@ class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is UserViewHolder -> holder.onBind(user)
-            is FriendViewHolder -> holder.onBind(friendList[position - 1])
+            is FriendViewHolder -> holder.onBind(friends[position - 1])
         }
     }
 
     override fun getItemCount() : Int {
-        return friendList.size + 1
+        return friends.size + 1
     }
 
-    fun setFriendList(friendList: List<Friend>) {
-        this.friendList = friendList.toList()
+    fun setFriends(friends: List<Friend>) {
+        this.friends = friends.toList()
         notifyDataSetChanged()
     }
 

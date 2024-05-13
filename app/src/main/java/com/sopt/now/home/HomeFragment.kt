@@ -25,7 +25,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
 
         initAdapter()
 
-        getFriendList()
+        getFriends()
 
         val userId = requireActivity().intent.getStringExtra("userId")
         if (userId != null) {
@@ -41,19 +41,19 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
         }
     }
 
-    private fun getFriendList() {
-        friendService.getFriendList(2).enqueue(object : Callback<ResponseFriendDto> {
+    private fun getFriends() {
+        friendService.getFriends(2).enqueue(object : Callback<ResponseFriendDto> {
             override fun onResponse(
                 call: Call<ResponseFriendDto>,
                 response: Response<ResponseFriendDto>
             ) {
                 if (response.isSuccessful) {
                     val data: ResponseFriendDto? = response.body()
-                    val friendList = data?.data?.map {
+                    val friends = data?.data?.map {
                         Friend(it.id, it.email, it.firstName, it.lastName, it.avatar)
                     } ?: listOf()
                     val friendAdapter = binding.rvFriends.adapter as FriendAdapter
-                    friendAdapter.setFriendList(friendList)
+                    friendAdapter.setFriends(friends)
                     Log.d("FriendListSuc", "data: $data")
                 } else {
                     val error = response.errorBody()?.string() ?: response.message()
