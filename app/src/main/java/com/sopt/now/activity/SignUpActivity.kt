@@ -16,7 +16,7 @@ import com.sopt.now.response.ResponseSignUpDto
 class SignUpActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
-    private val authService by lazy { ServicePool.authService }
+    private val authService = ServicePool.authService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
