@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
         binding.btnSignUp.setOnClickListener {
-            switchToSignUp()
+            navigateToSignUp()
         }
     }
 
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT,
                     ).show()
                     Log.d("Login", "data: $data, userId: $userId")
-                    switchToMain(userId)
+                    navigateToMain(userId)
                 } else {
                     val error = response.message()
                     Toast.makeText(
@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun switchToMain(userId: String?) {
+    private fun navigateToMain(userId: String?) {
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("userId", userId)
         }
@@ -82,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun switchToSignUp(){
+    private fun navigateToSignUp(){
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
