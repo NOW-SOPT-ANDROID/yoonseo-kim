@@ -28,8 +28,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
         getFriends()
 
         val userId = requireActivity().intent.getStringExtra("userId")
-        if (userId != null) {
-            getUserInfo(userId.toInt())
+        userId?.let {
+            getUserInfo(it.toInt())
         }
     }
 
