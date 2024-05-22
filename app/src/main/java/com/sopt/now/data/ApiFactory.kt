@@ -1,4 +1,4 @@
-package com.sopt.now
+package com.sopt.now.data
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.sopt.now.BuildConfig.AUTH_BASE_URL

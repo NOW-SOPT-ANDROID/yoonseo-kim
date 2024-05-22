@@ -1,4 +1,4 @@
-package com.sopt.now
+package com.sopt.now.util.context
 
 import android.content.Context
 import android.widget.Toast
