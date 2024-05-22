@@ -53,23 +53,22 @@ class LoginActivity : AppCompatActivity() {
                     val userId = response.headers()["location"]
                     Toast.makeText(
                         this@LoginActivity,
-                        "회원가입 성공 유저의 ID는 $userId 입니둥",
+                        getString(R.string.success_message),
                         Toast.LENGTH_SHORT,
                     ).show()
-                    Log.d("Login", "data: $data, userId: $userId")
                     navigateToMain(userId)
                 } else {
                     val error = response.message()
                     Toast.makeText(
                         this@LoginActivity,
-                        "로그인이 실패 $error",
+                        getString(R.string.fail_message),
                         Toast.LENGTH_SHORT,
                     ).show()
                 }
             }
 
             override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-                Toast.makeText(this@LoginActivity, "서버 에러 발생 ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, getString(R.string.server_error_message), Toast.LENGTH_SHORT).show()
             }
         })
     }
