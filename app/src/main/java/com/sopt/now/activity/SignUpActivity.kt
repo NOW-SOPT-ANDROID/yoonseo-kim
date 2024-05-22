@@ -18,7 +18,6 @@ import com.sopt.now.response.ResponseSignUpDto
 class SignUpActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
-    //private val authService = ServicePool.authService
     private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -20,6 +20,8 @@ import retrofit2.Response
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
+    private lateinit var friendAdapter: FriendAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

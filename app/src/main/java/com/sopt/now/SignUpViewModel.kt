@@ -19,38 +19,6 @@ class SignUpViewModel : ViewModel() {
     private val _liveData = MutableLiveData<SignUpState>()
     val liveData: LiveData<SignUpState> = _liveData
 
-//    fun signUp(request: RequestSignUpDto) {
-//        authService.signUp(request).enqueue(object : Callback<ResponseSignUpDto> {
-//            override fun onResponse(
-//                call: Call<ResponseSignUpDto>,
-//                response: Response<ResponseSignUpDto>,
-//            ) {
-//                if (response.isSuccessful) {
-//                    val data: ResponseSignUpDto? = response.body()
-//                    val userId = response.headers()["location"]
-//                    liveData.value = SignUpState(
-//                        isSuccess = true,
-//                        message = "회원가입 성공 유저의 ID는 $userId 입니둥"
-//                    )
-//                    Log.d("SignUp", "data: $data, userId: $userId")
-//                } else {
-//                    val error = response.message()
-//                    liveData.value = SignUpState(
-//                        isSuccess = false,
-//                        message = "로그인이 실패 $error"
-//                    )
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-//                liveData.value = SignUpState(
-//                    isSuccess = false,
-//                    message = "서버 에러 발생 "
-//                )
-//            }
-//        })
-//    }
-
     // 코루틴 사용 - 2번째 방법
     fun signUp(request: RequestSignUpDto) {
         viewModelScope.launch {
