@@ -29,6 +29,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sopt.now.compose.BottomNavigationItem
+import com.sopt.now.compose.activity.MainActivity.Companion.HOME
+import com.sopt.now.compose.activity.MainActivity.Companion.HOME_SCREEN
+import com.sopt.now.compose.activity.MainActivity.Companion.MY_PAGE
+import com.sopt.now.compose.activity.MainActivity.Companion.MY_PAGE_SCREEN
+import com.sopt.now.compose.activity.MainActivity.Companion.SEARCH
+import com.sopt.now.compose.activity.MainActivity.Companion.SEARCH_SCREEN
 import com.sopt.now.compose.home.HomeScreen
 import com.sopt.now.compose.mypage.MyPageScreen
 import com.sopt.now.compose.search.SearchScreen
@@ -39,6 +45,12 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         const val USER_INFO = "user_info"
+        const val HOME = "Home"
+        const val SEARCH = "Search"
+        const val MY_PAGE = "My Page"
+        const val HOME_SCREEN = 0
+        const val SEARCH_SCREEN = 1
+        const val MY_PAGE_SCREEN = 2
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,15 +77,15 @@ fun Scaffold(userInfo: UserInfo?) {
     val items = listOf(
         BottomNavigationItem(
             icon = Icons.Filled.Home,
-            label = "Home"
+            label = HOME
         ),
         BottomNavigationItem(
             icon = Icons.Filled.Search,
-            label = "Search"
+            label = SEARCH
         ),
         BottomNavigationItem(
             icon = Icons.Filled.Person,
-            label = "My Page"
+            label = MY_PAGE
         )
     )
 
@@ -108,13 +120,13 @@ fun Scaffold(userInfo: UserInfo?) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             when(selectedItem) {
-                0 -> {
+                HOME_SCREEN -> {
                     HomeScreen()
                 }
-                1 -> {
+                SEARCH_SCREEN -> {
                     SearchScreen()
                 }
-                2 -> {
+                MY_PAGE_SCREEN -> {
                     userInfo?.let {
                         MyPageScreen(userInfo = it)
                     }

@@ -1,13 +1,11 @@
 package com.sopt.now.compose.activity
 
-import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,14 +36,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
 import com.sopt.now.compose.activity.LoginActivity.Companion.USER_INFO
+import com.sopt.now.compose.activity.SignUpActivity.Companion.MAX_ID_LENGTH
+import com.sopt.now.compose.activity.SignUpActivity.Companion.MAX_PWD_LENGTH
+import com.sopt.now.compose.activity.SignUpActivity.Companion.MIN_ID_LENGTH
+import com.sopt.now.compose.activity.SignUpActivity.Companion.MIN_PWD_LENGTH
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.user.UserInfo
 
 class SignUpActivity : ComponentActivity() {
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +62,20 @@ class SignUpActivity : ComponentActivity() {
             }
         }
     }
+
+    companion object {
+        const val USER_INFO = "user_info"
+        const val MIN_ID_LENGTH = 6
+        const val MAX_ID_LENGTH = 10
+        const val MIN_PWD_LENGTH = 8
+        const val MAX_PWD_LENGTH = 12
+    }
 }
+
 fun isSignUpAvailable(context: Context, id: String, password: String, nickname: String): Boolean {
     when {
-        id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
-        password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
+        id.length !in MIN_ID_LENGTH..MAX_ID_LENGTH -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
+        password.length !in MIN_PWD_LENGTH..MAX_PWD_LENGTH -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
         nickname.isBlank() || nickname.contains(" ") -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
         else -> {
             Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
@@ -77,6 +84,7 @@ fun isSignUpAvailable(context: Context, id: String, password: String, nickname: 
     }
     return false
 }
+
 @Composable
 fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti: String) {
     var id by remember { mutableStateOf("") }
@@ -204,10 +212,11 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SignUpPreview() {
-    NOWSOPTAndroidTheme {
-        SignUp("", "", "", "")
-    }
-}
+
+//@Preview(showBackground = true)
+//@Composable
+//fun SignUpPreview() {
+//    NOWSOPTAndroidTheme {
+//        SignUp("", "", "", "")
+//    }
+//}

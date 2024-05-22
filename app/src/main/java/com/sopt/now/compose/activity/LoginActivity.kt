@@ -42,10 +42,6 @@ import com.sopt.now.compose.user.UserInfo
 
 class LoginActivity : ComponentActivity() {
 
-    companion object {
-        const val USER_INFO = "user_info"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -55,14 +51,18 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
-                    if (userInfo != null) {
-                        Login(userInfo)
-                    } else {
+                    userInfo?.let {
+                        Login(it)
+                    } ?: run {
                         Login()
                     }
                 }
             }
         }
+    }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
 }
 
