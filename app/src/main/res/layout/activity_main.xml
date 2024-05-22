@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_activity"
-    tools:context=".activity.MainActivity">
+    tools:context=".presentation.main.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fcv_home"
