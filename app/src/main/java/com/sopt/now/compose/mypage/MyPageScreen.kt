@@ -1,48 +1,34 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.mypage
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-
-class MainActivity : ComponentActivity() {
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            NOWSOPTAndroidTheme {
-                Surface {
-                    val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
-                    Main(userInfo)
-                }
-            }
-        }
-    }
-}
+import com.sopt.now.compose.R
+import com.sopt.now.compose.activity.LoginActivity
+import com.sopt.now.compose.user.UserInfo
 
 @Composable
-fun Main(userInfo: UserInfo?) {
+fun MyPageScreen(userInfo: UserInfo?) {
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -52,7 +38,7 @@ fun Main(userInfo: UserInfo?) {
     ) {
         userInfo?.let { user ->
             Image(
-                painter = painterResource(id = R.drawable.img),
+                painter = painterResource(id = R.drawable.donut),
                 contentDescription = null,
                 modifier = Modifier.size(110.dp).aspectRatio(1f)
             )
@@ -61,24 +47,31 @@ fun Main(userInfo: UserInfo?) {
             UserInfoItem(title = "ID", content = user.id)
             UserInfoItem(title = "비밀번호", content = user.password)
         }
+
+        Spacer(modifier = Modifier.height(120.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(context, LoginActivity::class.java)
+                context.startActivity(intent)
+            }, modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(id = R.string.btn_logout),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
+
 }
 
 @Composable
 fun UserInfoItem(title: String, content: String) {
     Text(
-        text = "$title $content",
+        text = "$title   $content",
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.fillMaxWidth()
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewMainActivityContent() {
-    val userInfo = UserInfo ("", "", "", "")
-    NOWSOPTAndroidTheme {
-        Main(userInfo)
-    }
 }

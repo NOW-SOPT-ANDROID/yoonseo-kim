@@ -15,9 +15,7 @@
 
     <string name="btn_login">로그인 하기</string>
     <string name="btn_sign_up">회원가입 하기</string>
-
-    <string name="my_page_id_title">회원님의 ID</string>
-    <string name="my_page_pwd_title">회원님의 비밀번호</string>
+    <string name="btn_logout">로그아웃 하기</string>
 
     <string name="login_success_message">로그인에 성공하였습니다.</string>
     <string name="login_fail_message">아이디 또는 비밀번호가 틀립니다.</string>

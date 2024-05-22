@@ -1,13 +1,11 @@
-package com.sopt.now.compose
+package com.sopt.now.compose.activity
 
-import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,21 +28,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
-import com.sopt.now.compose.SignUpActivity.Companion.USER_INFO
+import com.sopt.now.compose.R
+import com.sopt.now.compose.activity.SignUpActivity.Companion.USER_INFO
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.user.UserInfo
 
-class SignUpActivity : ComponentActivity() {
-
-    companion object {
-        const val USER_INFO = "user_info"
-    }
+class LoginActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,36 +50,29 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val userId = intent.getStringExtra("userId").toString()
-                    val userPassword = intent.getStringExtra("userPassword").toString()
-                    val userNickname = intent.getStringExtra("userNickname").toString()
-                    val userMbti = intent.getStringExtra("userMbti").toString()
-                    SignUp(userId, userPassword, userNickname, userMbti)
+                    val userInfo = intent.getParcelableExtra<UserInfo>(USER_INFO)
+                    userInfo?.let {
+                        Login(it)
+                    } ?: run {
+                        Login()
+                    }
                 }
             }
         }
     }
-}
-fun isSignUpAvailable(context: Context, id: String, password: String, nickname: String): Boolean {
-    when {
-        id.length !in 6..10 -> Toast.makeText(context, context.getString(R.string.id_wrong_message), Toast.LENGTH_SHORT).show()
-        password.length !in 8..12 -> Toast.makeText(context, context.getString(R.string.pwd_wrong_message), Toast.LENGTH_SHORT).show()
-        nickname.isBlank() || nickname.contains(" ") -> Toast.makeText(context, context.getString(R.string.nickname_wrong_message), Toast.LENGTH_SHORT).show()
-        else -> {
-            Toast.makeText(context, context.getString(R.string.sign_up_success_message), Toast.LENGTH_SHORT).show()
-            return true
-        }
+
+    companion object {
+        const val USER_INFO = "user_info"
     }
-    return false
 }
+
 @Composable
-fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti: String) {
+fun Login(userInfo: UserInfo?=null) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var nickname by remember { mutableStateOf("") }
-    var mbti by remember { mutableStateOf("") }
 
     val context = LocalContext.current
+
 
     Column(
         modifier = Modifier
@@ -91,16 +80,15 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             .padding(30.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
-        Text (
-            text = stringResource(id = R.string.sign_up_title),
+        Text(
+            text = stringResource(id = R.string.login_title),
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
         )
-
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = stringResource(id = R.string.id),
@@ -109,19 +97,15 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             textAlign = TextAlign.Start,
             modifier = Modifier.fillMaxWidth()
         )
-
         Spacer(modifier = Modifier.height(30.dp))
-
         TextField(
             value = id,
             onValueChange = { id = it },
             placeholder = { Text(stringResource(id = R.string.id_hint)) },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
         )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
+        Spacer(modifier = Modifier.height(40.dp))
         Text(
             text = stringResource(id = R.string.pwd),
             fontSize = 20.sp,
@@ -129,84 +113,60 @@ fun SignUp(userId: String, userPassword: String, userNickname: String, userMbti:
             textAlign = TextAlign.Start,
             modifier = Modifier.fillMaxWidth()
         )
-
         Spacer(modifier = Modifier.height(30.dp))
-
         TextField(
             value = password,
             onValueChange = { password = it },
             placeholder = { Text(stringResource(id = R.string.pwd_hint)) },
             modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = stringResource(id = R.string.nickname),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        TextField(
-            value = nickname,
-            onValueChange = { nickname = it },
-            placeholder = { Text(stringResource(id = R.string.nickname_hint)) },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            text = stringResource(id = R.string.mbti),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        TextField(
-            value = mbti,
-            onValueChange = { mbti = it },
-            placeholder = { Text(stringResource(id = R.string.mbti_hint)) },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-        )
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(200.dp))
 
         Button(
             onClick = {
-                if (isSignUpAvailable(context, id, password, nickname)) {
-                    val userInfo = UserInfo(id, password, nickname, mbti)
-                    val intent = Intent(context, LoginActivity::class.java).apply {
+                if (id == userInfo?.id && password == userInfo?.password) {
+                    Toast.makeText(context, context.getString(R.string.login_success_message), Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context, MainActivity::class.java).apply {
                         putExtra(USER_INFO, userInfo)
                     }
                     context.startActivity(intent)
+                } else {
+                    Toast.makeText(context, context.getString(R.string.login_fail_message), Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
+                text = stringResource(id = R.string.btn_login),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(context, SignUpActivity::class.java)
+                context.startActivity(intent)
+            }, modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
                 text = stringResource(id = R.string.btn_sign_up),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun SignUpPreview() {
+fun LoginPreview() {
+    val userInfo = UserInfo ("", "", "", "")
     NOWSOPTAndroidTheme {
-        SignUp("", "", "", "")
+        Login(userInfo)
     }
 }
