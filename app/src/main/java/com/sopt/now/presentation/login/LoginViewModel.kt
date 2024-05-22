@@ -1,30 +1,24 @@
 package com.sopt.now.presentation.login
 
-import android.content.Intent
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getString
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.R
-import com.sopt.now.ServicePool
+import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.data.dto.response.ResponseLoginDto
-import com.sopt.now.presentation.main.MainActivity
-import com.sopt.now.presentation.signup.SignUpState
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.HttpException
-import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
 
     private val authService by lazy { ServicePool.authService }
     private val _liveData = MutableLiveData<LoginState>()
-    val liveData: LiveData<LoginState> = _liveData
+    val liveData: LiveData<LoginState> get() = _liveData
+
+    private val _userId = MutableLiveData<String>()
+    val userId: LiveData<String> get() = _userId
+
     fun login(request: RequestLoginDto) {
 //        val loginRequest = getLoginRequestDto()
 //        ServicePool.authService.login(loginRequest).enqueue(object : Callback<ResponseLoginDto> {
@@ -60,7 +54,9 @@ class LoginViewModel : ViewModel() {
             runCatching {
                 authService.login(request)
             }.onSuccess {
-                _liveData.value = LoginState(true, it.message)
+                val userId = it.headers()["location"]
+                _userId.value = userId.toString()
+                _liveData.value = LoginState(true, "로그인에 성공하였습니다.")
             }.onFailure {
                 if (it is HttpException) {
                     _liveData.value = LoginState(false, it.message())
@@ -69,13 +65,5 @@ class LoginViewModel : ViewModel() {
                 }
             }
         }
-    }
-
-    private fun navigateToMain(userId: String?) {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("userId", userId)
-        }
-        startActivity(intent)
-        finish()
     }
 }

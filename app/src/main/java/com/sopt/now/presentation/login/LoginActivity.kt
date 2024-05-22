@@ -5,16 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.R
-import com.sopt.now.ServicePool.authService
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.data.dto.request.RequestLoginDto
-import com.sopt.now.data.dto.response.ResponseLoginDto
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -31,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initViews() {
         binding.btnLogin.setOnClickListener {
             viewModel.login(getLoginRequestDto())
+            navigateToMain()
         }
         binding.btnSignUp.setOnClickListener {
             navigateToSignUp()
@@ -39,11 +34,22 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initObserver() {
         viewModel.liveData.observe(this) {
-            Toast.makeText(
-                this@LoginActivity,
-                it.message,
-                Toast.LENGTH_SHORT,
-            ).show()
+            if (it.isSuccess) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    it.message,
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        }
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        viewModel.userId.observe(this) {
+            intent.putExtra("userId", viewModel.userId.value)
+            startActivity(intent)
+            finish()
         }
     }
 
