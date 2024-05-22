@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sopt.now.BindingFragment
-import com.sopt.now.ServicePool.friendService
-import com.sopt.now.ServicePool.userService
+import com.sopt.now.util.base.BindingFragment
+import com.sopt.now.data.ServicePool.friendService
+import com.sopt.now.data.ServicePool.userService
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.friend.Friend
 import com.sopt.now.presentation.friend.FriendAdapter
@@ -18,8 +18,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
-
-    private lateinit var friendAdapter: FriendAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
