@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.sopt.now.BindingFragment
+import com.sopt.now.util.base.BindingFragment
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.data.dto.response.ResponseUserInfoDto
-import com.sopt.now.ServicePool.userService
+import com.sopt.now.data.ServicePool.userService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
