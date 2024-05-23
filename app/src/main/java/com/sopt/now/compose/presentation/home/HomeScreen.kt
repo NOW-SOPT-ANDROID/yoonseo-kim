@@ -7,14 +7,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import com.sopt.now.compose.presentation.friend.FriendItem
 import com.sopt.now.compose.presentation.user.UserItem
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.response.ResponseFriendDto
+import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,18 +29,24 @@ import retrofit2.Response
 @Composable
 fun HomeScreen() {
 
-    val userList = mutableStateListOf (
-        UserInfo (
-            authenticationId = "yoonseo",
-            nickname = "yoon",
-            phone = "010-1234-1234"
-        )
-    )
+    val viewModel: MainViewModel = viewModel()
+
+    val userInfoState by viewModel.userInfo.observeAsState()
 
     val friendList = remember { mutableStateListOf<ResponseFriendDto.Data>() }
 
-    LaunchedEffect(key1 = true) {
-        getFriendList(friendList)
+//    LaunchedEffect(key1 = true) {
+//        userInfoState?.authenticationId?.let { userId ->
+//            userId.toIntOrNull()?.let { id ->
+//                viewModel.getUserInfo(id)
+//            }
+//        }
+//    }
+
+    LaunchedEffect(key1 = userInfoState) {
+        userInfoState?.let { user ->
+            getFriendList(friendList)
+        }
     }
 
     LazyColumn(
@@ -44,8 +54,10 @@ fun HomeScreen() {
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(userList) { user ->
-            UserItem(user)
+        userInfoState?.let { user ->
+            item {
+                UserItem(user)
+            }
         }
         items(friendList) { friend ->
             FriendItem(friend)
