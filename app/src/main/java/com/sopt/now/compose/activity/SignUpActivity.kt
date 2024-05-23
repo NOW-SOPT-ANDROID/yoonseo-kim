@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sopt.now.compose.R
 import com.sopt.now.compose.ServicePool
+import com.sopt.now.compose.SignUpViewModel
 import com.sopt.now.compose.request.RequestSignUpDto
 import com.sopt.now.compose.response.ResponseSignUpDto
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
@@ -46,6 +48,8 @@ import retrofit2.Response
 
 class SignUpActivity : ComponentActivity() {
 
+    private val viewModel by viewModels<SignUpViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,7 +58,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUpPage()
+                    SignUpPage(viewModel)
                 }
             }
         }
@@ -62,7 +66,7 @@ class SignUpActivity : ComponentActivity() {
 }
 
 @Composable
-fun SignUpPage() {
+fun SignUpPage(viewModel: SignUpViewModel) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
@@ -170,7 +174,7 @@ fun SignUpPage() {
 
         Button(
             onClick = {
-                signUp(context, id, password, nickname, phone)
+                viewModel.signUp(context, id, password, nickname, phone)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -182,33 +186,4 @@ fun SignUpPage() {
     }
 }
 
-fun signUp(context: Context, id: String, password: String, nickname: String, phone: String) {
-    val signUpRequest = RequestSignUpDto(authenticationId = id, password = password, nickname = nickname, phone = phone)
-    ServicePool.authService.signUp(signUpRequest).enqueue(object : Callback<ResponseSignUpDto> {
-        override fun onResponse(call: Call<ResponseSignUpDto>, response: Response<ResponseSignUpDto>) {
-            if (response.isSuccessful) {
-                val data: ResponseSignUpDto? = response.body()
-                val userId = response.headers()["location"]
-                Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
-                Log.d("Login", "data: $data, userId: $userId")
-                if (context is Activity) {
-                    navigateToLogin(userId, context)
-                }
-            } else {
-                val error = response.message()
-                Toast.makeText(context, "로그인 실패: $error", Toast.LENGTH_SHORT).show()
-            }
-        }
-        override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-            Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
-        }
-    })
-}
 
-private fun navigateToLogin(userId: String?, activity: Activity) {
-    val intent = Intent(activity, LoginActivity::class.java).apply {
-        putExtra("userId", userId)
-    }
-    activity.startActivity(intent)
-    activity.finish()
-}

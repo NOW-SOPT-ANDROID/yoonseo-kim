@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,17 +37,23 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
+import com.sopt.now.compose.LoginViewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.ServicePool.authService
+import com.sopt.now.compose.home.HomeViewModel
 import com.sopt.now.compose.request.RequestLoginDto
 import com.sopt.now.compose.response.ResponseLoginDto
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.LoginState
 import com.sopt.now.compose.user.UserInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,15 +63,28 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginPage()
+                    LoginPage(viewModel)
                 }
             }
         }
+
+        viewModel.loginState.observe(this, Observer { state ->
+            when {
+                state.isSuccess -> {
+                    Toast.makeText(this, "로그인 성공: ${state.message}", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                else -> {
+                    Toast.makeText(this, "로그인 실패: ${state.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 }
 
 @Composable
-fun LoginPage() {
+fun LoginPage(viewModel: LoginViewModel) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -122,7 +142,7 @@ fun LoginPage() {
 
         Button(
             onClick = {
-                login(context, id, password)
+                viewModel.login(context, id, password)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -149,33 +169,3 @@ fun LoginPage() {
     }
 }
 
-fun login(context: Context, id: String, password: String) {
-    val loginRequest = RequestLoginDto(authenticationId = id, password = password)
-    authService.login(loginRequest).enqueue(object : Callback<ResponseLoginDto> {
-        override fun onResponse(call: Call<ResponseLoginDto>, response: Response<ResponseLoginDto>) {
-            if (response.isSuccessful) {
-                val data: ResponseLoginDto? = response.body()
-                val userId = response.headers()["location"]
-                Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
-                Log.d("Login", "data: $data, userId: $userId")
-                if (context is Activity) {
-                    navigateToMain(userId, context)
-                }
-            } else {
-                val error = response.message()
-                Toast.makeText(context, "로그인 실패: $error", Toast.LENGTH_SHORT).show()
-            }
-        }
-        override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-            Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
-        }
-    })
-}
-
-private fun navigateToMain(userId: String?, activity: Activity) {
-    val intent = Intent(activity, MainActivity::class.java).apply {
-        putExtra("userId", userId)
-    }
-    activity.startActivity(intent)
-    activity.finish()
-}
