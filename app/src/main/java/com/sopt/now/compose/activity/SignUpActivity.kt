@@ -192,7 +192,7 @@ fun signUp(context: Context, id: String, password: String, nickname: String, pho
                 Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
                 Log.d("Login", "data: $data, userId: $userId")
                 if (context is Activity) {
-                    switchToLogin(userId, context)
+                    navigateToLogin(userId, context)
                 }
             } else {
                 val error = response.message()
@@ -205,7 +205,7 @@ fun signUp(context: Context, id: String, password: String, nickname: String, pho
     })
 }
 
-private fun switchToLogin(userId: String?, activity: Activity) {
+private fun navigateToLogin(userId: String?, activity: Activity) {
     val intent = Intent(activity, LoginActivity::class.java).apply {
         putExtra("userId", userId)
     }
