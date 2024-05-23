@@ -1,6 +1,8 @@
 package com.sopt.now.compose.presentation.signup
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -31,7 +33,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
+import com.sopt.now.compose.presentation.login.LoginActivity
+import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 
 class SignUpActivity : ComponentActivity() {
@@ -50,6 +55,19 @@ class SignUpActivity : ComponentActivity() {
                 }
             }
         }
+
+        viewModel.signUpState.observe(this, Observer { state ->
+            when {
+                state.isSuccess -> {
+                    Toast.makeText(this, "회원가입 성공: ${state.message}", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
+                else -> {
+                    Toast.makeText(this, "회원가입 실패: ${state.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 }
 
