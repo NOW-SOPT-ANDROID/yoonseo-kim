@@ -24,13 +24,14 @@ class LoginViewModel : ViewModel() {
 
     fun login(context: Context, id: String, password: String) {
         val loginRequest = RequestLoginDto(authenticationId = id, password = password)
-        ServicePool.authService.login(loginRequest).enqueue(object : Callback<ResponseLoginDto> {
+        authService.login(loginRequest).enqueue(object : Callback<ResponseLoginDto> {
             override fun onResponse(call: Call<ResponseLoginDto>, response: Response<ResponseLoginDto>) {
                 if (response.isSuccessful) {
                     val data: ResponseLoginDto? = response.body()
                     val userId = response.headers()["location"]
-                    Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
                     Log.d("Login", "data: $data, userId: $userId")
+                    _loginState.value = LoginState(true, "로그인 성공 !")
                     if (context is Activity) {
                         navigateToMain(userId, context)
                     }
