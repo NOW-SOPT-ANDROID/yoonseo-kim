@@ -3,6 +3,7 @@ package com.sopt.now.compose.presentation.mypage
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,10 +30,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.data.ServicePool.userService
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.data.dto.response.ResponseUserInfoDto
+import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,16 +46,22 @@ fun MyPageScreen(context: Context, userId: Int) {
 
     val context = LocalContext.current
 
-    var userInfo by remember { mutableStateOf<UserInfo?>(null) }
+    val viewModel: MainViewModel = viewModel()
+
+    val userInfoState = remember { mutableStateOf<UserInfo?>(null) }
 
     LaunchedEffect(userId) {
-        getUserInfo(userId) { userInfoDto ->
-            userInfo = UserInfo(
-                nickname = userInfoDto.nickname,
-                phone = userInfoDto.phone,
-                authenticationId = userInfoDto.authenticationId
-            )
-        }
+        viewModel.getUserInfo(userId)
+    }
+
+    val userInfo by viewModel.userInfo.observeAsState()
+
+    userInfo?.let {
+        userInfoState.value = UserInfo(
+            nickname = it.nickname,
+            phone = it.phone,
+            authenticationId = it.authenticationId
+        )
     }
 
     Column(
@@ -60,7 +70,7 @@ fun MyPageScreen(context: Context, userId: Int) {
             .padding(30.dp),
         verticalArrangement = Arrangement.spacedBy(40.dp),
     ) {
-        userInfo?.let { user ->
+        userInfoState.value?.let { user ->
             Image(
                 painter = painterResource(id = R.drawable.donut),
                 contentDescription = null,
@@ -89,29 +99,29 @@ fun MyPageScreen(context: Context, userId: Int) {
 
 }
 
-private fun getUserInfo(userId: Int, onResult: (ResponseUserInfoDto.Data) -> Unit) {
-    userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
-        override fun onResponse(
-            call: Call<ResponseUserInfoDto>,
-            response: Response<ResponseUserInfoDto>,
-        ) {
-            if (response.isSuccessful) {
-                val data: ResponseUserInfoDto? = response.body()
-                data?.data?.let {
-                    onResult(it)
-                }
-                Log.d("MyPage", "data: $data, userId: $userId")
-            } else {
-                val error = response.errorBody()?.string() ?: response.message()
-                Log.d("MyPage", "error: $error")
-            }
-        }
-
-        override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-            Log.d("MyPage", "onFailure", t)
-        }
-    })
-}
+//private fun getUserInfo(userId: Int, onResult: (ResponseUserInfoDto.Data) -> Unit) {
+//    userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
+//        override fun onResponse(
+//            call: Call<ResponseUserInfoDto>,
+//            response: Response<ResponseUserInfoDto>,
+//        ) {
+//            if (response.isSuccessful) {
+//                val data: ResponseUserInfoDto? = response.body()
+//                data?.data?.let {
+//                    onResult(it)
+//                }
+//                Log.d("MyPage", "data: $data, userId: $userId")
+//            } else {
+//                val error = response.errorBody()?.string() ?: response.message()
+//                Log.d("MyPage", "error: $error")
+//            }
+//        }
+//
+//        override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
+//            Log.d("MyPage", "onFailure", t)
+//        }
+//    })
+//}
 
 @Composable
 fun UserInfoItem(title: String, content: String) {
