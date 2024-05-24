@@ -1,7 +1,6 @@
 package com.sopt.now.compose.presentation.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -31,15 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sopt.now.compose.util.BottomNavigationItem
-import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.presentation.home.HomeScreen
 import com.sopt.now.compose.presentation.mypage.MyPageScreen
-import com.sopt.now.compose.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.compose.presentation.search.SearchScreen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
 
@@ -124,28 +118,4 @@ fun Scaffold(userId: Int) {
             }
         }
     }
-}
-
-private fun getUserInfo(userId: Int, onResult: (ResponseUserInfoDto.Data) -> Unit) {
-    ServicePool.userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
-        override fun onResponse(
-            call: Call<ResponseUserInfoDto>,
-            response: Response<ResponseUserInfoDto>,
-        ) {
-            if (response.isSuccessful) {
-                val data: ResponseUserInfoDto? = response.body()
-                data?.data?.let {
-                    onResult(it)
-                }
-                Log.d("MyPage", "data: $data, userId: $userId")
-            } else {
-                val error = response.errorBody()?.string() ?: response.message()
-                Log.d("MyPage", "error: $error")
-            }
-        }
-
-        override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-            Log.d("MyPage", "onFailure", t)
-        }
-    })
 }

@@ -29,15 +29,14 @@ class HomeViewModel : ViewModel() {
                     } ?: run {
                         _friendList.postValue(emptyList())
                     }
-                    Log.d("HomeViewModel", "data: $data")
                 } else {
                     val error = response.errorBody()?.string() ?: response.message()
-                    Log.d("HomeViewModel", "error: $error")
+                    Log.d("Home", "친구 목록 불러오기 실패: $error")
                 }
             }
 
             override fun onFailure(call: Call<ResponseFriendDto>, t: Throwable) {
-                Log.d("HomeViewModel", "onFailure", t)
+                Log.d("Home", "서버 오류 발생", t)
             }
         })
     }

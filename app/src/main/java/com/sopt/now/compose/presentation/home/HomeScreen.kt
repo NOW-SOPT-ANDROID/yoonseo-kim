@@ -19,7 +19,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
 
-
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun HomeScreen(context: Context, userId: Int) {

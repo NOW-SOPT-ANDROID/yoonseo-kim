@@ -36,18 +36,14 @@ class MainViewModel : ViewModel() {
                             )
                         }
                     } else {
-                        Log.d("MyPage", "Error: ${response.errorBody()?.string() ?: response.message()}")
+                        Log.d("MyPage", "사용자 정보 불러오기 실패: ${response.errorBody()?.string() ?: response.message()}")
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-                    Log.d("MyPage", "onFailure", t)
+                    Log.d("MyPage", "서버 오류 발생", t)
                 }
             })
         }
     }
-
-//    companion object {
-//        const val USER_ID = 51
-//    }
 }

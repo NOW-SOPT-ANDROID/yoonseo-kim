@@ -2,7 +2,6 @@ package com.sopt.now.compose.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.login.LoginActivity
-import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.util.showToast
 
