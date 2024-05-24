@@ -25,12 +25,12 @@ class LoginViewModel : ViewModel() {
             }.onSuccess {
                 val userId = it.headers()["location"]
                 _userId.value = userId.toString()
-                _liveData.value = LoginState(true, "로그인에 성공하였습니다.")
+                _liveData.value = LoginState(true, "로그인 성공")
             }.onFailure {
                 if (it is HttpException) {
                     _liveData.value = LoginState(false, it.message())
                 } else {
-                    _liveData.value = LoginState(false, "로그인이 실패")
+                    _liveData.value = LoginState(false, "로그인 실패")
                 }
             }
         }
