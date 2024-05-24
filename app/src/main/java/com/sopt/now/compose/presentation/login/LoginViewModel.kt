@@ -37,11 +37,13 @@ class LoginViewModel : ViewModel() {
                     }
                 } else {
                     val error = response.message()
-                    Toast.makeText(context, "로그인 실패: $error", Toast.LENGTH_SHORT).show()
+                    _loginState.value = LoginState(false, "로그인 실패: $error")
+                    //Toast.makeText(context, "로그인 실패: $error", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-                Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
+                _loginState.value = LoginState(false, "서버 에러 발생")
+                //Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
             }
         })
     }

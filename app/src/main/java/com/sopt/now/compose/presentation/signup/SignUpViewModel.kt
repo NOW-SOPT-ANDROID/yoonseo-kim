@@ -28,7 +28,6 @@ class SignUpViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val data: ResponseSignUpDto? = response.body()
                     val userId = response.headers()["location"]
-                    //Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
                     Log.d("SignUp", "data: $data, userId: $userId")
                     _signUpState.value = SignUpState(true, "회원가입 성공 !")
                     if (context is Activity) {
@@ -36,13 +35,11 @@ class SignUpViewModel : ViewModel() {
                     }
                 } else {
                     val error = response.message()
-                    Toast.makeText(context, "회원가입 실패: $error", Toast.LENGTH_SHORT).show()
-                    _signUpState.postValue(SignUpState(false, "회원가입 실패: $error"))
+                    _signUpState.value = SignUpState(false, "회원가입 실패: $error")
                 }
             }
             override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-                Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
-                //_signUpState.postValue(SignUpState(false, "서버 에러 발생"))
+                _signUpState.value = SignUpState(false, "서버 에러 발생")
             }
         })
     }
