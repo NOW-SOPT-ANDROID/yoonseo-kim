@@ -20,36 +20,6 @@ class LoginViewModel : ViewModel() {
     val userId: LiveData<String> get() = _userId
 
     fun login(request: RequestLoginDto) {
-//        val loginRequest = getLoginRequestDto()
-//        ServicePool.authService.login(loginRequest).enqueue(object : Callback<ResponseLoginDto> {
-//            override fun onResponse(
-//                call: Call<ResponseLoginDto>,
-//                response: Response<ResponseLoginDto>,
-//            ) {
-//                if (response.isSuccessful) {
-//                    val data: ResponseLoginDto? = response.body()
-//                    val userId = response.headers()["location"]
-//                    Toast.makeText(
-//                        this@LoginActivity,
-//                        getString(R.string.success_message),
-//                        Toast.LENGTH_SHORT,
-//                    ).show()
-//                    navigateToMain(userId)
-//                } else {
-//                    val error = response.message()
-//                    Toast.makeText(
-//                        this@LoginActivity,
-//                        getString(R.string.fail_message),
-//                        Toast.LENGTH_SHORT,
-//                    ).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-//                Toast.makeText(this@LoginActivity, getString(R.string.server_error_message), Toast.LENGTH_SHORT).show()
-//            }
-//        })
-
         viewModelScope.launch {
             runCatching {
                 authService.login(request)
