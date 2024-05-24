@@ -6,9 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.ServicePool
-import com.sopt.now.compose.data.ServicePool.userService
 import com.sopt.now.compose.data.dto.response.ResponseUserInfoDto
-import com.sopt.now.compose.presentation.signup.SignUpState
 import com.sopt.now.compose.presentation.user.UserInfo
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -21,10 +19,6 @@ class MainViewModel : ViewModel() {
 
     private val _userInfo = MutableLiveData<UserInfo?>()
     val userInfo: LiveData<UserInfo?> get() = _userInfo
-
-    init {
-        getUserInfo(USER_ID)
-    }
 
     fun getUserInfo(userId: Int) {
         viewModelScope.launch {
@@ -53,7 +47,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    companion object {
-        const val USER_ID = 51
-    }
+//    companion object {
+//        const val USER_ID = 51
+//    }
 }

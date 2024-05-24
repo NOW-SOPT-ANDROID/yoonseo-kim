@@ -10,8 +10,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class HomeViewModel : ViewModel() {
+
     private val friendService by lazy { ServicePool.friendService }
     private val _friendList = MutableLiveData<List<ResponseFriendDto.Data>>()
     val friendList: LiveData<List<ResponseFriendDto.Data>> get() = _friendList
@@ -42,6 +42,3 @@ class HomeViewModel : ViewModel() {
         })
     }
 }
-
-
-

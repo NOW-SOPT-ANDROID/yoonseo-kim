@@ -113,7 +113,7 @@ fun Scaffold(userId: Int) {
         ) {
             when(selectedItem) {
                 0 -> {
-                    HomeScreen()
+                    HomeScreen(context, userId)
                 }
                 1 -> {
                     SearchScreen()

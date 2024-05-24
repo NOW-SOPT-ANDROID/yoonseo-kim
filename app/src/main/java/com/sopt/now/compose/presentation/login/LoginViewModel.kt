@@ -3,8 +3,6 @@ package com.sopt.now.compose.presentation.login
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,8 +15,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
-    private val authService by lazy { ServicePool.authService }
 
+    private val authService by lazy { ServicePool.authService }
     private val _loginState = MutableLiveData<LoginState>()
     val loginState: LiveData<LoginState> get() = _loginState
 
@@ -29,8 +27,6 @@ class LoginViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     val data: ResponseLoginDto? = response.body()
                     val userId = response.headers()["location"]
-                    //Toast.makeText(context, "회원가입 성공 유저의 ID는 $userId 입니둥", Toast.LENGTH_SHORT).show()
-                    Log.d("Login", "data: $data, userId: $userId")
                     _loginState.value = LoginState(true, "로그인 성공 !")
                     if (context is Activity) {
                         navigateToMain(userId, context)
@@ -38,12 +34,10 @@ class LoginViewModel : ViewModel() {
                 } else {
                     val error = response.message()
                     _loginState.value = LoginState(false, "로그인 실패: $error")
-                    //Toast.makeText(context, "로그인 실패: $error", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
                 _loginState.value = LoginState(false, "서버 에러 발생")
-                //Toast.makeText(context, "서버 에러 발생", Toast.LENGTH_SHORT).show()
             }
         })
     }
