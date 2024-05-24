@@ -40,39 +40,6 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-//    private fun signUp() {
-//        val signUpRequest = getSignUpRequestDto()
-//        authService.signUp(signUpRequest).enqueue(object : Callback<ResponseSignUpDto> {
-//            override fun onResponse(
-//                call: Call<ResponseSignUpDto>,
-//                response: Response<ResponseSignUpDto>,
-//            ) {
-//                if (response.isSuccessful) {
-//                    val data: ResponseSignUpDto? = response.body()
-//                    val userId = response.headers()["location"]
-//                    Toast.makeText(
-//                        this@SignUpActivity,
-//                        "회원가입 성공 유저의 ID는 $userId 입니둥",
-//                        Toast.LENGTH_SHORT,
-//                    ).show()
-//                    Log.d("SignUp", "data: $data, userId: $userId")
-//                    navigateToLogin(userId)
-//                } else {
-//                    val error = response.message()
-//                    Toast.makeText(
-//                        this@SignUpActivity,
-//                        "로그인이 실패 $error",
-//                        Toast.LENGTH_SHORT,
-//                    ).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-//                Toast.makeText(this@SignUpActivity, "서버 에러 발생 ", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
-
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
