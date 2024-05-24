@@ -39,6 +39,7 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.presentation.signup.SignUpActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.util.showToast
 
 class LoginActivity : ComponentActivity() {
 
@@ -60,12 +61,12 @@ class LoginActivity : ComponentActivity() {
         viewModel.loginState.observe(this, Observer { state ->
             when {
                 state.isSuccess -> {
-                    Toast.makeText(this, "로그인 성공: ${state.message}", Toast.LENGTH_SHORT).show()
+                    showToast(state.message)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
                 else -> {
-                    Toast.makeText(this, "로그인 실패: ${state.message}", Toast.LENGTH_SHORT).show()
+                    showToast(state.message)
                 }
             }
         })
