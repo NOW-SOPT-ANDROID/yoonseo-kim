@@ -2,13 +2,11 @@ package com.sopt.now.presentation.mypage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.util.base.BindingFragment
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
-import com.sopt.now.presentation.home.HomeViewModel
 import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.user.UserInfo
 

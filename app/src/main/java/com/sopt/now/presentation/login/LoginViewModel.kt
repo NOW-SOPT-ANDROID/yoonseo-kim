@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestLoginDto
-import com.sopt.now.data.dto.response.ResponseLoginDto
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

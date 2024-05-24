@@ -9,7 +9,6 @@ import com.sopt.now.presentation.home.HomeFragment
 import com.sopt.now.presentation.mypage.MyPageFragment
 import com.sopt.now.presentation.search.SearchFragment
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

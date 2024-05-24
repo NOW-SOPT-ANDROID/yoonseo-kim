@@ -5,11 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.ServicePool.userService
 import com.sopt.now.data.dto.response.ResponseFriendDto
-import com.sopt.now.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.presentation.friend.Friend
-import com.sopt.now.presentation.user.UserInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

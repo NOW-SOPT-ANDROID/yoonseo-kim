@@ -1,25 +1,14 @@
 package com.sopt.now.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sopt.now.util.base.BindingFragment
-import com.sopt.now.data.ServicePool.friendService
-import com.sopt.now.data.ServicePool.userService
 import com.sopt.now.databinding.FragmentHomeBinding
-import com.sopt.now.presentation.friend.Friend
 import com.sopt.now.presentation.friend.FriendAdapter
-import com.sopt.now.data.dto.response.ResponseFriendDto
-import com.sopt.now.data.dto.response.ResponseUserInfoDto
-import com.sopt.now.presentation.login.LoginViewModel
 import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.user.UserInfo
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
