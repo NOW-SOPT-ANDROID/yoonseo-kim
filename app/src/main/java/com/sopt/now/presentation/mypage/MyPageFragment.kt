@@ -4,56 +4,37 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.sopt.now.util.base.BindingFragment
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
-import com.sopt.now.data.dto.response.ResponseUserInfoDto
-import com.sopt.now.data.ServicePool.userService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.sopt.now.presentation.home.HomeViewModel
+import com.sopt.now.presentation.main.MainViewModel
+import com.sopt.now.presentation.user.UserInfo
+
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
+
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().intent.getStringExtra("userId")?.toInt()?.let {
-            getUserInfo(it)
+            viewModel.getUserInfo(it)
         }
 
         setUpListener()
+        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+            updateUI(userInfo)
+        }
     }
 
-    private fun getUserInfo(userId: Int) {
-        userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
-            override fun onResponse(
-                call: Call<ResponseUserInfoDto>,
-                response: Response<ResponseUserInfoDto>,
-            ) {
-                if (response.isSuccessful) {
-                    val data: ResponseUserInfoDto? = response.body()
-                    data?.data?.let {
-                        updateUI(it)
-                    }
-                    Log.d("MyPage", "data: $data, userId: $userId")
-                } else {
-                    val error = response.errorBody()?.string() ?: response.message()
-                    Log.d("MyPage", "error: $error")
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-                Log.d("MyPage", "onFailure", t)
-            }
-        })
-    }
-
-    private fun updateUI(data: ResponseUserInfoDto.Data) {
+    private fun updateUI(userInfo: UserInfo) {
         with(binding) {
-            tvMyPageNickname.text = data.nickname
-            tvMyPageId.text = data.authenticationId
-            tvMyPagePhone.text = data.phone
+            tvMyPageNickname.text = userInfo.nickname
+            tvMyPageId.text = userInfo.authenticationId
+            tvMyPagePhone.text = userInfo.phone
         }
     }
 
