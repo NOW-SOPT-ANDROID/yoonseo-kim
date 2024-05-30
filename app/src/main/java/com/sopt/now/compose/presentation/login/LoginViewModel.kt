@@ -1,7 +1,6 @@
 package com.sopt.now.compose.presentation.login
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,13 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.data.dto.request.RequestLoginDto
-import com.sopt.now.compose.data.dto.response.ResponseLoginDto
 import com.sopt.now.compose.core.view.UiState
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.HttpException
-import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
 

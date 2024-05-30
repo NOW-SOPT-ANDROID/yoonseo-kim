@@ -133,8 +133,6 @@ fun LoginPage(viewModel: LoginViewModel, activity: Activity) {
 
         Button(
             onClick = {
-//                viewModel.login(RequestLoginDto(authenticationId = id, password = password))
-//                context.startActivity(Intent(context, MainActivity::class.java))
                 val request = RequestLoginDto(authenticationId = id, password = password)
                 viewModel.login(request, activity)
             },
