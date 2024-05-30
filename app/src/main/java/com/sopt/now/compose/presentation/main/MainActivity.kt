@@ -29,7 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.sopt.now.compose.util.BottomNavigationItem
+import com.sopt.now.compose.core.view.BottomNavigationItem
 import com.sopt.now.compose.presentation.home.HomeScreen
 import com.sopt.now.compose.presentation.mypage.MyPageScreen
 import com.sopt.now.compose.presentation.search.SearchScreen

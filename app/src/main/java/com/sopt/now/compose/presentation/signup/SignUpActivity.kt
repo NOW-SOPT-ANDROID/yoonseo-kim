@@ -36,7 +36,7 @@ import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.util.showToast
+import com.sopt.now.compose.core.util.showToast
 
 class SignUpActivity : ComponentActivity() {
 
