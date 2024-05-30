@@ -5,6 +5,7 @@ import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 import com.sopt.now.compose.data.dto.response.ResponseLoginDto
 import com.sopt.now.compose.data.dto.response.ResponseSignUpDto
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -15,7 +16,7 @@ interface AuthService {
     ): Call<ResponseSignUpDto>
 
     @POST("member/login")
-    fun login(
+    suspend fun login(
         @Body request: RequestLoginDto,
-    ): Call<ResponseLoginDto>
+    ): Response<ResponseLoginDto>
 }

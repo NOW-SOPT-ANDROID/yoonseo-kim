@@ -1,5 +1,6 @@
 package com.sopt.now.compose.presentation.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -38,7 +39,8 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.presentation.signup.SignUpActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
-import com.sopt.now.compose.util.showToast
+import com.sopt.now.compose.core.util.showToast
+import com.sopt.now.compose.data.dto.request.RequestLoginDto
 
 class LoginActivity : ComponentActivity() {
 
@@ -52,7 +54,7 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginPage(viewModel)
+                    LoginPage(viewModel = viewModel, activity = this)
                 }
             }
         }
@@ -73,7 +75,7 @@ class LoginActivity : ComponentActivity() {
 }
 
 @Composable
-fun LoginPage(viewModel: LoginViewModel) {
+fun LoginPage(viewModel: LoginViewModel, activity: Activity) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -131,7 +133,10 @@ fun LoginPage(viewModel: LoginViewModel) {
 
         Button(
             onClick = {
-                viewModel.login(context, id, password)
+//                viewModel.login(RequestLoginDto(authenticationId = id, password = password))
+//                context.startActivity(Intent(context, MainActivity::class.java))
+                val request = RequestLoginDto(authenticationId = id, password = password)
+                viewModel.login(request, activity)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
