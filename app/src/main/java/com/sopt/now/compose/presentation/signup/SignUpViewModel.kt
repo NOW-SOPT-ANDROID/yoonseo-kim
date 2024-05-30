@@ -11,6 +11,7 @@ import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 import com.sopt.now.compose.data.dto.response.ResponseSignUpDto
+import com.sopt.now.compose.core.view.UiState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,8 +19,8 @@ import retrofit2.Response
 class SignUpViewModel : ViewModel() {
 
     private val authService by lazy { ServicePool.authService }
-    private val _signUpState = MutableLiveData<SignUpState>()
-    val signUpState: LiveData<SignUpState> get() = _signUpState
+    private val _signUpState = MutableLiveData<UiState>()
+    val signUpState: LiveData<UiState> get() = _signUpState
 
     fun signUp(context: Context, id: String, password: String, nickname: String, phone: String) {
         val signUpRequest = RequestSignUpDto(authenticationId = id, password = password, nickname = nickname, phone = phone)
@@ -29,17 +30,17 @@ class SignUpViewModel : ViewModel() {
                     val data: ResponseSignUpDto? = response.body()
                     val userId = response.headers()["location"]
                     Log.d("SignUp", "data: $data, userId: $userId")
-                    _signUpState.value = SignUpState(true, "회원가입 성공 !")
+                    _signUpState.value = UiState(true, "회원가입 성공 !")
                     if (context is Activity) {
                         navigateToLogin(userId, context)
                     }
                 } else {
                     val error = response.message()
-                    _signUpState.value = SignUpState(false, "회원가입 실패: $error")
+                    _signUpState.value = UiState(false, "회원가입 실패: $error")
                 }
             }
             override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-                _signUpState.value = SignUpState(false, "서버 에러 발생")
+                _signUpState.value = UiState(false, "서버 에러 발생")
             }
         })
     }
