@@ -1,5 +1,6 @@
 package com.sopt.now.compose.presentation.signup
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -37,6 +38,7 @@ import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.core.util.showToast
+import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 
 class SignUpActivity : ComponentActivity() {
 
@@ -50,7 +52,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUpPage(viewModel)
+                    SignUpPage(viewModel = viewModel, activity = this)
                 }
             }
         }
@@ -71,7 +73,7 @@ class SignUpActivity : ComponentActivity() {
 }
 
 @Composable
-fun SignUpPage(viewModel: SignUpViewModel) {
+fun SignUpPage(viewModel: SignUpViewModel, activity: Activity) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
@@ -179,7 +181,8 @@ fun SignUpPage(viewModel: SignUpViewModel) {
 
         Button(
             onClick = {
-                viewModel.signUp(context, id, password, nickname, phone)
+                val request = RequestSignUpDto(authenticationId = id, password = password, nickname = nickname, phone = phone)
+                viewModel.signUp(request, activity)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
