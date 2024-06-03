@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.response.ResponseFriendDto
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class HomeViewModel : ViewModel() {
 
@@ -16,28 +16,23 @@ class HomeViewModel : ViewModel() {
     private val _friendList = MutableLiveData<List<ResponseFriendDto.Data>>()
     val friendList: LiveData<List<ResponseFriendDto.Data>> get() = _friendList
 
-    fun getFriendList(friendList: List<ResponseFriendDto.Data>?) {
-        friendService.getFriendList(2).enqueue(object : Callback<ResponseFriendDto> {
-            override fun onResponse(
-                call: Call<ResponseFriendDto>,
-                response: Response<ResponseFriendDto>,
-            ) {
-                if (response.isSuccessful) {
-                    val data: ResponseFriendDto? = response.body()
-                    data?.data?.let { dataList ->
-                        _friendList.postValue(dataList)
-                    } ?: run {
-                        _friendList.postValue(emptyList())
-                    }
+    fun getFriendList() {
+        viewModelScope.launch {
+            runCatching {
+                friendService.getFriendList(PAGE)
+            }.onSuccess {
+                _friendList.postValue(it.body()?.data ?: emptyList())
+            }.onFailure {
+                if (it is HttpException) {
+                    Log.e("FriendList", "서버 통신 오류")
                 } else {
-                    val error = response.errorBody()?.string() ?: response.message()
-                    Log.d("Home", "친구 목록 불러오기 실패: $error")
+                    Log.e("FriendList", "친구 정보 불러오기 실패")
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<ResponseFriendDto>, t: Throwable) {
-                Log.d("Home", "서버 오류 발생", t)
-            }
-        })
+    companion object {
+        const val PAGE = 2
     }
 }

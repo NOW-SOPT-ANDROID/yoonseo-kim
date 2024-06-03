@@ -1,12 +1,10 @@
 package com.sopt.now.compose.presentation.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +19,7 @@ import com.sopt.now.compose.presentation.user.UserInfo
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun HomeScreen(context: Context, userId: Int) {
+fun HomeScreen(userId: Int) {
 
     val mainViewModel: MainViewModel = viewModel()
     val homeViewModel: HomeViewModel = viewModel()
@@ -33,11 +31,9 @@ fun HomeScreen(context: Context, userId: Int) {
 
     mainViewModel.getUserInfo(userId)
 
-    LaunchedEffect(userInfo) {
-        userInfo?.let {
-            userInfoState.value = it
-            homeViewModel.getFriendList(friendList)
-        }
+    userInfo?.let {
+        userInfoState.value = it
+        homeViewModel.getFriendList()
     }
 
     LazyColumn(
