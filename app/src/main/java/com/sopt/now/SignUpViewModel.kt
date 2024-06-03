@@ -16,8 +16,8 @@ import retrofit2.Response
 class SignUpViewModel : ViewModel() {
 
     private val authService by lazy { ServicePool.authService }
-    private val _liveData = MutableLiveData<SignUpState>()
-    val liveData: LiveData<SignUpState> = _liveData
+    private val _signUpState = MutableLiveData<SignUpState>()
+    val signUpState: LiveData<SignUpState> = _signUpState
 
     // 코루틴 사용 - 2번째 방법
     fun signUp(request: RequestSignUpDto) {
@@ -34,12 +34,12 @@ class SignUpViewModel : ViewModel() {
             runCatching {
                 authService.signUp(request)
             }.onSuccess {
-                _liveData.value = SignUpState(true, it.message)
+                _signUpState.value = SignUpState(true, "회원가입 성공")
             }.onFailure {
                 if (it is HttpException) {
-                    _liveData.value = SignUpState(false, it.message())
+                    _signUpState.value = SignUpState(false, it.message())
                 } else {
-                    _liveData.value = SignUpState(false, "로그인이 실패")
+                    _signUpState.value = SignUpState(false, "회원가입 실패")
                 }
             }
         }
