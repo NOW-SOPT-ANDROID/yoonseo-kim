@@ -1,13 +1,10 @@
 package com.sopt.now.compose.presentation.signup
 
-import android.app.Activity
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.compose.data.ServicePool
-import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.core.view.UiState
 import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 import kotlinx.coroutines.launch

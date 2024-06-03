@@ -1,6 +1,5 @@
 package com.sopt.now.compose.presentation.signup
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -52,7 +50,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUpPage(viewModel = viewModel)
+                    SignUpPage(viewModel)
                 }
             }
         }
@@ -83,8 +81,6 @@ fun SignUpPage(viewModel: SignUpViewModel) {
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
-
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -194,7 +190,8 @@ fun SignUpPage(viewModel: SignUpViewModel) {
             Text(
                 text = stringResource(id = R.string.btn_sign_up),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
