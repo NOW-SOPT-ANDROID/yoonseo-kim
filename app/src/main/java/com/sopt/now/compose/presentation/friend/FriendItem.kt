@@ -34,7 +34,8 @@ fun FriendItem(friend: ResponseFriendDto.Data) {
             contentDescription = "Friend Profile",
             modifier = Modifier
                 .size(80.dp)
-                .padding(start = 10.dp, top = 10.dp, bottom = 10.dp)
+                .padding(start = 10.dp)
+                .padding(vertical = 10.dp)
         )
         Spacer(modifier = Modifier.width(15.dp))
         Text(
