@@ -113,7 +113,7 @@ fun Scaffold(userId: Int) {
                     SearchScreen()
                 }
                 2 -> {
-                    MyPageScreen(context, userId)
+                    MyPageScreen()
                 }
             }
         }

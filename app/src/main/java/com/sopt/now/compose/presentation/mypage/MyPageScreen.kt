@@ -34,7 +34,7 @@ import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
 
 @Composable
-fun MyPageScreen(context: Context, userId: Int) {
+fun MyPageScreen() {
 
     val context = LocalContext.current
 
