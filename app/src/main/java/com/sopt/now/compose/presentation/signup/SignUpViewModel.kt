@@ -19,14 +19,12 @@ class SignUpViewModel : ViewModel() {
     private val _signUpState = MutableLiveData<UiState>()
     val signUpState: LiveData<UiState> get() = _signUpState
 
-    fun signUp(request: RequestSignUpDto, activity: Activity) {
+    fun signUp(request: RequestSignUpDto) {
         viewModelScope.launch {
             runCatching {
                 authService.signUp(request)
             }.onSuccess {
-                val userId = it.headers()["location"]
                 _signUpState.value = UiState(true, "회원가입 성공 !")
-                navigateToLogin(userId, activity)
             }.onFailure {
                 if (it is HttpException) {
                     _signUpState.value = UiState(false, it.message())
@@ -35,13 +33,5 @@ class SignUpViewModel : ViewModel() {
                 }
             }
         }
-    }
-
-    private fun navigateToLogin(userId: String?, activity: Activity) {
-        val intent = Intent(activity, LoginActivity::class.java).apply {
-            putExtra("userId", userId)
-        }
-        activity.startActivity(intent)
-        activity.finish()
     }
 }

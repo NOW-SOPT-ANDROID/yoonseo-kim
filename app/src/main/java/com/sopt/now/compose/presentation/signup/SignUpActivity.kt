@@ -52,7 +52,7 @@ class SignUpActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SignUpPage(viewModel = viewModel, activity = this)
+                    SignUpPage(viewModel = viewModel)
                 }
             }
         }
@@ -61,8 +61,7 @@ class SignUpActivity : ComponentActivity() {
             when {
                 state.isSuccess -> {
                     showToast(state.message)
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                    navigateToLogin()
                 }
                 else -> {
                     showToast(state.message)
@@ -70,10 +69,16 @@ class SignUpActivity : ComponentActivity() {
             }
         })
     }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
 
 @Composable
-fun SignUpPage(viewModel: SignUpViewModel, activity: Activity) {
+fun SignUpPage(viewModel: SignUpViewModel) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var nickname by remember { mutableStateOf("") }
@@ -182,7 +187,7 @@ fun SignUpPage(viewModel: SignUpViewModel, activity: Activity) {
         Button(
             onClick = {
                 val request = RequestSignUpDto(authenticationId = id, password = password, nickname = nickname, phone = phone)
-                viewModel.signUp(request, activity)
+                viewModel.signUp(request)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
