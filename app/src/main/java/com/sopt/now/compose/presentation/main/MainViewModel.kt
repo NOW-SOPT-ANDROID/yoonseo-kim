@@ -5,15 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.compose.core.view.UiState
 import com.sopt.now.compose.data.ServicePool
-import com.sopt.now.compose.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.compose.presentation.user.UserInfo
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.HttpException
-import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
@@ -26,8 +21,8 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
             runCatching {
                 userService.getUserInfo(userId)
-            }.onSuccess {
-                _userInfo.value = it.body()?.data
+            }.onSuccess { response ->
+                _userInfo.value = response.data
             }.onFailure {
                 if (it is HttpException) {
                     Log.d("UserInfo", "서버 통신 오류")

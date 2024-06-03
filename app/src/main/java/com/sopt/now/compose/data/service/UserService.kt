@@ -9,5 +9,5 @@ interface UserService {
     @GET("member/info")
     suspend fun getUserInfo(
         @Header("memberId") userId: Int
-    ): Response<ResponseUserInfoDto>
+    ): ResponseUserInfoDto
 }
