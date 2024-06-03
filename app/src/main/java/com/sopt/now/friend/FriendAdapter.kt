@@ -1,21 +1,18 @@
 package com.sopt.now.friend
 
+import android.provider.ContactsContract.CommonDataKinds.Relation.TYPE_FRIEND
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sopt.now.user.UserInfo
 import com.sopt.now.databinding.ItemFriendBinding
 import com.sopt.now.databinding.ItemUserBinding
+import com.sopt.now.response.ResponseUserInfoDto
 import com.sopt.now.user.UserViewHolder
 
 class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var friendList: List<Friend> = emptyList()
-    private var user = UserInfo("", "", "", "")
-
-    companion object {
-        private const val TYPE_USER = 0
-        private const val TYPE_FRIEND = 1
-    }
+    private var friends: List<Friend> = emptyList()
+    private var user = UserInfo("", "", "")
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
@@ -42,21 +39,26 @@ class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is UserViewHolder -> holder.onBind(user)
-            is FriendViewHolder -> holder.onBind(friendList[position - 1])
+            is FriendViewHolder -> holder.onBind(friends[position - 1])
         }
     }
 
     override fun getItemCount() : Int {
-        return friendList.size + 1
+        return friends.size + 1
     }
 
-    fun setFriendList(friendList: List<Friend>) {
-        this.friendList = friendList.toList()
+    fun setFriends(friends: List<Friend>) {
+        this.friends = friends.toList()
         notifyDataSetChanged()
     }
 
     fun setUser(userInfo: UserInfo) {
-        this.user = userInfo
+        user = userInfo
         notifyDataSetChanged()
+    }
+
+    companion object {
+        private const val TYPE_USER = 0
+        private const val TYPE_FRIEND = 1
     }
 }

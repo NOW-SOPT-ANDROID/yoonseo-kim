@@ -6,12 +6,12 @@
     <string name="id">ID</string>
     <string name="pwd">비밀번호</string>
     <string name="nickname">닉네임</string>
-    <string name="mbti">MBTI</string>
+    <string name="phone">Phone</string>
 
     <string name="id_hint">아이디를 입력해주세요</string>
     <string name="pwd_hint">비밀번호를 입력해주세요</string>
     <string name="nickname_hint">닉네임을 입력해주세요</string>
-    <string name="mbti_hint">MBTI를 입력해주세요</string>
+    <string name="phone_hint">전화번호를 입력해주세요</string>
 
     <string name="btn_login">로그인 하기</string>
     <string name="btn_sign_up">회원가입 하기</string>
@@ -31,4 +31,10 @@
     <string name="home_nav">Home</string>
     <string name="search_nav">Search</string>
     <string name="my_page_nav">My Page</string>
+
+    <string name="success_message">회원가입 성공 유저의 ID는 %1$s 입니둥</string>
+    <string name="login_tag">Login</string>
+    <string name="login_data_message">data: %1$s, userId: %2$s</string>
+    <string name="fail_message">로그인이 실패 %1$s</string>
+    <string name="server_error_message">서버 에러 발생</string>
 </resources>
