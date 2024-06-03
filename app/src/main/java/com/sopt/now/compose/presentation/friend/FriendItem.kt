@@ -17,11 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.sopt.now.compose.data.dto.response.ResponseFriendDto
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun FriendItem(friend: ResponseFriendDto.Data) {
+fun FriendItem(friend: Friend) {
     Row(
         modifier = Modifier
             .height(80.dp)
