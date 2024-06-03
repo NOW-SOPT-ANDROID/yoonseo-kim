@@ -39,14 +39,8 @@ fun MyPageScreen(context: Context, userId: Int) {
     val context = LocalContext.current
 
     val viewModel: MainViewModel = viewModel()
-
-    val userInfoState = remember { mutableStateOf<UserInfo?>(null) }
-
-    LaunchedEffect(userId) {
-        viewModel.getUserInfo(userId)
-    }
-
     val userInfo by viewModel.userInfo.observeAsState()
+    val userInfoState = remember { mutableStateOf<UserInfo?>(null) }
 
     userInfo?.let {
         userInfoState.value = UserInfo(
