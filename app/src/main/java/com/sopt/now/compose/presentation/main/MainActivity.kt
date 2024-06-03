@@ -27,10 +27,12 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.sopt.now.compose.core.view.BottomNavigationItem
 import com.sopt.now.compose.presentation.home.HomeScreen
+import com.sopt.now.compose.presentation.main.MainActivity.Companion.HOME
+import com.sopt.now.compose.presentation.main.MainActivity.Companion.MY_PAGE
+import com.sopt.now.compose.presentation.main.MainActivity.Companion.SEARCH
 import com.sopt.now.compose.presentation.mypage.MyPageScreen
 import com.sopt.now.compose.presentation.search.SearchScreen
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
@@ -47,18 +49,23 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     userId?.let {
-                        Scaffold(userId = userId.toInt())
+                        Main(userId = userId.toInt())
                     }
                 }
             }
         }
     }
+
+    companion object {
+        const val HOME = 0
+        const val SEARCH = 1
+        const val MY_PAGE = 2
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Scaffold(userId: Int) {
-    val context = LocalContext.current
+fun Main(userId: Int) {
     var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
         BottomNavigationItem(
@@ -106,13 +113,13 @@ fun Scaffold(userId: Int) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             when(selectedItem) {
-                0 -> {
+                HOME -> {
                     HomeScreen(userId)
                 }
-                1 -> {
+                SEARCH -> {
                     SearchScreen()
                 }
-                2 -> {
+                MY_PAGE -> {
                     MyPageScreen()
                 }
             }
