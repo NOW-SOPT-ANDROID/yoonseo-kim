@@ -27,13 +27,7 @@ class MainViewModel : ViewModel() {
             runCatching {
                 userService.getUserInfo(userId)
             }.onSuccess {
-                it.body()?.data?.let { userInfoDto ->
-                    _userInfo.value = UserInfo(
-                        nickname = userInfoDto.nickname,
-                        phone = userInfoDto.phone,
-                        authenticationId = userInfoDto.authenticationId
-                    )
-                }
+                _userInfo.value = it.body()?.data
             }.onFailure {
                 if (it is HttpException) {
                     Log.d("UserInfo", "서버 통신 오류")

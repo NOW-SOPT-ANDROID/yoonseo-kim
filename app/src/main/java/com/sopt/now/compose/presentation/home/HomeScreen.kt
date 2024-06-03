@@ -31,9 +31,7 @@ fun HomeScreen(context: Context, userId: Int) {
 
     val userInfoState = remember { mutableStateOf<UserInfo?>(null) }
 
-    LaunchedEffect(userId) {
-        mainViewModel.getUserInfo(userId)
-    }
+    mainViewModel.getUserInfo(userId)
 
     LaunchedEffect(userInfo) {
         userInfo?.let {
