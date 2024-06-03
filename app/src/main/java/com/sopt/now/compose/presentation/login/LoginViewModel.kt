@@ -22,7 +22,7 @@ class LoginViewModel : ViewModel() {
     private val _userId = MutableLiveData<String>()
     val userId: LiveData<String> get() = _userId
 
-    fun login(request: RequestLoginDto, activity: Activity) {
+    fun login(request: RequestLoginDto) {
         viewModelScope.launch {
             runCatching {
                 authService.login(request)
@@ -30,7 +30,6 @@ class LoginViewModel : ViewModel() {
                 val userId = it.headers()["location"]
                 _userId.value = userId.toString()
                 _loginState.value = UiState(true, "로그인 성공 !")
-                navigateToMain(userId, activity)
             }.onFailure {
                 if (it is HttpException) {
                     _loginState.value = UiState(false, it.message())
@@ -39,13 +38,5 @@ class LoginViewModel : ViewModel() {
                 }
             }
         }
-    }
-
-    private fun navigateToMain(userId: String?, activity: Activity) {
-        val intent = Intent(activity, MainActivity::class.java).apply {
-            putExtra("userId", userId)
-        }
-        activity.startActivity(intent)
-        activity.finish()
     }
 }

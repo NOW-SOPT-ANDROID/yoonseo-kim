@@ -34,6 +34,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
 import com.sopt.now.compose.presentation.main.MainActivity
@@ -54,7 +56,7 @@ class LoginActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginPage(viewModel = viewModel, activity = this)
+                    LoginPage(viewModel = viewModel)
                 }
             }
         }
@@ -63,8 +65,7 @@ class LoginActivity : ComponentActivity() {
             when {
                 state.isSuccess -> {
                     showToast(state.message)
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    navigateToMain(viewModel.userId.value)
                 }
                 else -> {
                     showToast(state.message)
@@ -72,10 +73,18 @@ class LoginActivity : ComponentActivity() {
             }
         })
     }
+
+    private fun navigateToMain(userId: String?) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("userId", userId)
+        }
+        startActivity(intent)
+        finish()
+    }
 }
 
 @Composable
-fun LoginPage(viewModel: LoginViewModel, activity: Activity) {
+fun LoginPage(viewModel: LoginViewModel) {
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -134,7 +143,7 @@ fun LoginPage(viewModel: LoginViewModel, activity: Activity) {
         Button(
             onClick = {
                 val request = RequestLoginDto(authenticationId = id, password = password)
-                viewModel.login(request, activity)
+                viewModel.login(request)
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -160,3 +169,5 @@ fun LoginPage(viewModel: LoginViewModel, activity: Activity) {
         }
     }
 }
+
+
