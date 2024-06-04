@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.core.util.showToast
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.data.dto.request.RequestSignUpDto
@@ -29,11 +30,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initObserver() {
         viewModel.signUpState.observe(this) {
-            Toast.makeText(
-                this@SignUpActivity,
-                it.message,
-                Toast.LENGTH_SHORT,
-            ).show()
+            this@SignUpActivity.showToast(it.message)
             if (it.isSuccess) {
                 navigateToLogin()
             }
@@ -41,8 +38,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun navigateToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
         finish()
     }
 

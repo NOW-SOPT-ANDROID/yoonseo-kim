@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.core.util.showToast
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.databinding.ActivityLoginBinding
@@ -35,11 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initObserver() {
         viewModel.loginState.observe(this) {
             if (it.isSuccess) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    it.message,
-                    Toast.LENGTH_SHORT,
-                ).show()
+                this@LoginActivity.showToast(it.message)
             }
         }
     }
