@@ -22,13 +22,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
 
         initAdapter()
 
-        homeViewModel.friends.observe(viewLifecycleOwner) { friends ->
-            friendAdapter.setFriends(friends)
-        }
-
-        mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            updateUI(userInfo)
-        }
+        observeFriends()
+        observeUserInfo()
 
         homeViewModel.getFriends()
 
@@ -42,6 +37,18 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
         binding.rvFriends.run {
             adapter = friendAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun observeFriends() {
+        homeViewModel.friends.observe(viewLifecycleOwner) { friends ->
+            friendAdapter.setFriends(friends)
+        }
+    }
+
+    private fun observeUserInfo() {
+        mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+            updateUI(userInfo)
         }
     }
 

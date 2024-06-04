@@ -23,6 +23,20 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
         }
 
         setUpListener()
+
+        observeUserInfo()
+    }
+
+    private fun setUpListener() {
+        binding.btnLogout.setOnClickListener {
+            val intent = Intent(activity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            activity?.finish()
+        }
+    }
+
+    private fun observeUserInfo() {
         viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
             updateUI(userInfo)
         }
@@ -33,15 +47,6 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
             tvMyPageNickname.text = userInfo.nickname
             tvMyPageId.text = userInfo.authenticationId
             tvMyPagePhone.text = userInfo.phone
-        }
-    }
-
-    private fun setUpListener() {
-        binding.btnLogout.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            activity?.finish()
         }
     }
 }
