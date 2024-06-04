@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.sopt.now.util.base.BindingFragment
+import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.presentation.main.MainViewModel

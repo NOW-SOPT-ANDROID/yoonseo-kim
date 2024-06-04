@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sopt.now.util.base.BindingFragment
+import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.friend.FriendAdapter
 import com.sopt.now.presentation.main.MainViewModel

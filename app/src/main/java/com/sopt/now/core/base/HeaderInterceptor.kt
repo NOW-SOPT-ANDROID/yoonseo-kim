@@ -1,4 +1,4 @@
-package com.sopt.now.util
+package com.sopt.now.core.base
 
 import okhttp3.Interceptor
 import okhttp3.Response
