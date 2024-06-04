@@ -28,7 +28,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.liveData.observe(this) {
+        viewModel.signUpState.observe(this) {
             Toast.makeText(
                 this@SignUpActivity,
                 it.message,
