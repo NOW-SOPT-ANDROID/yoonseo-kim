@@ -4,36 +4,35 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.response.ResponseUserInfoDto
 import com.sopt.now.presentation.user.UserInfo
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
+    private val userService by lazy { ServicePool.userService }
+
     private val _userInfo = MutableLiveData<UserInfo>()
     val userInfo: LiveData<UserInfo> = _userInfo
     fun getUserInfo(userId: Int) {
-        ServicePool.userService.getUserInfo(userId).enqueue(object : Callback<ResponseUserInfoDto> {
-            override fun onResponse(
-                call: Call<ResponseUserInfoDto>,
-                response: Response<ResponseUserInfoDto>,
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.data?.let {
-                        val userInfo = UserInfo(it.authenticationId, it.nickname, it.phone)
-                        _userInfo.value = userInfo
-                    }
+        viewModelScope.launch {
+            runCatching {
+                userService.getUserInfo(userId)
+            }.onSuccess { response ->
+                _userInfo.value = response.data
+            }.onFailure {
+                if (it is HttpException) {
+                    Log.d("UserInfo", "서버 통신 오류")
                 } else {
-                    Log.e("Home", "사용자 정보 불러오기 실패")
+                    Log.d("UserInfo", "사용자 정보 불러오기 실패")
                 }
             }
-
-            override fun onFailure(call: Call<ResponseUserInfoDto>, t: Throwable) {
-                Log.e("Home", "서버 통신 오류")
-            }
-        })
+        }
     }
 }
