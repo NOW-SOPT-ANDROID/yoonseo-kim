@@ -15,7 +15,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
     private val mainViewModel by viewModels<MainViewModel>()
     private val homeViewModel by viewModels<HomeViewModel>()
 
-    private val friendAdapter = FriendAdapter()
+    private val friendAdapter by lazy { FriendAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,10 +34,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
     }
 
     private fun initAdapter() {
-        binding.rvFriends.run {
-            adapter = friendAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
+        binding.rvFriends.adapter = friendAdapter
     }
 
     private fun observeFriends() {
