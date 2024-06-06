@@ -12,7 +12,7 @@ import retrofit2.HttpException
 
 class LoginViewModel : ViewModel() {
 
-    private val authService by lazy { ServicePool.authService }
+    private val authService = ServicePool.authService
     private val _loginState = MutableLiveData<UiState>()
     val loginState: LiveData<UiState> get() = _loginState
 

@@ -6,17 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.dto.response.ResponseFriendDto
 import com.sopt.now.presentation.friend.Friend
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.HttpException
-import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
-    private val friendService by lazy { ServicePool.friendService }
+    private val friendService = ServicePool.friendService
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
 
