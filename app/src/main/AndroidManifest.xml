@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".presentation.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.NOWSOPTAndroid">
@@ -28,10 +28,10 @@
         </activity>
         <activity
             android:exported="false"
-            android:name=".activity.MainActivity"/>
+            android:name=".presentation.main.MainActivity"/>
         <activity
             android:exported="false"
-            android:name=".activity.SignUpActivity"/>
+            android:name=".presentation.signup.SignUpActivity"/>
     </application>
 
 </manifest>
