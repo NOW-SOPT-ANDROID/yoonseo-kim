@@ -2,6 +2,7 @@ package com.sopt.now.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.sopt.now.core.base.factory.AuthViewModelFactory

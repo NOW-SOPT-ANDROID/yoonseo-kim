@@ -7,7 +7,7 @@ class FriendRepository(private val friendService: FriendService) {
     suspend fun getFriends(page: Int): Result<List<Friend>> {
         return runCatching {
             val response = friendService.getFriends(page)
-            response.data ?: throw IllegalStateException("No data available")
+            response.data
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.sopt.now.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.core.base.BindingFragment
@@ -19,11 +20,11 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
 
     private val userRepository by lazy { UserRepository(ServicePool.userService) }
     private val userViewModelFactory by lazy { UserViewModelFactory(userRepository) }
-    private val mainViewModel by viewModels<MainViewModel> { userViewModelFactory }
+    private val mainViewModel: MainViewModel by viewModels { userViewModelFactory }
 
     private val friendRepository by lazy { FriendRepository(ServicePool.friendService) }
     private val friendViewModelFactory by lazy { FriendViewModelFactory(friendRepository) }
-    private val homeViewModel by viewModels<HomeViewModel> { friendViewModelFactory }
+    private val homeViewModel: HomeViewModel by viewModels { friendViewModelFactory }
 
     private val friendAdapter by lazy { FriendAdapter() }
 

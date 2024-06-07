@@ -2,6 +2,7 @@ package com.sopt.now.presentation.mypage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.core.base.BindingFragment
@@ -18,7 +19,7 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
 
     private val userRepository by lazy { UserRepository(ServicePool.userService) }
     private val viewModelFactory by lazy { UserViewModelFactory(userRepository) }
-    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

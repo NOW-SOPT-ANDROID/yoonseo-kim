@@ -10,7 +10,7 @@ class AuthRepository(private val authService: AuthService) {
         return runCatching {
             val response = authService.login(request)
             val userId = response.headers()["location"]
-            userId ?: throw IllegalStateException("User ID not found in response headers")
+            userId ?: throw IllegalStateException("User ID not found")
         }
     }
 
