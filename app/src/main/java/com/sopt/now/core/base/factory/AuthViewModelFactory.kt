@@ -1,4 +1,4 @@
-package com.sopt.now.core.base
+package com.sopt.now.core.base.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

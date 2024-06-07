@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.core.base.AuthViewModelFactory
+import com.sopt.now.core.base.factory.AuthViewModelFactory
 import com.sopt.now.core.util.showToast
 import com.sopt.now.data.ServicePool
 import com.sopt.now.presentation.main.MainActivity
