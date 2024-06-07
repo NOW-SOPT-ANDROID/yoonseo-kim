@@ -24,7 +24,8 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
                 .onSuccess {
                     _userId.value = userId.toString()
                     _loginState.value = UiState(true, "로그인 성공")
-                }.onFailure {
+                }
+                .onFailure {
                     if (it is HttpException) {
                         _loginState.value = UiState(false, it.message())
                     } else {

@@ -21,7 +21,8 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
             authRepository.signUp(request)
                 .onSuccess {
                     _signUpState.value = UiState(true, "회원가입 성공")
-                }.onFailure {
+                }
+                .onFailure {
                     if (it is HttpException) {
                         _signUpState.value = UiState(false, it.message())
                     } else {
