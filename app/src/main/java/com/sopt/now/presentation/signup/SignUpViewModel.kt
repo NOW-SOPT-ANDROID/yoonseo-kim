@@ -7,10 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.view.UiState
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.repository.AuthRepository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     private val authService = ServicePool.authService
     private val _signUpState = MutableLiveData<UiState>()
@@ -18,17 +19,16 @@ class SignUpViewModel : ViewModel() {
 
     fun signUp(request: RequestSignUpDto) {
         viewModelScope.launch {
-            runCatching {
-                authService.signUp(request)
-            }.onSuccess {
-                _signUpState.value = UiState(true, it.message)
-            }.onFailure {
-                if (it is HttpException) {
-                    _signUpState.value = UiState(false, it.message())
-                } else {
-                    _signUpState.value = UiState(false, "로그인이 실패")
+            authRepository.signUp(request)
+                .onSuccess {
+                    _signUpState.value = UiState(true, "회원가입 성공")
+                }.onFailure {
+                    if (it is HttpException) {
+                        _signUpState.value = UiState(false, it.message())
+                    } else {
+                        _signUpState.value = UiState(false, "회원가입 실패")
+                    }
                 }
-            }
         }
     }
 }

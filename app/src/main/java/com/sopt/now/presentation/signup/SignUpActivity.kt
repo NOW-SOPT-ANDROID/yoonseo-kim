@@ -1,19 +1,23 @@
 package com.sopt.now.presentation.signup
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.core.base.AuthViewModelFactory
 import com.sopt.now.core.util.showToast
-import com.sopt.now.presentation.login.LoginActivity
+import com.sopt.now.data.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.repository.AuthRepository
 
 class SignUpActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
-    private val viewModel by viewModels<SignUpViewModel>()
+
+    private val authRepository by lazy { AuthRepository(ServicePool.authService) }
+    private val viewModelFactory by lazy { AuthViewModelFactory(authRepository) }
+
+    private val viewModel: SignUpViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -2,7 +2,6 @@ package com.sopt.now.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.sopt.now.core.base.AuthViewModelFactory
@@ -13,7 +12,6 @@ import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.data.repository.AuthRepository
-import com.sopt.now.data.service.AuthService
 
 class LoginActivity : AppCompatActivity() {
 
