@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.AuthViewModelFactory
 import com.sopt.now.core.base.factory.FriendViewModelFactory
+import com.sopt.now.core.base.factory.UserViewModelFactory
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.repository.FriendRepository
 import com.sopt.now.data.repository.UserRepository
@@ -16,7 +17,9 @@ import com.sopt.now.presentation.user.UserInfo
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val mainViewModel by viewModels<MainViewModel>()
+    private val userRepository by lazy { UserRepository(ServicePool.userService) }
+    private val userViewModelFactory by lazy { UserViewModelFactory(userRepository) }
+    private val mainViewModel by viewModels<MainViewModel> { userViewModelFactory }
 
     private val friendRepository by lazy { FriendRepository(ServicePool.friendService) }
     private val friendViewModelFactory by lazy { FriendViewModelFactory(friendRepository) }

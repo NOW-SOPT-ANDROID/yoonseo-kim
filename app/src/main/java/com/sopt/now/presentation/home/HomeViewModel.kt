@@ -20,7 +20,8 @@ class HomeViewModel(private val friendRepository: FriendRepository) : ViewModel(
             friendRepository.getFriends(PAGE)
                 .onSuccess { friends ->
                     _friends.postValue(friends)
-                }.onFailure {
+                }
+                .onFailure {
                 if (it is HttpException) {
                     Log.e("FriendList", "서버 통신 오류")
                 } else {
