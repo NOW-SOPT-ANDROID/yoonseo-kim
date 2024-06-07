@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.repository.FriendRepository
 import com.sopt.now.compose.presentation.friend.Friend
 import kotlinx.coroutines.launch
@@ -13,7 +12,6 @@ import retrofit2.HttpException
 
 class HomeViewModel(private val friendRepository: FriendRepository) : ViewModel() {
 
-    //private val friendService by lazy { ServicePool.friendService }
     private val _friendList = MutableLiveData<List<Friend>>()
     val friendList: LiveData<List<Friend>> get() = _friendList
 

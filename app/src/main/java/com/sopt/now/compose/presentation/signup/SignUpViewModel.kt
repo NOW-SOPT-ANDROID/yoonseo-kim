@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.core.view.UiState
 import com.sopt.now.compose.data.dto.request.RequestSignUpDto
 import com.sopt.now.compose.data.repository.AuthRepository
@@ -13,7 +12,6 @@ import retrofit2.HttpException
 
 class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    //private val authService by lazy { ServicePool.authService }
     private val _signUpState = MutableLiveData<UiState>()
     val signUpState: LiveData<UiState> get() = _signUpState
 

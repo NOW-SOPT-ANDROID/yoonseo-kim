@@ -5,15 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.repository.UserRepository
 import com.sopt.now.compose.presentation.user.UserInfo
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
-
-    //private val userService by lazy { ServicePool.userService }
 
     private val _userInfo = MutableLiveData<UserInfo?>()
     val userInfo: LiveData<UserInfo?> get() = _userInfo
