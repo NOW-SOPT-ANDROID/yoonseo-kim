@@ -5,24 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.ServicePool
+import com.sopt.now.data.repository.FriendRepository
 import com.sopt.now.presentation.friend.Friend
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val friendRepository: FriendRepository) : ViewModel() {
 
-    private val friendService = ServicePool.friendService
     private val _friends = MutableLiveData<List<Friend>>()
     val friends: LiveData<List<Friend>> = _friends
 
     fun getFriends() {
         viewModelScope.launch {
-            runCatching {
-                friendService.getFriends(PAGE)
-            }.onSuccess { response ->
-                _friends.postValue(response.data)
-            }.onFailure {
+            friendRepository.getFriends(PAGE)
+                .onSuccess { friends ->
+                    _friends.postValue(friends)
+                }.onFailure {
                 if (it is HttpException) {
                     Log.e("FriendList", "서버 통신 오류")
                 } else {
