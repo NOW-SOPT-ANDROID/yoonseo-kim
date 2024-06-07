@@ -14,6 +14,11 @@ import com.sopt.now.compose.presentation.friend.FriendItem
 import com.sopt.now.compose.presentation.user.UserItem
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.now.compose.core.base.factory.FriendViewModelFactory
+import com.sopt.now.compose.core.base.factory.UserViewModelFactory
+import com.sopt.now.compose.data.ServicePool
+import com.sopt.now.compose.data.repository.FriendRepository
+import com.sopt.now.compose.data.repository.UserRepository
 import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
 
@@ -21,8 +26,14 @@ import com.sopt.now.compose.presentation.user.UserInfo
 @Composable
 fun HomeScreen(userId: Int) {
 
-    val mainViewModel: MainViewModel = viewModel()
-    val homeViewModel: HomeViewModel = viewModel()
+    val userRepository by remember { mutableStateOf(UserRepository(ServicePool.userService)) }
+    val userViewModelFactory by remember { mutableStateOf(UserViewModelFactory(userRepository)) }
+
+    val friendRepository by remember { mutableStateOf(FriendRepository(ServicePool.friendService)) }
+    val friendViewModelFactory by remember { mutableStateOf(FriendViewModelFactory(friendRepository)) }
+
+    val mainViewModel: MainViewModel = viewModel(factory = userViewModelFactory)
+    val homeViewModel: HomeViewModel = viewModel(factory = friendViewModelFactory)
 
     val userInfo by mainViewModel.userInfo.observeAsState()
     val friendList by homeViewModel.friendList.observeAsState(emptyList())
