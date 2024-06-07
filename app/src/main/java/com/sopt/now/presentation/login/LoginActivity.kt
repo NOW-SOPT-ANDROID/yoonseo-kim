@@ -5,16 +5,24 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.sopt.now.core.base.AuthViewModelFactory
 import com.sopt.now.core.util.showToast
+import com.sopt.now.data.ServicePool
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.data.dto.request.RequestLoginDto
+import com.sopt.now.data.repository.AuthRepository
+import com.sopt.now.data.service.AuthService
 
 class LoginActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
-    private val viewModel by viewModels<LoginViewModel>()
+
+    private val authRepository by lazy { AuthRepository(ServicePool.authService) }
+    private val viewModelFactory by lazy { AuthViewModelFactory(authRepository) }
+
+    private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
