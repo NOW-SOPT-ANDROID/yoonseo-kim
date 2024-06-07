@@ -21,8 +21,8 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun login(request: RequestLoginDto) {
         viewModelScope.launch {
             authRepository.login(request)
-                .onSuccess {
-                    _userId.value = userId.toString()
+                .onSuccess { userId ->
+                    _userId.value = userId
                     _loginState.value = UiState(true, "로그인 성공")
                 }
                 .onFailure {
