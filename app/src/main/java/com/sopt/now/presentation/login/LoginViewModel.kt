@@ -12,7 +12,6 @@ import retrofit2.HttpException
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    //private val authService = ServicePool.authService
     private val _loginState = MutableLiveData<UiState>()
     val loginState: LiveData<UiState> get() = _loginState
 
