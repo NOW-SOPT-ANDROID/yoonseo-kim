@@ -2,12 +2,12 @@ package com.sopt.now.presentation.mypage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.UserViewModelFactory
 import com.sopt.now.data.ServicePool
+import com.sopt.now.data.repoImpl.UserRepositoryImpl
 import com.sopt.now.data.repository.UserRepository
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
@@ -17,7 +17,7 @@ import com.sopt.now.presentation.user.UserInfo
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
 
-    private val userRepository by lazy { UserRepository(ServicePool.userService) }
+    private val userRepository: UserRepository by lazy { UserRepositoryImpl(ServicePool.userService) }
     private val viewModelFactory by lazy { UserViewModelFactory(userRepository) }
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 

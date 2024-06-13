@@ -8,13 +8,14 @@ import com.sopt.now.core.util.showToast
 import com.sopt.now.data.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repository.AuthRepository
 
 class SignUpActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
 
-    private val authRepository by lazy { AuthRepository(ServicePool.authService) }
+    private val authRepository: AuthRepository by lazy { AuthRepositoryImpl(ServicePool.authService) }
     private val viewModelFactory by lazy { AuthViewModelFactory(authRepository) }
 
     private val viewModel: SignUpViewModel by viewModels { viewModelFactory }

@@ -2,7 +2,6 @@ package com.sopt.now.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.sopt.now.core.base.factory.AuthViewModelFactory
@@ -12,13 +11,14 @@ import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.data.dto.request.RequestLoginDto
+import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repository.AuthRepository
 
 class LoginActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
-    private val authRepository by lazy { AuthRepository(ServicePool.authService) }
+    private val authRepository: AuthRepository by lazy { AuthRepositoryImpl(ServicePool.authService) }
     private val viewModelFactory by lazy { AuthViewModelFactory(authRepository) }
 
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
