@@ -23,9 +23,9 @@ class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
                 }
                 .onFailure {
                     if (it is HttpException) {
-                        Log.d("UserInfo", "서버 통신 오류")
+                        Log.e("UserInfo", "서버 통신 오류")
                     } else {
-                        Log.d("UserInfo", "사용자 정보 불러오기 실패")
+                        Log.e("UserInfo", "사용자 정보 불러오기 실패")
                     }
                 }
         }

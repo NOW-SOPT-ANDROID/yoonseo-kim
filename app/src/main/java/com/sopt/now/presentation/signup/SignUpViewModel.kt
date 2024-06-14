@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.view.UiState
-import com.sopt.now.data.ServicePool
 import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.repository.AuthRepository
 import kotlinx.coroutines.launch
