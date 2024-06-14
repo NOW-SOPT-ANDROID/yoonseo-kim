@@ -3,7 +3,7 @@ package com.sopt.now.presentation.signup
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.sopt.now.core.base.factory.AuthViewModelFactory
+import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.core.util.showToast
 import com.sopt.now.data.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
@@ -16,7 +16,7 @@ class SignUpActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
 
     private val authRepository: AuthRepository by lazy { AuthRepositoryImpl(ServicePool.authService) }
-    private val viewModelFactory by lazy { AuthViewModelFactory(authRepository) }
+    private val viewModelFactory by lazy { BaseViewModelFactory(authRepository = authRepository) }
 
     private val viewModel: SignUpViewModel by viewModels { viewModelFactory }
 

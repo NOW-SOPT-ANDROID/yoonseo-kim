@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.sopt.now.core.base.BindingFragment
-import com.sopt.now.core.base.factory.UserViewModelFactory
+import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.repoImpl.UserRepositoryImpl
 import com.sopt.now.data.repository.UserRepository
@@ -18,7 +18,7 @@ import com.sopt.now.presentation.user.UserInfo
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
 
     private val userRepository: UserRepository by lazy { UserRepositoryImpl(ServicePool.userService) }
-    private val viewModelFactory by lazy { UserViewModelFactory(userRepository) }
+    private val viewModelFactory by lazy { BaseViewModelFactory(userRepository = userRepository) }
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
