@@ -15,13 +15,9 @@ import com.sopt.now.compose.presentation.user.UserItem
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.core.base.factory.BaseViewModelFactory
-import com.sopt.now.compose.core.base.factory.FriendViewModelFactory
-import com.sopt.now.compose.core.base.factory.UserViewModelFactory
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.repoImpl.FriendRepositoryImpl
 import com.sopt.now.compose.data.repoImpl.UserRepositoryImpl
-import com.sopt.now.compose.data.repository.FriendRepository
-import com.sopt.now.compose.data.repository.UserRepository
 import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
 

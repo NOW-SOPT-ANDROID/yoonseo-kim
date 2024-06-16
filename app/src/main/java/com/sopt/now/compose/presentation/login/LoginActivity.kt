@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
-import com.sopt.now.compose.core.base.factory.AuthViewModelFactory
 import com.sopt.now.compose.core.base.factory.BaseViewModelFactory
 import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.presentation.signup.SignUpActivity
@@ -44,7 +43,6 @@ import com.sopt.now.compose.core.util.showToast
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.request.RequestLoginDto
 import com.sopt.now.compose.data.repoImpl.AuthRepositoryImpl
-import com.sopt.now.compose.data.repository.AuthRepository
 
 class LoginActivity : ComponentActivity() {
 

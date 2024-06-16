@@ -28,10 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
 import com.sopt.now.compose.core.base.factory.BaseViewModelFactory
-import com.sopt.now.compose.core.base.factory.UserViewModelFactory
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.repoImpl.UserRepositoryImpl
-import com.sopt.now.compose.data.repository.UserRepository
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
