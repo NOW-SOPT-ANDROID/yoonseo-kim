@@ -18,7 +18,6 @@ import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.user.UserInfo
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 

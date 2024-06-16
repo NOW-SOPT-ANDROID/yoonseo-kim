@@ -14,7 +14,6 @@ import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repository.AuthRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class SignUpActivity : AppCompatActivity() {
 

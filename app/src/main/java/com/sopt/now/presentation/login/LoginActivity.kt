@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.factory.BaseViewModelFactory
@@ -18,7 +17,6 @@ import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repository.AuthRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
