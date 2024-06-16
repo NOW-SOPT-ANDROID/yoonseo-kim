@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sopt.now.compose.R
+import com.sopt.now.compose.core.base.factory.BaseViewModelFactory
+import com.sopt.now.compose.data.ServicePool
+import com.sopt.now.compose.data.repoImpl.UserRepositoryImpl
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
@@ -36,7 +39,10 @@ fun MyPageScreen() {
 
     val context = LocalContext.current
 
-    val viewModel: MainViewModel = viewModel()
+    val userRepository by remember { mutableStateOf(UserRepositoryImpl(ServicePool.userService)) }
+    val userViewModelFactory by remember { mutableStateOf(BaseViewModelFactory(userRepository = userRepository)) }
+
+    val viewModel: MainViewModel = viewModel(factory = userViewModelFactory)
     val userInfo by viewModel.userInfo.observeAsState()
     val userInfoState = remember { mutableStateOf<UserInfo?>(null) }
 
