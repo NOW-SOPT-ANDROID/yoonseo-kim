@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.core.util.showToast
 import com.sopt.now.data.ServicePool
@@ -13,6 +16,9 @@ import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repository.AuthRepository
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -41,20 +47,24 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.loginState.observe(this) {
-            if (it.isSuccess) {
-                this@LoginActivity.showToast(it.message)
+        viewModel.loginState.flowWithLifecycle(lifecycle).onEach { uiState ->
+            if (uiState.isSuccess) {
+                this@LoginActivity.showToast(uiState.message)
+                navigateToMain()
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun navigateToMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        viewModel.userId.observe(this) {
-            intent.putExtra("userId", viewModel.userId.value)
-            startActivity(intent)
-            finish()
-        }
+        viewModel.userId.flowWithLifecycle(lifecycle).onEach { userId ->
+            userId?.let {
+                val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
+                    putExtra("userId", it)
+                }
+                startActivity(intent)
+                finish()
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun navigateToSignUp(){

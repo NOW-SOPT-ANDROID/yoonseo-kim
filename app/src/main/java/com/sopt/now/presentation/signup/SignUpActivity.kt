@@ -3,6 +3,8 @@ package com.sopt.now.presentation.signup
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.core.util.showToast
 import com.sopt.now.data.ServicePool
@@ -10,6 +12,9 @@ import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repository.AuthRepository
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -34,12 +39,12 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.signUpState.observe(this) {
-            this@SignUpActivity.showToast(it.message)
-            if (it.isSuccess) {
+        viewModel.signUpState.flowWithLifecycle(lifecycle).onEach { uiState ->
+            if (uiState.isSuccess) {
+                this@SignUpActivity.showToast(uiState.message)
                 navigateToLogin()
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun navigateToLogin() {
