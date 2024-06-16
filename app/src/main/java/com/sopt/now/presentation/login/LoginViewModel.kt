@@ -23,7 +23,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
             authRepository.login(request)
                 .onSuccess { userId ->
                     _userId.value = userId
-                    _loginState.value = UiState(true, "로그인 성공")
+                    _loginState.value = UiState(true, "로그인 성공 ! userId는 $userId")
                 }
                 .onFailure {
                     if (it is HttpException) {

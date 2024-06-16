@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.data.ServicePool
@@ -13,6 +15,9 @@ import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.user.UserInfo
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
@@ -43,9 +48,9 @@ class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBind
     }
 
     private fun observeUserInfo() {
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+        viewModel.userInfo.flowWithLifecycle(lifecycle).onEach { userInfo ->
             updateUI(userInfo)
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun updateUI(userInfo: UserInfo) {

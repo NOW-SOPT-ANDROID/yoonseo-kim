@@ -3,6 +3,8 @@ package com.sopt.now.presentation.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.data.ServicePool
@@ -14,6 +16,9 @@ import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.friend.FriendAdapter
 import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.user.UserInfo
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
@@ -48,15 +53,15 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
     }
 
     private fun observeFriends() {
-        homeViewModel.friends.observe(viewLifecycleOwner) { friends ->
+        homeViewModel.friends.flowWithLifecycle(lifecycle).onEach { friends ->
             friendAdapter.setFriends(friends)
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun observeUserInfo() {
-        mainViewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+        mainViewModel.userInfo.flowWithLifecycle(lifecycle).onEach { userInfo ->
             updateUI(userInfo)
-        }
+        }.launchIn(lifecycleScope)
     }
 
     private fun updateUI(userInfo: UserInfo) {
