@@ -7,19 +7,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.data.repository.FriendRepository
 import com.sopt.now.presentation.friend.Friend
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class HomeViewModel(private val friendRepository: FriendRepository) : ViewModel() {
 
-    private val _friends = MutableLiveData<List<Friend>>()
-    val friends: LiveData<List<Friend>> = _friends
+    private val _friends = MutableStateFlow<List<Friend>>(emptyList())
+    val friends: StateFlow<List<Friend>> = _friends
 
     fun getFriends() {
         viewModelScope.launch {
             friendRepository.getFriends(PAGE)
                 .onSuccess { friends ->
-                    _friends.postValue(friends)
+                    _friends.value = friends
                 }
                 .onFailure {
                 if (it is HttpException) {

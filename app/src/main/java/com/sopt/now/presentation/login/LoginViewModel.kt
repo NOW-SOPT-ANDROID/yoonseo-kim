@@ -1,22 +1,22 @@
 package com.sopt.now.presentation.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.view.UiState
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.data.repository.AuthRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _loginState = MutableLiveData<UiState>()
-    val loginState: LiveData<UiState> get() = _loginState
+    private val _loginState = MutableStateFlow(UiState())
+    val loginState: StateFlow<UiState> get() = _loginState
 
-    private val _userId = MutableLiveData<String>()
-    val userId: LiveData<String> get() = _userId
+    private val _userId = MutableStateFlow<String?>(null)
+    val userId: StateFlow<String?> get() = _userId
 
     fun login(request: RequestLoginDto) {
         viewModelScope.launch {

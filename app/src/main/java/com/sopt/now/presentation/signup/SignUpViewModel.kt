@@ -7,13 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.sopt.now.core.view.UiState
 import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.repository.AuthRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
 class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _signUpState = MutableLiveData<UiState>()
-    val signUpState: LiveData<UiState> get() = _signUpState
+    private val _signUpState = MutableStateFlow(UiState())
+    val signUpState: StateFlow<UiState> get() = _signUpState
 
     fun signUp(request: RequestSignUpDto) {
         viewModelScope.launch {
