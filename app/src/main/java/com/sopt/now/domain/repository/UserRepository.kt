@@ -1,6 +1,6 @@
-package com.sopt.now.data.repository
+package com.sopt.now.domain.repository
 
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.entity.UserInfo
 
 interface UserRepository {
     suspend fun getUserInfo(userId: Int): Result<UserInfo>

@@ -1,4 +1,4 @@
-package com.sopt.now.data.repository
+package com.sopt.now.domain.repository
 
 import com.sopt.now.presentation.friend.Friend
 

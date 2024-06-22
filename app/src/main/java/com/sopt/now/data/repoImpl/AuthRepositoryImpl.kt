@@ -2,7 +2,7 @@ package com.sopt.now.data.repoImpl
 
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.data.dto.request.RequestSignUpDto
-import com.sopt.now.data.repository.AuthRepository
+import com.sopt.now.domain.repository.AuthRepository
 import com.sopt.now.data.service.AuthService
 
 class AuthRepositoryImpl(private val authService: AuthService) : AuthRepository {

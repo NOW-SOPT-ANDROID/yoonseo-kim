@@ -11,7 +11,7 @@ import com.sopt.now.data.ServicePool
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.repoImpl.AuthRepositoryImpl
-import com.sopt.now.data.repository.AuthRepository
+import com.sopt.now.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

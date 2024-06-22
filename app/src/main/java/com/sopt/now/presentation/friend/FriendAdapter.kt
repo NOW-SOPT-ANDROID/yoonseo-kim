@@ -3,7 +3,7 @@ package com.sopt.now.presentation.friend
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.entity.UserInfo
 import com.sopt.now.databinding.ItemFriendBinding
 import com.sopt.now.databinding.ItemUserBinding
 import com.sopt.now.presentation.user.UserViewHolder

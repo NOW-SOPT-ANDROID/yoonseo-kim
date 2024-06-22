@@ -10,12 +10,12 @@ import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.repoImpl.FriendRepositoryImpl
 import com.sopt.now.data.repoImpl.UserRepositoryImpl
-import com.sopt.now.data.repository.FriendRepository
-import com.sopt.now.data.repository.UserRepository
+import com.sopt.now.domain.repository.FriendRepository
+import com.sopt.now.domain.repository.UserRepository
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.friend.FriendAdapter
 import com.sopt.now.presentation.main.MainViewModel
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.entity.UserInfo
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

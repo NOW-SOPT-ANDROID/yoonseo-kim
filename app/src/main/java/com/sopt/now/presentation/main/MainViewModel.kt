@@ -3,8 +3,8 @@ package com.sopt.now.presentation.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.repository.UserRepository
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.repository.UserRepository
+import com.sopt.now.domain.entity.UserInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

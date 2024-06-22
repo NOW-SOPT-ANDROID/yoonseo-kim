@@ -1,6 +1,6 @@
 package com.sopt.now.data.repoImpl
 
-import com.sopt.now.data.repository.FriendRepository
+import com.sopt.now.domain.repository.FriendRepository
 import com.sopt.now.data.service.FriendService
 import com.sopt.now.presentation.friend.Friend
 

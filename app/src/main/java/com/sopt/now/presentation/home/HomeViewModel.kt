@@ -3,7 +3,7 @@ package com.sopt.now.presentation.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sopt.now.data.repository.FriendRepository
+import com.sopt.now.domain.repository.FriendRepository
 import com.sopt.now.presentation.friend.Friend
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

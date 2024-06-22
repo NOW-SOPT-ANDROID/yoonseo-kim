@@ -1,6 +1,6 @@
 package com.sopt.now.data.dto.response
 
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.entity.UserInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

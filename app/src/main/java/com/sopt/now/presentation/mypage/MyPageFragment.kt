@@ -10,11 +10,11 @@ import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.data.ServicePool
 import com.sopt.now.data.repoImpl.UserRepositoryImpl
-import com.sopt.now.data.repository.UserRepository
+import com.sopt.now.domain.repository.UserRepository
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.presentation.main.MainViewModel
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.entity.UserInfo
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 

@@ -2,9 +2,9 @@ package com.sopt.now.core.base.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.now.data.repository.AuthRepository
-import com.sopt.now.data.repository.FriendRepository
-import com.sopt.now.data.repository.UserRepository
+import com.sopt.now.domain.repository.AuthRepository
+import com.sopt.now.domain.repository.FriendRepository
+import com.sopt.now.domain.repository.UserRepository
 import com.sopt.now.presentation.home.HomeViewModel
 import com.sopt.now.presentation.login.LoginViewModel
 import com.sopt.now.presentation.main.MainViewModel
