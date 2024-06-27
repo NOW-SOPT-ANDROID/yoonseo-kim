@@ -19,9 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
-    private val viewModelFactory by lazy { BaseViewModelFactory() }
-
-    private val viewModel: LoginViewModel by viewModels { viewModelFactory }
+    private val viewModel: LoginViewModel by viewModels { BaseViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
