@@ -8,9 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.core.util.showToast
 import com.sopt.now.data.ServicePool
+import com.sopt.now.data.datasource.AuthDataSource
+import com.sopt.now.data.datasourceImpl.AuthDataSourceImpl
 import com.sopt.now.databinding.ActivitySignUpBinding
 import com.sopt.now.data.dto.request.RequestSignUpDto
 import com.sopt.now.data.repoImpl.AuthRepositoryImpl
+import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,7 +22,8 @@ class SignUpActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySignUpBinding.inflate(layoutInflater) }
 
-    private val authRepository: AuthRepository by lazy { AuthRepositoryImpl(ServicePool.authService) }
+    private val authDataSource: AuthDataSource by lazy { AuthDataSourceImpl(ServicePool.authService) }
+    private val authRepository: AuthRepository by lazy { AuthRepositoryImpl(authDataSource) }
     private val viewModelFactory by lazy { BaseViewModelFactory(authRepository = authRepository) }
 
     private val viewModel: SignUpViewModel by viewModels { viewModelFactory }
@@ -50,14 +54,12 @@ class SignUpActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun getSignUpRequestDto(): RequestSignUpDto {
+    private fun getSignUpRequestDto(): UserEntity {
         val id = binding.etSignUpId.text.toString()
-        val password = binding.etSignUpPwd.text.toString()
         val nickname = binding.etSignUpNickname.text.toString()
         val phoneNumber = binding.etSignUpPhone.text.toString()
-        return RequestSignUpDto(
-            authenticationId = id,
-            password = password,
+        return UserEntity(
+            id = id,
             nickname = nickname,
             phone = phoneNumber
         )
