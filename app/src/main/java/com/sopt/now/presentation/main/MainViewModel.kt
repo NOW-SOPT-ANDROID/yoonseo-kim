@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.domain.repository.UserRepository
-import com.sopt.now.domain.entity.UserInfo
+import com.sopt.now.domain.entity.UserEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -12,12 +12,12 @@ import retrofit2.HttpException
 
 class MainViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _userInfo = MutableStateFlow(UserInfo())
-    val userInfo: StateFlow<UserInfo> = _userInfo
+    private val _userInfo = MutableStateFlow(UserEntity())
+    val userInfo: StateFlow<UserEntity> = _userInfo
 
     fun getUserInfo(userId: Int) {
         viewModelScope.launch {
-            userRepository.getUserInfo(userId)
+            userRepository.getUserInfo()
                 .onSuccess { userInfo ->
                     _userInfo.value = userInfo
                 }
