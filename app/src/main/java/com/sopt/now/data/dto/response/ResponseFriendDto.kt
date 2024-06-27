@@ -1,6 +1,6 @@
 package com.sopt.now.data.dto.response
 
-import com.sopt.now.presentation.friend.Friend
+import com.sopt.now.domain.entity.FriendEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,7 +15,7 @@ data class ResponseFriendDto(
     @SerialName("total_pages")
     val totalPages: Int,
     @SerialName("data")
-    val data: List<Friend>,
+    val data: List<FriendEntity>,
     @SerialName("support")
     val support: Support
 ) {
