@@ -1,30 +1,20 @@
 package com.sopt.now.core.base.factory
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sopt.now.data.ApiFactory
 import com.sopt.now.data.ServicePool
-import com.sopt.now.data.datasource.AuthDataSource
-import com.sopt.now.data.datasource.FriendDataSource
-import com.sopt.now.data.datasource.UserDataSource
 import com.sopt.now.data.datasourceImpl.AuthDataSourceImpl
 import com.sopt.now.data.datasourceImpl.FriendDataSourceImpl
 import com.sopt.now.data.datasourceImpl.UserDataSourceImpl
 import com.sopt.now.data.repoImpl.AuthRepositoryImpl
 import com.sopt.now.data.repoImpl.FriendRepositoryImpl
 import com.sopt.now.data.repoImpl.UserRepositoryImpl
-import com.sopt.now.domain.repository.AuthRepository
-import com.sopt.now.domain.repository.FriendRepository
-import com.sopt.now.domain.repository.UserRepository
 import com.sopt.now.presentation.home.HomeViewModel
 import com.sopt.now.presentation.login.LoginViewModel
 import com.sopt.now.presentation.main.MainViewModel
 import com.sopt.now.presentation.signup.SignUpViewModel
 
-class BaseViewModelFactory(
-    private val context: Context
-) : ViewModelProvider.Factory {
+class BaseViewModelFactory : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {

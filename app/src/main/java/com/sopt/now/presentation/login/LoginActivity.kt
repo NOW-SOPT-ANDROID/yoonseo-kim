@@ -2,22 +2,16 @@ package com.sopt.now.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.core.util.showToast
-import com.sopt.now.data.ServicePool
-import com.sopt.now.data.datasource.AuthDataSource
-import com.sopt.now.data.datasourceImpl.AuthDataSourceImpl
 import com.sopt.now.presentation.main.MainActivity
 import com.sopt.now.presentation.signup.SignUpActivity
 import com.sopt.now.databinding.ActivityLoginBinding
 import com.sopt.now.data.dto.request.RequestLoginDto
-import com.sopt.now.data.repoImpl.AuthRepositoryImpl
-import com.sopt.now.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -25,9 +19,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
-    private val authDataSource: AuthDataSource by lazy { AuthDataSourceImpl(ServicePool.authService) }
-    private val authRepository: AuthRepository by lazy { AuthRepositoryImpl(authDataSource) }
-    private val viewModelFactory by lazy { BaseViewModelFactory(authRepository = authRepository) }
+    private val viewModelFactory by lazy { BaseViewModelFactory() }
 
     private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 

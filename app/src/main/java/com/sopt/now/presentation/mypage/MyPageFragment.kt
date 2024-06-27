@@ -8,11 +8,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.BaseViewModelFactory
-import com.sopt.now.data.ServicePool
-import com.sopt.now.data.datasource.UserDataSource
-import com.sopt.now.data.datasourceImpl.UserDataSourceImpl
-import com.sopt.now.data.repoImpl.UserRepositoryImpl
-import com.sopt.now.domain.repository.UserRepository
 import com.sopt.now.presentation.login.LoginActivity
 import com.sopt.now.databinding.FragmentMyPageBinding
 import com.sopt.now.presentation.main.MainViewModel
@@ -22,9 +17,7 @@ import kotlinx.coroutines.flow.onEach
 
 class MyPageFragment : BindingFragment<FragmentMyPageBinding>(FragmentMyPageBinding::inflate) {
 
-    private val userDataSource: UserDataSource by lazy { UserDataSourceImpl(ServicePool.userService) }
-    private val userRepository: UserRepository by lazy { UserRepositoryImpl(userDataSource) }
-    private val viewModelFactory by lazy { BaseViewModelFactory(userRepository = userRepository) }
+    private val viewModelFactory by lazy { BaseViewModelFactory() }
     private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
