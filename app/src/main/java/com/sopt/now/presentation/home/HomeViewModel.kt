@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sopt.now.domain.repository.FriendRepository
-import com.sopt.now.presentation.friend.Friend
+import com.sopt.now.domain.entity.FriendEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -12,8 +12,8 @@ import retrofit2.HttpException
 
 class HomeViewModel(private val friendRepository: FriendRepository) : ViewModel() {
 
-    private val _friends = MutableStateFlow<List<Friend>>(emptyList())
-    val friends: StateFlow<List<Friend>> = _friends
+    private val _friends = MutableStateFlow<List<FriendEntity>>(emptyList())
+    val friends: StateFlow<List<FriendEntity>> = _friends
 
     fun getFriends() {
         viewModelScope.launch {

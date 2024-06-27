@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import com.sopt.now.core.base.BindingFragment
 import com.sopt.now.core.base.factory.BaseViewModelFactory
 import com.sopt.now.data.ServicePool
+import com.sopt.now.data.datasource.UserDataSource
+import com.sopt.now.data.datasourceImpl.UserDataSourceImpl
 import com.sopt.now.data.repoImpl.FriendRepositoryImpl
 import com.sopt.now.data.repoImpl.UserRepositoryImpl
 import com.sopt.now.domain.repository.FriendRepository
@@ -15,13 +17,14 @@ import com.sopt.now.domain.repository.UserRepository
 import com.sopt.now.databinding.FragmentHomeBinding
 import com.sopt.now.presentation.friend.FriendAdapter
 import com.sopt.now.presentation.main.MainViewModel
-import com.sopt.now.domain.entity.UserInfo
+import com.sopt.now.domain.entity.UserEntity
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val userRepository: UserRepository by lazy { UserRepositoryImpl(ServicePool.userService) }
+    private val userDataSource: UserDataSource by lazy { UserDataSourceImpl(ServicePool.userService) }
+    private val userRepository: UserRepository by lazy { UserRepositoryImpl(userDataSource) }
     private val userViewModelFactory by lazy { BaseViewModelFactory(userRepository = userRepository) }
     private val mainViewModel: MainViewModel by viewModels { userViewModelFactory }
 
@@ -63,7 +66,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(FragmentHomeBinding::i
         }.launchIn(lifecycleScope)
     }
 
-    private fun updateUI(userInfo: UserInfo) {
+    private fun updateUI(userInfo: UserEntity) {
         val friendAdapter = binding.rvFriends.adapter as? FriendAdapter
         friendAdapter?.setUser(userInfo)
     }
