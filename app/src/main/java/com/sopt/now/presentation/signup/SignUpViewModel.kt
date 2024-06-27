@@ -22,15 +22,13 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
             authRepository.signUp(userEntity)
                 .onSuccess {
                     _signUpState.value = UiState(true, "회원가입 성공")
-                    Log.e("SignUpButton", "회원가입 성공됨")
                 }
                 .onFailure {
                     if (it is HttpException) {
                         _signUpState.value = UiState(false, it.message())
-                        Log.e("SignUpButton", "회원가입 http exception 오류")
                     } else {
+                        Log.e("SignUpButton", "회원가입 실패", it)
                         _signUpState.value = UiState(false, "회원가입 실패")
-                        Log.e("SignUpButton", "뭔가 회원가입 조건 틀렸나봐")
                     }
                 }
         }
