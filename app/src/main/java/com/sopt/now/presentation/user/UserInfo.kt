@@ -1,4 +1,4 @@
-package com.sopt.now.domain.entity
+package com.sopt.now.presentation.user
 
 import kotlinx.serialization.Serializable
 
