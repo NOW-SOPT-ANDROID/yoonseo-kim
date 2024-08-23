@@ -18,11 +18,8 @@ class AuthRepositoryImpl(
         userId ?: throw IllegalStateException("User ID not found")
     }
 
-    override suspend fun signUp(userEntity: UserEntity): Result<BaseResponseEntity> = runCatching {
+    override suspend fun signUp(userEntity: UserEntity): Result<Unit> = runCatching {
         val response = authDataSource.signUp(userEntity.toSignUpDto())
-        BaseResponseEntity(
-            code = response.code,
-            message = response.message
-        )
+        response.data
     }
 }

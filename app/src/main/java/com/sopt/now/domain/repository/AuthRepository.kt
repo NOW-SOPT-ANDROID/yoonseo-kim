@@ -7,5 +7,5 @@ import com.sopt.now.domain.entity.UserEntity
 
 interface AuthRepository {
     suspend fun login(id: String, password: String): Result<Int?>
-    suspend fun signUp(userEntity: UserEntity): Result<BaseResponseEntity>
+    suspend fun signUp(userEntity: UserEntity): Result<Unit>
 }
