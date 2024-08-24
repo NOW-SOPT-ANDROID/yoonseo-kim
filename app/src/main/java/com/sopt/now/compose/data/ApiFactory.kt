@@ -29,7 +29,7 @@ object ApiFactory {
     }
 
     inline fun <reified T> create(baseUrl: String): T {
-        val retrofit = when(baseUrl) {
+        val retrofit = when (baseUrl) {
             AUTH_BASE_URL -> authRetrofit
             OPEN_BASE_URL -> openRetrofit
             else -> throw IllegalArgumentException("Unknown Base URL")

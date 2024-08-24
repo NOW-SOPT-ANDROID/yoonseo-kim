@@ -33,7 +33,6 @@ import com.sopt.now.compose.presentation.user.UserInfo
 
 @Composable
 fun MyPageScreen() {
-
     val context = LocalContext.current
 
     val viewModel: MainViewModel = viewModel()
@@ -44,7 +43,7 @@ fun MyPageScreen() {
         userInfoState.value = UserInfo(
             nickname = it.nickname,
             phone = it.phone,
-            authenticationId = it.authenticationId
+            authenticationId = it.authenticationId,
         )
     }
 
@@ -58,7 +57,7 @@ fun MyPageScreen() {
             Image(
                 painter = painterResource(id = R.drawable.donut),
                 contentDescription = null,
-                modifier = Modifier.size(110.dp).aspectRatio(1f)
+                modifier = Modifier.size(110.dp).aspectRatio(1f),
             )
             UserInfoItem(title = "닉네임", content = user.nickname)
             UserInfoItem(title = "Phone", content = user.phone)
@@ -71,16 +70,16 @@ fun MyPageScreen() {
             onClick = {
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
-            }, modifier = Modifier.fillMaxWidth()
+            },
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
                 text = stringResource(id = R.string.btn_logout),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
     }
-
 }
 
 @Composable
@@ -89,6 +88,6 @@ fun UserInfoItem(title: String, content: String) {
         text = "$title   $content",
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     )
 }

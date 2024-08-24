@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
             NOWSOPTAndroidTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     userId?.let {
                         Main(userId = userId.toInt())
@@ -70,16 +70,16 @@ fun Main(userId: Int) {
     val items = listOf(
         BottomNavigationItem(
             icon = Icons.Filled.Home,
-            label = "Home"
+            label = "Home",
         ),
         BottomNavigationItem(
             icon = Icons.Filled.Search,
-            label = "Search"
+            label = "Search",
         ),
         BottomNavigationItem(
             icon = Icons.Filled.Person,
-            label = "My Page"
-        )
+            label = "My Page",
+        ),
     )
 
     Scaffold(
@@ -91,7 +91,7 @@ fun Main(userId: Int) {
                 ),
                 title = {
                     Text("NOW SOPT")
-                }
+                },
             )
         },
         bottomBar = {
@@ -101,24 +101,26 @@ fun Main(userId: Int) {
                         icon = { Icon(item.icon, contentDescription = item.label) },
                         label = { Text(item.label) },
                         selected = selectedItem == index,
-                        onClick = { selectedItem = index }
+                        onClick = { selectedItem = index },
                     )
                 }
             }
-        }
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            when(selectedItem) {
+            when (selectedItem) {
                 HOME -> {
                     HomeScreen(userId)
                 }
+
                 SEARCH -> {
                     SearchScreen()
                 }
+
                 MY_PAGE -> {
                     MyPageScreen()
                 }

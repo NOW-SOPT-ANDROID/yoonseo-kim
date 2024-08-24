@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sopt.now.compose.core.view.UiState
 import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.request.RequestLoginDto
-import com.sopt.now.compose.core.view.UiState
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

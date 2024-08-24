@@ -10,17 +10,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import com.sopt.now.compose.presentation.friend.FriendItem
-import com.sopt.now.compose.presentation.user.UserItem
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.sopt.now.compose.presentation.friend.FriendItem
 import com.sopt.now.compose.presentation.main.MainViewModel
 import com.sopt.now.compose.presentation.user.UserInfo
+import com.sopt.now.compose.presentation.user.UserItem
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun HomeScreen(userId: Int) {
-
     val mainViewModel: MainViewModel = viewModel()
     val homeViewModel: HomeViewModel = viewModel()
 
@@ -39,7 +38,7 @@ fun HomeScreen(userId: Int) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         userInfoState.value?.let { user ->
             item {
