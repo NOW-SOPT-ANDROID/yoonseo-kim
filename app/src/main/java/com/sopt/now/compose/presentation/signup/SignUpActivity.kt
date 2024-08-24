@@ -33,14 +33,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
+import com.sopt.now.compose.core.base.factory.BaseViewModelFactory
 import com.sopt.now.compose.presentation.login.LoginActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
 import com.sopt.now.compose.core.util.showToast
+import com.sopt.now.compose.data.ServicePool
 import com.sopt.now.compose.data.dto.request.RequestSignUpDto
+import com.sopt.now.compose.data.repoImpl.AuthRepositoryImpl
 
 class SignUpActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<SignUpViewModel>()
+    private val authRepository by lazy { AuthRepositoryImpl(ServicePool.authService) }
+    private val viewModelFactory by lazy { BaseViewModelFactory(authRepository) }
+
+    private val viewModel: SignUpViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

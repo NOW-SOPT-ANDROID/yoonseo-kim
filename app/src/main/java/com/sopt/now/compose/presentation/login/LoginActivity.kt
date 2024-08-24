@@ -35,15 +35,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import com.sopt.now.compose.R
-import com.sopt.now.compose.core.util.showToast
-import com.sopt.now.compose.data.dto.request.RequestLoginDto
+import com.sopt.now.compose.core.base.factory.BaseViewModelFactory
 import com.sopt.now.compose.presentation.main.MainActivity
 import com.sopt.now.compose.presentation.signup.SignUpActivity
 import com.sopt.now.compose.ui.theme.NOWSOPTAndroidTheme
+import com.sopt.now.compose.core.util.showToast
+import com.sopt.now.compose.data.ServicePool
+import com.sopt.now.compose.data.dto.request.RequestLoginDto
+import com.sopt.now.compose.data.repoImpl.AuthRepositoryImpl
 
 class LoginActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<LoginViewModel>()
+    private val authRepository by lazy { AuthRepositoryImpl(ServicePool.authService) }
+    private val viewModelFactory by lazy { BaseViewModelFactory(authRepository) }
+
+    private val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,28 +57,24 @@ class LoginActivity : ComponentActivity() {
             NOWSOPTAndroidTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     LoginPage(viewModel)
                 }
             }
         }
 
-        viewModel.loginState.observe(
-            this,
-            Observer { state ->
-                when {
-                    state.isSuccess -> {
-                        showToast(state.message)
-                        navigateToMain(viewModel.userId.value)
-                    }
-
-                    else -> {
-                        showToast(state.message)
-                    }
+        viewModel.loginState.observe(this, Observer { state ->
+            when {
+                state.isSuccess -> {
+                    showToast(state.message)
+                    navigateToMain(viewModel.userId.value)
                 }
-            },
-        )
+                else -> {
+                    showToast(state.message)
+                }
+            }
+        })
     }
 
     private fun navigateToMain(userId: String?) {
@@ -95,7 +97,7 @@ fun LoginPage(viewModel: LoginViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(30.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -112,7 +114,7 @@ fun LoginPage(viewModel: LoginViewModel) {
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(30.dp))
         TextField(
@@ -128,7 +130,7 @@ fun LoginPage(viewModel: LoginViewModel) {
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(30.dp))
         TextField(
@@ -146,12 +148,12 @@ fun LoginPage(viewModel: LoginViewModel) {
                 val request = RequestLoginDto(authenticationId = id, password = password)
                 viewModel.login(request)
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = stringResource(id = R.string.btn_login),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -160,13 +162,15 @@ fun LoginPage(viewModel: LoginViewModel) {
             onClick = {
                 context.startActivity(Intent(context, SignUpActivity::class.java))
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = stringResource(id = R.string.btn_sign_up),
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
         }
     }
 }
+
+
