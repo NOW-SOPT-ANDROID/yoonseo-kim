@@ -2,6 +2,7 @@ package com.sopt.now.data.service
 
 import com.sopt.now.data.dto.request.RequestLoginDto
 import com.sopt.now.data.dto.request.RequestSignUpDto
+import com.sopt.now.data.dto.response.BaseResponse
 import com.sopt.now.data.dto.response.ResponseLoginDto
 import com.sopt.now.data.dto.response.ResponseSignUpDto
 import retrofit2.Call
@@ -13,10 +14,10 @@ interface AuthService {
     @POST("member/join")
     suspend fun signUp(
         @Body request: RequestSignUpDto,
-    ): ResponseSignUpDto
+    ): BaseResponse<Unit>
 
     @POST("member/login")
     suspend fun login(
         @Body request: RequestLoginDto,
-    ): Response<ResponseLoginDto>
+    ): Response<BaseResponse<Unit>>
 }

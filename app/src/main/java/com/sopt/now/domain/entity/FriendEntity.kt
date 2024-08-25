@@ -1,10 +1,10 @@
-package com.sopt.now.presentation.friend
+package com.sopt.now.domain.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Friend(
+data class FriendEntity(
     @SerialName("id")
     val id: Int,
     @SerialName("email")

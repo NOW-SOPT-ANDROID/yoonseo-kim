@@ -3,14 +3,15 @@ package com.sopt.now.presentation.friend
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sopt.now.presentation.user.UserInfo
+import com.sopt.now.domain.entity.UserEntity
 import com.sopt.now.databinding.ItemFriendBinding
 import com.sopt.now.databinding.ItemUserBinding
+import com.sopt.now.domain.entity.FriendEntity
 import com.sopt.now.presentation.user.UserViewHolder
 
 class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var friends: List<Friend> = emptyList()
-    private var user = UserInfo("", "", "")
+    private var friends: List<FriendEntity> = emptyList()
+    private var user = UserEntity("", "", "")
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
@@ -45,12 +46,12 @@ class FriendAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return friends.size + 1
     }
 
-    fun setFriends(friends: List<Friend>) {
+    fun setFriends(friends: List<FriendEntity>) {
         this.friends = friends.toList()
         notifyDataSetChanged()
     }
 
-    fun setUser(userInfo: UserInfo) {
+    fun setUser(userInfo: UserEntity) {
         user = userInfo
         notifyDataSetChanged()
     }
